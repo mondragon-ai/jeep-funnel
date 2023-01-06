@@ -1,11 +1,11 @@
 import Head from "next/head";
 
-function Layout({ children, title }) {
+function Layout({ children }) {
   return (
     <div>
       <Head>
         <meta charSet="utf-8" />
-        <title>{title}</title>
+        <title>Tittle</title>
         <meta content="Home" property="og:title" />
         <meta content="Home" property="twitter:title" />
         <meta content="width=device-width, initial-scale=1" name="viewport" />

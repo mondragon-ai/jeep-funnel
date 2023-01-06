@@ -1,71 +1,24 @@
-function FormTwo() {
+import ProductRow from "./ProductRow";
+import AddressInput from "./AddressInput";
+import MyImage from "./MyImage";
+
+function OrderForm() {
   return (
     <div className="formcard" id="FORM_TWO">
       <div className="imgblock">
-        <img
-          src="/images/decal-wb-patriot-bundle.png"
-          loading="lazy"
-          srcSet="/images/decal-wb-patriot-bundle-p-500.png 500w, /images/decal-wb-patriot-bundle.png 800w"
-          sizes="100vw"
-          alt=""
-        />
+        <MyImage src={"/images/decal-wb-patriot-bundle.png"} />
       </div>
       <div className="productcontainer">
         <div className="div-block-89">
           <div className="listheadertext">Item</div>
           <div className="listheadertext">Price</div>
         </div>
-        <div id="PoductRowFirst" className="productrow">
-          <div className="checkbox">
-            <input
-              disabled
-              type="checkbox"
-              // group="product"
-              name='{ "name": "14 Giveaway Entries", "price": "900",  "piece": "$7.00 per pc", "product_id": "42235971567788" }'
-              id="product_one"
-            />
-          </div>
-          <div className="div-block-90">
-            <div className="div-block-92">
-              <div className="productrowtitle">{`(14 Giveaway Entries)`}</div>
-              <div className="productrowsubheader">
-                {`2 Products (1 Wristband/1 Decal)`}
-              </div>
-            </div>
-          </div>
-          <div className="div-block-91">
-            <div className="productrowsubheader">{`$7.00 / pc`}</div>
-          </div>
-        </div>
-        <div id="PoductRowFirst" className="productrow">
-          <div className="checkbox">
-            <input
-              disabled
-              type="checkbox"
-              // group="product"
-              name='{ "name": "24 Giveaway Entries", "price": "2000", "piece": "$6.00 per pc", "product_id": "42235972780204" }'
-              id="product_three"
-            />
-          </div>
-          <div className="div-block-90">
-            <div className="div-block-92">
-              <div className="productrowtitle">{`(24 Giveaway Entries)`}</div>
-              <div className="productrowsubheader">
-                {`4 Products (2 Wristbands/2 Decals) Save 15%`}
-              </div>
-            </div>
-          </div>
-          <div className="div-block-91">
-            <div className="productrowsubheader">{`$6.00 / pc`}</div>
-          </div>
-        </div>
-        <div id="BEST_DEAL" className="productrow">
+        {/* <div id="BEST_DEAL" className="productrow">
           <div className="checkbox">
             <input
               defaultChecked
               disabled
               type="checkbox"
-              // group="product"
               name='{ "name": "30 GIVEAWAY ENTRIES (BEST DEAL!!)", "price": "5000", "piece": "$5.00 per pc", "product_id": "42235974189228" }'
               id="product_four"
             />
@@ -83,29 +36,34 @@ function FormTwo() {
           <div className="div-block-91">
             <div className="productrowsubheader">{`$5.00 / pc`}</div>
           </div>
-        </div>
-        <div id="PoductRowFirst" className="productrow">
-          <div className="checkbox">
-            <input
-              disabled
-              type="checkbox"
-              // group="product"
-              name='{ "name": "40 Giveaway Entries", "price": "9900", "piece": "$4.00 per pc", "product_id": "42235974877356" }'
-              id="product_two"
-            />
-          </div>
-          <div className="div-block-90">
-            <div className="div-block-92">
-              <div className="productrowtitle">{` (40 Giveaway Entries)`}</div>
-              <div className="productrowsubheader">
-                {`10 Products (5 Wristbands/5 Decals) Save 40%`}
-              </div>
-            </div>
-          </div>
-          <div className="div-block-91">
-            <div className="productrowsubheader">{`$4.00 / pc`}</div>
-          </div>
-        </div>
+        </div> */}
+        <>
+          <ProductRow
+            name="(14 Giveaway Entries)"
+            price="$7.00 / pc"
+            piece="2 Products (1 Wristband/1 Decal)"
+            productId="42235971567788"
+          />
+          <ProductRow
+            name="(24 Giveaway Entries)"
+            price="$6.00 / pc "
+            piece="4 Products (2 Wristbands/2 Decals) Save 15%"
+            productId="42235972780204"
+          />
+          <ProductRow
+            name="30 GIVEAWAY ENTRIES (BEST DEAL!!)"
+            price="$5.00 / pc"
+            piece="6 Products (3 Wristbands/3 Decals) Save 30%"
+            productId="42235974189228"
+            id="BEST_DEAL"
+          />
+          <ProductRow
+            name="(40 Giveaway Entries)"
+            price="$4.00 / pc"
+            piece="10 Products (5 Wristbands/5 Decals) Save 40%"
+            productId="42235974877356"
+          />
+        </>
       </div>
       <div className="div-block-93">
         <div className="div-block-95">
@@ -114,60 +72,10 @@ function FormTwo() {
         <div className="div-block-94" />
       </div>
       <div className="div-block-37">
-        <div className="input-group">
-          <input
-            defaultValue=""
-            className="form-control"
-            type="text"
-            name="line1"
-            id="line1"
-            required
-          />
-          <label htmlFor="line1">Address Name</label>
-          <div className="req-mark">!</div>
-        </div>
-        <div>
-          <div className="input-group">
-            <input
-              defaultValue=""
-              className="form-control"
-              type="text"
-              name="city"
-              id="city"
-              required
-            />
-            <label htmlFor="city">City</label>
-            <div className="req-mark">!</div>
-          </div>
-        </div>
-        <div>
-          <div className="input-group">
-            <input
-              defaultValue=""
-              className="form-control"
-              type="text"
-              name="state"
-              id="state"
-              required
-            />
-            <label htmlFor="state">State</label>
-            <div className="req-mark">!</div>
-          </div>
-        </div>
-        <div>
-          <div className="input-group">
-            <input
-              defaultValue=""
-              className="form-control"
-              type="text"
-              name="zip"
-              id="zip"
-              required
-            />
-            <label htmlFor="zip">Zip Code</label>
-            <div className="req-mark">!</div>
-          </div>
-        </div>
+        <AddressInput label="Address Name" name="line1" required />
+        <AddressInput label="City" name="city" required />
+        <AddressInput label="State" name="state" required />
+        <AddressInput label="Zip Code" name="zip" required />
       </div>
       <div className="div-block-93">
         <div className="div-block-95">
@@ -175,6 +83,7 @@ function FormTwo() {
         </div>
         <div className="div-block-94" />
       </div>
+
       <form id="payment-form">
         <div className="div-block-98">
           <div id="payment-element">
@@ -293,4 +202,4 @@ function FormTwo() {
   );
 }
 
-export default FormTwo;
+export default OrderForm;
