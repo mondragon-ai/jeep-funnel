@@ -27,14 +27,14 @@ function FormTwo() {
           </div>
           <div className="div-block-90">
             <div className="div-block-92">
-              <div className="productrowtitle">(14 Giveaway Entries)</div>
+              <div className="productrowtitle">{`(14 Giveaway Entries)`}</div>
               <div className="productrowsubheader">
-                2 Products (1 Wristband/1 Decal)
+                {`2 Products (1 Wristband/1 Decal)`}
               </div>
             </div>
           </div>
           <div className="div-block-91">
-            <div className="productrowsubheader">$7.00 / pc</div>
+            <div className="productrowsubheader">{`$7.00 / pc`}</div>
           </div>
         </div>
         <div id="PoductRowFirst" className="productrow">
@@ -49,14 +49,14 @@ function FormTwo() {
           </div>
           <div className="div-block-90">
             <div className="div-block-92">
-              <div className="productrowtitle">(24 Giveaway Entries)</div>
+              <div className="productrowtitle">{`(24 Giveaway Entries)`}</div>
               <div className="productrowsubheader">
-                4 Products (2 Wristbands/2 Decals) Save 15%
+                {`4 Products (2 Wristbands/2 Decals) Save 15%`}
               </div>
             </div>
           </div>
           <div className="div-block-91">
-            <div className="productrowsubheader">$6.00 / pc</div>
+            <div className="productrowsubheader">{`$6.00 / pc`}</div>
           </div>
         </div>
         <div id="BEST_DEAL" className="productrow">
@@ -73,16 +73,15 @@ function FormTwo() {
           <div className="div-block-90">
             <div className="div-block-92">
               <div className="productrowtitle">
-                {" "}
-                30 GIVEAWAY ENTRIES BEST DEAL!!
+                {`30 GIVEAWAY ENTRIES BEST DEAL!!`}
               </div>
               <div className="productrowsubheader">
-                6 Products (3 Wristbands/3 Decals) Save 30%
+                {`6 Products (3 Wristbands/3 Decals) Save 30%`}
               </div>
             </div>
           </div>
           <div className="div-block-91">
-            <div className="productrowsubheader">$5.00 / pc</div>
+            <div className="productrowsubheader">{`$5.00 / pc`}</div>
           </div>
         </div>
         <div id="PoductRowFirst" className="productrow">
@@ -97,14 +96,14 @@ function FormTwo() {
           </div>
           <div className="div-block-90">
             <div className="div-block-92">
-              <div className="productrowtitle"> (40 Giveaway Entries)</div>
+              <div className="productrowtitle">{` (40 Giveaway Entries)`}</div>
               <div className="productrowsubheader">
-                10 Products (5 Wristbands/5 Decals) Save 40%
+                {`10 Products (5 Wristbands/5 Decals) Save 40%`}
               </div>
             </div>
           </div>
           <div className="div-block-91">
-            <div className="productrowsubheader">$4.00 / pc</div>
+            <div className="productrowsubheader">{`$4.00 / pc`}</div>
           </div>
         </div>
       </div>
@@ -237,7 +236,8 @@ function FormTwo() {
                 </div>
                 <div className="listheadertext o">
                   <strong>
-                    Yes! <em>Rush & Insure</em> My Order for $3.99
+                    Yes! <em>{`Rush & Insure`}</em>
+                    {` My Order for $3.99`}
                   </strong>
                 </div>
                 <div>
@@ -256,11 +256,11 @@ function FormTwo() {
                 <div className="text-block-6">
                   <strong>
                     Put me in the front of the shipping line & insure my order:
-                  </strong>{" "}
-                  This will give your order priority in the fulfillment center
+                  </strong>
+                  {` This will give your order priority in the fulfillment center
                   (There is a huge demand for these) as well as shipping
                   insurance that will cover 100% of your shipment in case of
-                  loss or damaged packages, no questions asked!
+                  loss or damaged packages, no questions asked!`}
                 </div>
               </div>
             </div>
@@ -268,12 +268,13 @@ function FormTwo() {
         </div>
         <div className="text-block-7">
           <em className="italic-text">
-            By clicking "Enter Now" below, I certify that I am 18 years of age
-            or older, and agree to the GoingBigly.com{" "}
+            {`By clicking "Enter Now" below, I certify that I am 18 years of age
+            or older, and agree to the GoingBigly.com`}
           </em>
           <a
             target="_blank"
             href="https://goingbigly.com/pages/terms-of-service"
+            rel="noreferrer"
           >
             <em>Terms and Conditions</em>
           </a>
