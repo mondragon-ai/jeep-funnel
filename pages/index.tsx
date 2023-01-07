@@ -1,10 +1,55 @@
+import { useState } from "react";
 import SignupForm from "../components/SignupForm";
 import OrderForm from "../components/OrderForm";
 import Footer from "../components/Footer";
 import MyImage from "../components/MyImage";
 import IFrame from "../components/IFrame";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+import { imPoweredRequest } from "../lib/api";
+
+const stripePromise = loadStripe(
+  "pk_test_51LCmGyE1N4ioGCdR6UcKcjiZDb8jfZaaDWcIGhdaUCyhcIDBxG9uYzLGFtziZjZ6R6VnSSVEMW8dUZ8IfnwvSSBa0044BHRyL5"
+);
 
 export default function Home() {
+  const [customer, setCustomer] = useState({
+    isPending: false,
+    STRIPE_CLIENT_ID:
+      "seti_1MNb2CE1N4ioGCdRrSDAS5DK_secret_N7qjJFOjn11qJ16I6rZeEshKbdimKti",
+    error: null,
+  });
+  const [shipping, setShipping] = useState({});
+  const [product, setProduct] = useState({});
+
+  const onSignup = async (customer) => {
+    setCustomer({ isPending: true });
+    const payload = {
+      customer,
+      funnel_uuid: "fun_7626c00357",
+      high_risk: false,
+    };
+    const response = await imPoweredRequest(
+      "POST",
+      "https://us-central1-impowered-funnel.cloudfunctions.net/funnel/customers/create",
+      payload
+    );
+    if (!response) {
+      setCustomer({ error: true });
+    } else {
+      console.log("response", response);
+      setCustomer(response.result);
+    }
+  };
+
+  const onOrderSubmit = async (order) => {
+    const payload = {
+      order,
+      funnel_uuid: "fun_7626c00357",
+      high_risk: false,
+    };
+  };
+
   return (
     <div className="body-4">
       <div className="section-2 wf-section">
@@ -59,8 +104,19 @@ export default function Home() {
                   </h4>
                 </div>
                 <div className="div-block-37">
-                  <SignupForm />
-                  <OrderForm />
+                  {customer.STRIPE_CLIENT_ID ? (
+                    <Elements
+                      stripe={stripePromise}
+                      options={{ clientSecret: customer.STRIPE_CLIENT_ID }}
+                    >
+                      <OrderForm onOrderSubmit={onOrderSubmit} />
+                    </Elements>
+                  ) : (
+                    <SignupForm
+                      onSignup={onSignup}
+                      isLoading={customer.isPending}
+                    />
+                  )}
                 </div>
               </div>
               <div className="div-block-32">
