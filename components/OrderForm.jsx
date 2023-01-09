@@ -1,12 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import ProductRow from "./ProductRow";
-import {
-  useElements,
-  useStripe,
-  PaymentElement,
-} from "@stripe/react-stripe-js";
+import { PaymentElement } from "@stripe/react-stripe-js";
 import AddressInput from "./AddressInput";
 import MyImage from "./MyImage";
 
@@ -20,33 +16,17 @@ const validationSchema = Yup.object().shape({
   bump: Yup.boolean(),
 });
 
-function OrderForm({ onOrderSubmit }) {
-  const stripe = useStripe();
-  const elements = useElements();
-  const [error, setError] = useState(null);
-  const [processing, setProcessing] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState(null);
-
-  const initialValues = {
-    product:
-      '{ "name": "30 GIVEAWAY ENTRIES (BEST DEAL!!)", "price": "5000",  "piece": "$5.00 per pc", "product_id": "42235974189228" }',
-    shipping: {
-      line1: "",
-      state: "",
-      city: "",
-      zip: "",
-    },
-    bump: false,
+function OrderForm({
+  initialValues,
+  handleSubmit,
+  isLoading,
+  message,
+  stripe,
+  elements,
+}) {
+  const paymentElementOptions = {
+    layout: "tabs",
   };
-
-  const handleSubmit = (values, actions) => {
-    // Submit the form here
-    // You can access the form values using the "values" object
-    console.log({ "wroking values ": values });
-
-    actions.setSubmitting(false);
-  };
-
   return (
     <div className="formcard" id="FORM_TWO">
       <div className="imgblock">
@@ -128,7 +108,10 @@ function OrderForm({ onOrderSubmit }) {
               <div className="div-block-98">
                 <div id="payment-element">
                   {/*Stripe.js injects the Payment Element*/}
-                  <PaymentElement />
+                  <PaymentElement
+                    id="payment-element"
+                    options={paymentElementOptions}
+                  />
                 </div>
               </div>
               <div className="div-block-98">
@@ -222,19 +205,24 @@ function OrderForm({ onOrderSubmit }) {
                 </a>
                 <em> for this purchase.</em>
               </div>
-              {/* <div className="div-block-97">
-                <p id="ERROR_TWO" />
-                <div id="payment-message" className="hidden" />
-              </div> */}
+              {message && (
+                <div className="div-block-97">
+                  <p id="ERROR_TWO">{message}</p>
+                  {/* <div id="payment-message" className="hidden" /> */}
+                </div>
+              )}
+
               <button
                 className="funnelbtn btntext"
                 id="submit"
-                disabled={isSubmitting}
+                disabled={(isLoading || !stripe || !elements) && isSubmitting}
                 type="submit"
               >
-                Submit
+                {isLoading ? "Loading . . ." : "Submit"}
               </button>
-              <div id="error-message"></div>
+              {/* <div id="error-message"></div> */}
+              {/* Show any error or success messages */}
+              {message && <div id="payment-message">{message}</div>}
             </div>
           </Form>
         )}
@@ -251,47 +239,4 @@ export default OrderForm;
 //   console.log(values);
 
 //   actions.setSubmitting(false);
-// };
-
-// const handleSubmit = async (event) => {
-//   event.preventDefault();
-
-//   if (!stripe || !elements) {
-//     // Stripe.js has not loaded yet. Make sure to disable form submission until Stripe.js has loaded.
-//     return;
-//   }
-
-//   if (error) {
-//     elements.getElement("card").focus();
-//     return;
-//   }
-
-//   if (processing) {
-//     return;
-//   }
-
-//   const billingDetails = {
-//     address: {
-//       city: event.target.city.value,
-//       line1: event.target.line1.value,
-//       state: event.target.state.value,
-//       zip: event.target.zip.value,
-//     },
-//   };
-
-//   setProcessing(true);
-
-//   try {
-//     // const paymentMethod = await stripe.createPaymentMethod({
-//     //   type: "card",
-//     //   card: elements.getElement(CardElement),
-//     //   billing_details: billingDetails,
-//     // });
-
-//     setPaymentMethod(paymentMethod);
-//   } catch (error) {
-//     setError(error);
-//   } finally {
-//     setProcessing(false);
-//   }
 // };

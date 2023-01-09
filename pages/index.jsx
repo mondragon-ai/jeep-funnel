@@ -1,53 +1,20 @@
-import { useState } from "react";
-import SignupForm from "../components/SignupForm";
-import OrderForm from "../components/OrderForm";
+import SignupFormContainer from "../containers/SignupFormContainer";
+import OrderFormContainer from "../containers/OrderFormContainer";
 import Footer from "../components/Footer";
 import MyImage from "../components/MyImage";
 import IFrame from "../components/IFrame";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
-import { imPoweredRequest } from "../lib/api";
+import { useSelector } from "react-redux";
 
-const stripePromise = loadStripe(
-  "pk_test_51LCmGyE1N4ioGCdR6UcKcjiZDb8jfZaaDWcIGhdaUCyhcIDBxG9uYzLGFtziZjZ6R6VnSSVEMW8dUZ8IfnwvSSBa0044BHRyL5"
-);
+const stripePromise = loadStripe(process.env.STRIPE_PUBLIC_KEY);
 
 export default function Home() {
-  const [customer, setCustomer] = useState({
-    isPending: false,
-    STRIPE_CLIENT_ID:
-      "seti_1MNb2CE1N4ioGCdRrSDAS5DK_secret_N7qjJFOjn11qJ16I6rZeEshKbdimKti",
-    error: null,
-  });
-  const [shipping, setShipping] = useState({});
-  const [product, setProduct] = useState({});
+  const { customer } = useSelector((state) => state);
 
-  const onSignup = async (customer) => {
-    setCustomer({ isPending: true });
-    const payload = {
-      customer,
-      funnel_uuid: "fun_7626c00357",
-      high_risk: false,
-    };
-    const response = await imPoweredRequest(
-      "POST",
-      "https://us-central1-impowered-funnel.cloudfunctions.net/funnel/customers/create",
-      payload
-    );
-    if (!response) {
-      setCustomer({ error: true });
-    } else {
-      console.log("response", response);
-      setCustomer(response.result);
-    }
-  };
-
-  const onOrderSubmit = async (order) => {
-    const payload = {
-      order,
-      funnel_uuid: "fun_7626c00357",
-      high_risk: false,
-    };
+  const options = {
+    clientSecret: customer.STRIPE_CLIENT_ID,
+    appearance: { theme: "stripe" },
   };
 
   return (
@@ -105,17 +72,11 @@ export default function Home() {
                 </div>
                 <div className="div-block-37">
                   {customer.STRIPE_CLIENT_ID ? (
-                    <Elements
-                      stripe={stripePromise}
-                      options={{ clientSecret: customer.STRIPE_CLIENT_ID }}
-                    >
-                      <OrderForm onOrderSubmit={onOrderSubmit} />
+                    <Elements stripe={stripePromise} options={options}>
+                      <OrderFormContainer />
                     </Elements>
                   ) : (
-                    <SignupForm
-                      onSignup={onSignup}
-                      isLoading={customer.isPending}
-                    />
+                    <SignupFormContainer />
                   )}
                 </div>
               </div>
