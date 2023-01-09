@@ -80,7 +80,7 @@ const Congratulations = () => {
             <div className="div-block-53">
               <div className="text-block-10">
                 <strong className="bold-text-11">
-                  Here's a FREE $5.00 OFF to officialhodgetwins.com
+                  {`Here's a FREE $5.00 OFF to officialhodgetwins.com`}
                 </strong>
               </div>
               <a
@@ -136,9 +136,9 @@ const Congratulations = () => {
                 <div className="div-block-48">
                   <h2 className="heading-22">No Questions Asked Guarantee</h2>
                   <p className="paragraph-28">
-                    Questions or concerns about your order? Reach out to our
+                    {` Questions or concerns about your order? Reach out to our
                     team at info@shophodgetwins.com and we'll make sure you're
-                    taken care of!
+                    taken care of!`}
                   </p>
                 </div>
               </div>
@@ -189,3 +189,5 @@ const Congratulations = () => {
     </div>
   );
 };
+
+export default Congratulations;

@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { imPoweredRequest } from "../lib/request";
 import { useElements, useStripe } from "@stripe/react-stripe-js";
 import OrderForm from "../components/OrderForm";
-import { useDispatch, useSelector } from "react-redux";
-import { setIsPending, setMessage } from "../reducers/rootReducer";
+import GlobalContext from "../context/globalContext";
 
 function OrderFormContainer() {
   const stripe = useStripe();
   const elements = useElements();
-  const { customer, isPending, message } = useSelector((state) => state);
-  const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const [globalState, setGlobalState] = useContext(GlobalContext);
 
   const initialValues = {
     product:
@@ -22,39 +22,6 @@ function OrderFormContainer() {
     },
     bump: false,
   };
-
-  useEffect(() => {
-    if (!stripe) {
-      return;
-    }
-
-    const clientSecret = new URLSearchParams(window.location.search).get(
-      "payment_intent_client_secret"
-    );
-
-    console.log(" This is the clientSecret", clientSecret);
-
-    if (!clientSecret) {
-      return;
-    }
-
-    stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
-      switch (paymentIntent.status) {
-        case "succeeded":
-          setMessage("Payment succeeded!");
-          break;
-        case "processing":
-          setMessage("Your payment is processing.");
-          break;
-        case "requires_payment_method":
-          setMessage("Your payment was not successful, please try again.");
-          break;
-        default:
-          setMessage("Something went wrong.");
-          break;
-      }
-    });
-  }, [stripe]);
 
   const handleSubmit = async (values, { setSubmitting }) => {
     await fetchCustomerData(values);
@@ -76,7 +43,7 @@ function OrderFormContainer() {
   };
 
   const fetchCustomerData = async (order) => {
-    dispatch(setIsPending(true));
+    setIsLoading(true);
     const payload = createPayloadFromOrder(order);
     const response = await imPoweredRequest(
       "POST",
@@ -86,23 +53,22 @@ function OrderFormContainer() {
     if (!response) {
       setMessage("Could not fetch customer data");
     } else {
-      // setCustomer(response.result);
       console.log(" => [CHARGE CARD - Fetch customer data]", response.result);
     }
-    dispatch(setIsPending(false));
+    setIsLoading(false);
   };
 
   const createPayloadFromOrder = (order) => {
     const { product, shipping, bump } = order;
     const { line1, state, city, zip } = shipping;
-    const { name, price, piece, product_id } = JSON.parse(product);
+    const { name, price, product_id } = JSON.parse(product);
+    const { cus_uuid, first_name, high_risk, funnel_uuid } = globalState;
     const payload = {
-      cus_uuid: customer.id,
+      cus_uuid,
       product: {
         high_risk: true,
         title: name,
         price,
-        piece,
         product_id,
       },
       shipping: {
@@ -112,13 +78,14 @@ function OrderFormContainer() {
         city,
         zip,
         country: "US",
-        name: customer.first_name,
+        name: first_name,
         title: "Home",
       },
       bump,
-      high_risk: false,
-      funnel_uuid: "fun_7626c00357",
+      high_risk,
+      funnel_uuid,
     };
+    setGlobalState({ ...globalState, bump });
     return payload;
   };
 
@@ -126,7 +93,7 @@ function OrderFormContainer() {
     <OrderForm
       initialValues={initialValues}
       handleSubmit={handleSubmit}
-      isLoading={isPending}
+      isLoading={isLoading}
       message={message}
       stripe={stripe}
       elements={elements}
@@ -135,4 +102,3 @@ function OrderFormContainer() {
 }
 
 export default OrderFormContainer;
-

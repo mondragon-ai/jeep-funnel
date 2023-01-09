@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import SignupFormContainer from "../containers/SignupFormContainer";
 import OrderFormContainer from "../containers/OrderFormContainer";
 import Footer from "../components/Footer";
@@ -5,18 +6,20 @@ import MyImage from "../components/MyImage";
 import IFrame from "../components/IFrame";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
-import { useSelector } from "react-redux";
+import GlobalContext from "../context/globalContext";
 
 const stripePromise = loadStripe(process.env.STRIPE_PUBLIC_KEY);
 
 export default function Home() {
-  const { customer } = useSelector((state) => state);
+  const [globalState] = useContext(GlobalContext);
+  const { clientSecret } = globalState;
 
   const options = {
-    clientSecret: customer.STRIPE_CLIENT_ID,
+    clientSecret,
     appearance: { theme: "stripe" },
   };
 
+  console.log({ globalState });
   return (
     <div className="body-4">
       <div className="section-2 wf-section">
@@ -71,7 +74,7 @@ export default function Home() {
                   </h4>
                 </div>
                 <div className="div-block-37">
-                  {customer.STRIPE_CLIENT_ID ? (
+                  {clientSecret ? (
                     <Elements stripe={stripePromise} options={options}>
                       <OrderFormContainer />
                     </Elements>

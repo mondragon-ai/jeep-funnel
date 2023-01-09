@@ -1,15 +1,25 @@
 import "../styles/globals.css";
+import { useState } from "react";
 import type { AppProps } from "next/app";
 import Layout from "../components/Layout";
-import { Provider } from "react-redux";
-import store from "../store/store";
+import GlobalContext from "../context/globalContext";
 
 export default function App({ Component, pageProps }: AppProps) {
+  const [globalState, setGloblaState] = useState({
+    first_name: "",
+    email: "",
+    cus_uuid: "",
+    clientSecret: "",
+    funnel_uuid: "fun_7626c00357",
+    products: [],
+    high_risk: false,
+    bump: false,
+  });
   return (
-    <Provider store={store}>
+    <GlobalContext.Provider value={[globalState, setGloblaState]}>
       <Layout>
         <Component {...pageProps} />
       </Layout>
-    </Provider>
+    </GlobalContext.Provider>
   );
 }

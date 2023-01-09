@@ -1,11 +1,11 @@
+import { useState, useContext } from "react";
 import { imPoweredRequest } from "../lib/request";
 import SignupForm from "../components/SignupForm";
-import { setCustomer } from "../reducers/rootReducer";
-import { useDispatch, useSelector } from "react-redux";
+import GlobalContext from "../context/globalContext";
 
 const SignupFormContainer = () => {
-  const { customer } = useSelector((state) => state);
-  const dispatch = useDispatch();
+  const [globalState, setGlobalState] = useContext(GlobalContext);
+  const [isLoading, setIsLoading] = useState(false);
 
   const initialValues = {
     first_name: "",
@@ -14,23 +14,33 @@ const SignupFormContainer = () => {
   };
 
   const handleSubmit = async (values, { setSubmitting }) => {
-    dispatch(setCustomer({ isPending: true }));
+    setIsLoading(true);
+    const { first_name, email } = values;
+    const { funnel_uuid, high_risk } = globalState;
     const payload = {
-      values,
-      funnel_uuid: "fun_7626c00357",
-      high_risk: false,
+      customer: {
+        first_name,
+        email,
+      },
+      funnel_uuid,
+      high_risk,
     };
     const response = await imPoweredRequest(
       "POST",
       "https://us-central1-impowered-funnel.cloudfunctions.net/funnel/customers/create",
       payload
     );
-    if (!response) {
-      dispatch(setCustomer({ error: true }));
-    } else {
-      const { first_name, email } = values;
-      dispatch(setCustomer({ first_name, email, ...response.result }));
+    if (response) {
+      const { STRIPE_CLIENT_ID, id } = response.result;
+      setGlobalState({
+        ...globalState,
+        first_name,
+        email,
+        clientSecret: STRIPE_CLIENT_ID,
+        cus_uuid: id,
+      });
     }
+    setIsLoading(false);
     setSubmitting(false);
   };
 
@@ -38,16 +48,9 @@ const SignupFormContainer = () => {
     <SignupForm
       initialValues={initialValues}
       handleSubmit={handleSubmit}
-      isLoading={customer.isPending}
+      isLoading={isLoading}
     />
   );
 };
 
 export default SignupFormContainer;
-
-// const [customer, setCustomer] = useState({
-//   isPending: false,
-//   STRIPE_CLIENT_ID:
-//     "seti_1MNb2CE1N4ioGCdRrSDAS5DK_secret_N7qjJFOjn11qJ16I6rZeEshKbdimKti",
-//   error: null,
-// });
