@@ -1,10 +1,9 @@
 import "../styles/globals.css";
 import { useState } from "react";
-import type { AppProps } from "next/app";
 import Layout from "../components/Layout";
 import GlobalContext from "../context/globalContext";
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function App({ Component, pageProps }) {
   const [globalState, setGloblaState] = useState({
     first_name: "",
     email: "",
