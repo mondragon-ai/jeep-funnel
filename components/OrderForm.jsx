@@ -215,7 +215,7 @@ function OrderForm({
               <button
                 className="funnelbtn btntext"
                 id="submit"
-                disabled={(isLoading || !stripe || !elements) && isSubmitting}
+                disabled={isLoading || !stripe || !elements || isSubmitting}
                 type="submit"
               >
                 {isLoading ? "Loading . . ." : "Submit"}
@@ -232,11 +232,3 @@ function OrderForm({
 }
 
 export default OrderForm;
-
-// const handleSubmit = (values, actions) => {
-//   // Submit the form here
-//   // You can access the form values using the "values" object
-//   console.log(values);
-
-//   actions.setSubmitting(false);
-// };
