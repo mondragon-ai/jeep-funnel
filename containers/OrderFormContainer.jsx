@@ -24,38 +24,46 @@ function OrderFormContainer() {
   };
 
   const handleSubmit = async (values, { setSubmitting }) => {
-    await fetchCustomerData(values);
+    try {
+      setIsLoading(true);
 
-    if (!stripe || !elements) return;
+      if (!stripe || !elements) {
+        throw new Error("stripe or elements are not present");
+      }
 
-    const { error } = await stripe.confirmSetup({
-      elements,
-      confirmParams: {
-        return_url: "http://localhost:3000/upsell",
-      },
-    });
+      setTimeout(() => {
+        fetchCustomerData(values); // simulate a delay
+      }, 0);
 
-    if (error.type === "card_error" || error.type === "validation_error")
+      const { error } = await stripe.confirmSetup({
+        elements,
+        confirmParams: {
+          return_url: "http://localhost:3000/upsell",
+        },
+      });
+
+      if (error) throw new Error(error.message);
+    } catch (error) {
       setMessage(error.message);
-    else setMessage("An unexpected error occured.");
-
-    setSubmitting(false);
+    } finally {
+      setIsLoading(false);
+      setSubmitting(false);
+    }
   };
 
   const fetchCustomerData = async (order) => {
-    setIsLoading(true);
     const payload = createPayloadFromOrder(order);
+    // Make the request to the server to store the card after a successful submission
     const response = await imPoweredRequest(
       "POST",
       "https://us-central1-impowered-funnel.cloudfunctions.net/funnel/checkout/quick",
       payload
     );
-    if (!response) {
-      setMessage("Could not fetch customer data");
-    } else {
-      console.log(" => [CHARGE CARD - Fetch customer data]", response.result);
-    }
-    setIsLoading(false);
+
+    if (!response)
+      setMessage(
+        `We're sorry, but there was an issue processing your payment. Please try resubmitting the form or refreshing the page and trying again. If the problem persists, please contact our customer support team for assistance`
+      );
   };
 
   const createPayloadFromOrder = (order) => {
@@ -65,21 +73,29 @@ function OrderFormContainer() {
     const { cus_uuid, first_name, high_risk, funnel_uuid } = globalState;
     const payload = {
       cus_uuid,
-      product: {
-        high_risk: true,
-        title: name,
-        price,
-        product_id,
-      },
       shipping: {
         type: "BOTH",
         line1,
-        state,
+        line2: "",
         city,
+        state,
         zip,
         country: "US",
         name: first_name,
         title: "Home",
+      },
+      product: {
+        high_risk: true,
+        title: name,
+        price: Number(price),
+        product_id,
+        sku: "D8-kUSH-GUM",
+        compare_at_price: 0,
+        handle: "delta-8-strawberry-gummies",
+        option1: "4-Pack",
+        option2: "",
+        option3: "",
+        weight: 0.1,
       },
       bump,
       high_risk,
