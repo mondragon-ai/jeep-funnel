@@ -1,6 +1,6 @@
 import { Field, useFormikContext, ErrorMessage } from "formik";
 
-const ProductRow = ({ name, price, piece, productId, data, id }) => {
+const ProductRow = ({ title, price_str, price_num, piece, product_id, id }) => {
   const { values, setFieldValue } = useFormikContext();
   return (
     <div id={id ? "BEST_DEAL" : ""} className="productrow">
@@ -8,21 +8,27 @@ const ProductRow = ({ name, price, piece, productId, data, id }) => {
         <Field
           type="checkbox"
           name="product"
-          checked={values.product === data}
+          checked={values.product?.product_id === product_id}
           onChange={(e) => {
-            setFieldValue("product", data);
+            setFieldValue("product", {
+              title,
+              price_str,
+              price_num,
+              piece,
+              product_id,
+            });
           }}
-          id={productId}
+          id={product_id}
         />
       </div>
       <div className="div-block-90">
         <div className="div-block-92">
-          <div className="productrowtitle">{name}</div>
+          <div className="productrowtitle">{title}</div>
           <div className="productrowsubheader">{piece}</div>
         </div>
       </div>
       <div className="div-block-91">
-        <div className="productrowsubheader">{price}</div>
+        <div className="productrowsubheader">{price_str}</div>
       </div>
       <ErrorMessage name="address" component="div" />
     </div>
