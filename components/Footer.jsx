@@ -62,21 +62,22 @@ function Footer({ home }) {
               target="_parent"
             >
               <span className="text-span-15 footer-a">Privacy Policy</span>
-              {" | "}
             </a>
+            {" | "}
             <a
               href="https://goingbigly.com/pages/terms-of-service"
               target="_parent"
             >
               <span className="text-span-13 footer-a">Terms of Service</span>
-              {" | "}
             </a>
+
+            {" | "}
             <a href="https://goingbigly.com/pages/contact-us" target="_parent">
               <span className="text-span-12 footer-a">Contact Us</span>
               <br />
             </a>
             <span className="text-span-11">
-              {` GoingBigly © 2021 - All Rights Reserved`}
+              {`GoingBigly © 2021 - All Rights Reserved`}
             </span>
           </p>
         </div>
