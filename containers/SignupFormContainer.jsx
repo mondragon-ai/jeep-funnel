@@ -1,10 +1,10 @@
 import { useState, useContext } from "react";
 import { imPoweredRequest } from "../lib/request";
 import SignupForm from "../components/SignupForm";
-import GlobalContext from "../context/globalContext";
+import { Context } from "../context";
 
 const SignupFormContainer = () => {
-  const [globalState, setGlobalState] = useContext(GlobalContext);
+  const [globalState, setGlobalState] = useContext(Context);
   const [isLoading, setIsLoading] = useState(false);
 
   const initialValues = {
