@@ -31,6 +31,7 @@ const SignupFormContainer = () => {
       payload
     );
     if (response) {
+      console.log({ payload, result: response.result });
       const { STRIPE_CLIENT_ID, id } = response.result;
       setGlobalState({
         ...globalState,

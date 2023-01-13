@@ -7,7 +7,11 @@ import IFrame from "../components/IFrame";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { sendPageViewEvent } from "../lib/analytics";
+<<<<<<< HEAD
 import { Context } from "../context";
+=======
+import GlobalContext from "../context/globalContext";
+>>>>>>> 74fa64e64a5816f45b95d554f1fd933455d7bff1
 
 const stripePromise = loadStripe(process.env.STRIPE_PUBLIC_KEY);
 
@@ -571,3 +575,8 @@ export default function Home() {
     </div>
   );
 }
+
+// export async function getServerSideProps({ req }) {
+//   sendPageViewEvent("OPT_IN");
+//   return { props: {} };
+// }

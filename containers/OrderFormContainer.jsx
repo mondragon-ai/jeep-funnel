@@ -4,7 +4,7 @@ import { useElements, useStripe } from "@stripe/react-stripe-js";
 import OrderForm from "../components/OrderForm";
 import { Context } from "../context";
 
-function OrderFormContainer() {
+const OrderFormContainer = () => {
   const stripe = useStripe();
   const elements = useElements();
   const [isLoading, setIsLoading] = useState(false);
@@ -65,7 +65,6 @@ function OrderFormContainer() {
 
   const fetchCustomerData = async (order) => {
     const payload = createPayloadFromOrder(order);
-
     // Make the request to the server to store the card after a successful submission
     const response = await imPoweredRequest(
       "POST",
@@ -146,6 +145,6 @@ function OrderFormContainer() {
       elements={elements}
     />
   );
-}
+};
 
 export default OrderFormContainer;
