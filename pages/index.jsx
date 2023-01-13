@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import SignupFormContainer from "../containers/SignupFormContainer";
 import OrderFormContainer from "../containers/OrderFormContainer";
 import Footer from "../components/Footer";
@@ -6,20 +6,40 @@ import MyImage from "../components/MyImage";
 import IFrame from "../components/IFrame";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
-import GlobalContext from "../context/globalContext";
+import { sendPageViewEvent } from "../lib/analytics";
+import { Context } from "../context";
 
 const stripePromise = loadStripe(process.env.STRIPE_PUBLIC_KEY);
 
 export default function Home() {
-  const [globalState] = useContext(GlobalContext);
+  const [viewItem, setViewItem] = useState(0);
+  const [globalState] = useContext(Context);
   const { clientSecret } = globalState;
+
+  useEffect(() => {
+    sendPageViewEvent("OPT_IN"); // send page view event to google analytics
+  }, []);
 
   const options = {
     clientSecret,
-    appearance: { theme: "stripe" },
+    // appearance: { theme: "stripe" },
+    style: {
+      base: {
+        fontSize: "16px",
+        fontWeight: "800",
+        color: "#424770",
+        letterSpacing: "0.025em",
+        fontFamily: "Source Code Pro, monospace",
+        "::placeholder": {
+          color: "#aab7c4",
+        },
+      },
+      invalid: {
+        color: "#9e2146",
+      },
+    },
   };
 
-  console.log({ globalState });
   return (
     <div className="body-4">
       <div className="section-2 wf-section">
@@ -274,11 +294,13 @@ export default function Home() {
           <div className="div-block-105">
             <div className="accordiancontainer">
               <div>
-                <div className="div-block-107">
+                <div className="div-block-107" onClick={() => setViewItem(0)}>
                   <h3 className="heading-31">HOW TO ENTER?</h3>
                   <h3 className="heading-31">🔍</h3>
                 </div>
-                <div className="div-block-108">
+                <div
+                  className={`div-block-108 ${viewItem === 0 ? "active" : ""}`}
+                >
                   <ul role="list" className="list-5">
                     <li className="accordianlist">
                       {`Our new giveaway promotion is LIVE...we giving away a
@@ -306,11 +328,13 @@ export default function Home() {
                 </div>
               </div>
               <div>
-                <div className="div-block-107">
+                <div className="div-block-107" onClick={() => setViewItem(1)}>
                   <h3 className="heading-31">Is This Legit?</h3>
                   <h3 className="heading-31">🔍</h3>
                 </div>
-                <div className="div-block-108 customeNone">
+                <div
+                  className={`div-block-108 ${viewItem === 1 ? "active" : ""}`}
+                >
                   <ul role="list" className="list-5">
                     <li className="accordianlist">
                       <span className="boldtext">Yeaahhhh!! </span> We are
@@ -326,13 +350,16 @@ export default function Home() {
                 </div>
               </div>
               <div>
-                <div className="div-block-107">
+                <div className="div-block-107" onClick={() => setViewItem(2)}>
                   <h3 className="heading-31 boldtext">
                     HOW IS THE WINNER SELECTED?
                   </h3>
                   <h3 className="heading-31">🔍</h3>
                 </div>
-                <div className="div-block-108 customeNone">
+
+                <div
+                  className={`div-block-108 ${viewItem === 2 ? "active" : ""}`}
+                >
                   <ul role="list" className="list-5">
                     <li className="accordianlist">
                       {`Winners are selected via a random computerized drawing
@@ -352,11 +379,13 @@ export default function Home() {
                 </div>
               </div>
               <div>
-                <div className="div-block-107">
+                <div className="div-block-107" onClick={() => setViewItem(3)}>
                   <h3 className="heading-31 boldtext">WHO IS BIGLY?</h3>
                   <h3 className="heading-31">🔍</h3>
                 </div>
-                <div className="div-block-108 customeNone">
+                <div
+                  className={`div-block-108 ${viewItem === 3 ? "active" : ""}`}
+                >
                   <ul role="list" className="list-5">
                     <li className="accordianlist">
                       {`Bigly is a Veteran-Owned small business that loves
@@ -379,13 +408,15 @@ export default function Home() {
                 </div>
               </div>
               <div>
-                <div className="div-block-107">
+                <div className="div-block-107" onClick={() => setViewItem(4)}>
                   <h3 className="heading-31">
                     {`WHAT IS THE HODGE TWINS/BIGLY VIP CLUB?`}
                   </h3>
                   <h3 className="heading-31">🔍</h3>
                 </div>
-                <div className="div-block-108 customeNone">
+                <div
+                  className={`div-block-108 ${viewItem === 4 ? "active" : ""}`}
+                >
                   <ul role="list" className="list-5">
                     <li className="accordianlist">
                       <a href="#TOP_OF_FORM">Learn More</a>
@@ -394,11 +425,13 @@ export default function Home() {
                 </div>
               </div>
               <div>
-                <div className="div-block-107">
+                <div className="div-block-107" onClick={() => setViewItem(5)}>
                   <h3 className="heading-31 boldtext">WHO IS BIGLY?</h3>
                   <h3 className="heading-31">🔍</h3>
                 </div>
-                <div className="div-block-108 customeNone">
+                <div
+                  className={`div-block-108 ${viewItem === 5 ? "active" : ""}`}
+                >
                   <ul role="list" className="list-5">
                     <li className="accordianlist">
                       {`Don't contact us unless there's a fire. Thanks. Just
