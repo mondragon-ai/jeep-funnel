@@ -1,36 +1,97 @@
+import { useState, useEffect, useContext } from "react";
+import Upsell_ListItem from "../components/Upsell_ListItem";
+import Footer from "../components/Footer";
+import { imPoweredRequest } from "../lib/request";
+import { Context } from "../context";
+import { sendPageViewEvent } from "../lib/analytics";
+
 const Upsell = () => {
-  // useEffect(() => {
-  //   if (!stripe) {
-  //     return;
-  //   }
+  const [message, setMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [showVIP, setShowVIP] = useState("");
+  const [globalState, setGlobalState] = useContext(Context);
+  const [clientOrigin, setClientOrigin] = useState("http://localhost:3000");
 
-  //   const clientSecret = new URLSearchParams(window.location.search).get(
-  //     "payment_intent_client_secret"
-  //   );
+  useEffect(() => {
+    sendPageViewEvent("UPSELL"); // send page view event to google analytics
+    setClientOrigin(window.location.origin); // set client origin
+    setTimeout(() => setMessage(""), 5000);
+  }, []);
 
-  //   console.log(" This is the clientSecret", clientSecret);
+  const signUpForFreeDecals = async () => {
+    try {
+      setIsLoading(true);
+      const payload = createPayloadFromOrder();
+      const response = await imPoweredRequest(
+        "POST",
+        "https://us-central1-impowered-funnel.cloudfunctions.net/funnel/payments/quick-sub",
+        payload
+      );
 
-  //   if (!clientSecret) {
-  //     return;
-  //   }
+      if (!response) {
+        throw new Error(
+          `We're sorry, you couldn't sign up. Please try refreshing the page and try again.`
+        );
+      }
 
-  //   stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
-  //     switch (paymentIntent.status) {
-  //       case "succeeded":
-  //         setMessage("Payment succeeded!");
-  //         break;
-  //       case "processing":
-  //         setMessage("Your payment is processing.");
-  //         break;
-  //       case "requires_payment_method":
-  //         setMessage("Your payment was not successful, please try again.");
-  //         break;
-  //       default:
-  //         setMessage("Something went wrong.");
-  //         break;
-  //     }
-  //   });
-  // }, [stripe]);
+      updateGlobalState(); // update global state
+
+      // if (response.ok) {
+      window.location.href = `${clientOrigin}/congratulations`;
+      // }
+    } catch (e) {
+      setMessage(e.message);
+      setTimeout(() => setMessage(""), 5000);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const declineFreeDecals = async () => {
+    setIsLoading(true);
+    window.location.href = "https://officialhodgetwins.com/";
+    setIsLoading(false);
+  };
+
+  const createPayloadFromOrder = () => {
+    try {
+      const { cus_uuid, high_risk, funnel_uuid } = globalState;
+      return {
+        cus_uuid,
+        product: {
+          high_risk: false,
+          title: "VIP Membership",
+          sku: "VIP-CLUB",
+          price: 4000,
+          compare_at_price: 0,
+          handle: "",
+          options1: "",
+          options2: "",
+          options3: "",
+          weight: 0,
+          variant_id: 42235971567788,
+          quantity: 1,
+        },
+        high_risk,
+        funnel_uuid,
+      };
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const updateGlobalState = () => {
+    setGlobalState({
+      ...globalState,
+      products: [
+        ...globalState.products,
+        { title: "VIP Membership", price_num: 4000 },
+      ],
+    });
+  };
+
+  const showVIPClubInfo = () => setShowVIP(!showVIP);
+
   return (
     <div>
       <div className="section-8 wf-section">
@@ -43,7 +104,7 @@ const Upsell = () => {
                 </div>
                 <div className="div-block-112">
                   <img
-                    src="images/progress2.png"
+                    src="/images/progress2.png"
                     loading="lazy"
                     sizes="(max-width: 479px) 37vw, (max-width: 767px) 38vw, (max-width: 991px) 291.1953125px, 376px"
                     srcSet="images/progress2.png 500w"
@@ -53,26 +114,32 @@ const Upsell = () => {
                 </div>
               </div>
               <div className="w-embed">
-                <style
-                  dangerouslySetInnerHTML={{
-                    __html:
-                      "\n                .progress-bar-container {\n                display: flex;\n                justify-content: center;\n                align-items: center;\n                text-align: center;\n                }\n                @keyframes animate-stripes {\n                    0% {\n                        background-position: 0 0;\n                    }\n                    100% {\n                        background-position: 60px 0;\n                    }\n                }\n                .progress-bar {\n                background-color: #dc0a0a;\n                height: 45px;\n                width: 100%;\n                max-width: 100%;\n                margin: 50px auto;\n                border-radius: 5px;\n                box-shadow: 0 1px 5px #000 inset, 0 1px 0 #444;\n                position: relative;\n                }\n                .stripes {\n                background-size: 30px 30px;\n                background-image: linear-gradient(\n                    225deg,\n                    rgba(255, 255, 255, .15) 25%,\n                    transparent 25%,\n                    transparent 50%,\n                    rgba(255, 255, 255, .15) 50%,\n                    rgba(255, 255, 255, .15) 75%,\n                    transparent 75%,\n                    transparent\n                );\n                }\n                .stripes.animated {\n                animation: animate-stripes 0.6s linear infinite;\n                }\n                .stripes.animated.slower {\n                animation-duration: 3s;\n                }\n                .stripes.reverse {\n                animation-direction: normal;\n                }\n                .progress-bar-inner {\n                display: block;\n                height: 45px;\n                width: 33%;\n                color: #000;\n                font-size: 19x;\n                font-weight: 700;\n                background-color: #fff;\n                border-radius: 3px;\n                box-shadow: 0 1px 0 rgba(255, 255, 255, .5) inset;\n                position: absolute;\n                right: 0;\n                padding-top: 13px;\n                }\n                @media all and (max-width: 360px) {\n                .progress-bar-inner {\n                    font-size: 13px;\n                    padding-top: 3px;\n                }\n                }\n            ",
-                  }}
-                />
-                <div>
-                  <div className="progress-bar-container">
-                    <div className="progress-bar stripes animated reverse slower">
-                      <span className="progress-bar-inner">
-                        Almost Complete...
-                      </span>
-                    </div>
+                <div className="progress-bar-container">
+                  <div className="progress-bar stripes animated reverse slower">
+                    <span className="progress-bar-inner">
+                      Almost Complete...
+                    </span>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+        {message && (
+          <div
+            id="payment-message"
+            style={{
+              color: "#00bcd4",
+              padding: 20,
+              textAlign: "center",
+              fontWeight: "bolder",
+            }}
+          >
+            {message}
+          </div>
+        )}
       </div>
+
       <div className="section-10 wf-section">
         <div className="w-container">
           <div className="div-block-59">
@@ -84,7 +151,7 @@ const Upsell = () => {
             </div>
             <div className="div-block-60">
               <img
-                src="images/divider-red.png"
+                src="/images/divider-red.png"
                 loading="lazy"
                 alt="Heading text divider"
                 className="image-14"
@@ -97,13 +164,19 @@ const Upsell = () => {
                 for just $9.00 and claim your FREE Decals below!
               </p>
             </div>
+
             <div className="div-block-88">
               <div className="accordion js-accordion">
                 <div className="accordion__item js-accordion-item active">
-                  <div className="accordion-header js-accordion-header">
-                    <strong>What is the Hodge Twins/Bigly VIP Club?</strong>
+                  <div
+                    className="accordion-header js-accordion-header"
+                    onClick={showVIPClubInfo}
+                  >
+                    <span style={{ fontSize: 14 }} className="boldtext">
+                      What is the Hodge Twins/Bigly VIP Club?
+                    </span>
                     <img
-                      src="images/1947308-200.png"
+                      src="/images/1947308-200.png"
                       loading="lazy"
                       alt="Bigly logo"
                       className
@@ -111,560 +184,245 @@ const Upsell = () => {
                       height={20}
                     />
                   </div>
-                  <div
-                    className="accordion-body js-accordion-body"
-                    style={{ overflow: "hidden" }}
-                  >
-                    <div className="accordion-body__contents">
-                      <div
-                        className="container fullContainer noTopMargin padding20-top padding20-bottom padding40H noBorder borderSolid border3px cornersAll radius0 shadow0 bgCover101 emptySection"
-                        id="section--44513"
-                        data-title="Section"
-                        data-block-color="0074C7"
-                        style={{
-                          paddingTop: "60px",
-                          paddingBottom: "100px",
-                          backgroundImage:
-                            'url(https://impowered-funnel.web.app/"//hodgetwins.goingbigly.com/hosted/images/e5/279a3dcd37421d9e7c426d7f1fd37b/bottom-bg2.jpg")',
-                          outline: "none",
-                        }}
-                        data-trigger="none"
-                        data-animate="fade"
-                        data-delay={500}
-                      >
-                        <div className="containerInner ui-sortable">
-                          <div
-                            className="row bgCover noBorder borderSolid border3px cornersAll radius0 shadow0 P0-top P0-bottom P0H noTopMargin"
-                            id="row-185"
-                            data-trigger="none"
-                            data-animate="fade"
-                            data-delay={500}
-                            data-title="1 column row"
-                            style={{
-                              paddingTop: "20px",
-                              paddingBottom: "20px",
-                              margin: "0px",
-                              outline: "none",
-                            }}
-                          >
+                  {showVIP && (
+                    <div
+                      className="accordion-body js-accordion-body"
+                      style={{ overflow: "hidden" }}
+                    >
+                      <div className="accordion-body__contents">
+                        <div
+                          className="container fullContainer noTopMargin padding20-top padding20-bottom padding40H noBorder borderSolid border3px cornersAll radius0 shadow0 bgCover101 emptySection"
+                          id="section--44513"
+                          style={{
+                            paddingTop: "60px",
+                            paddingBottom: "100px",
+                            backgroundImage: 'url("/images/bottom-bg2.jpg")',
+                            outline: "none",
+                          }}
+                        >
+                          <div className="containerInner ui-sortable">
                             <div
-                              id="col-full-111-127"
-                              className="col-md-12 innerContent col_left"
-                              data-col="full"
-                              data-trigger="none"
-                              data-animate="fade"
-                              data-delay={500}
-                              data-title="1st column"
-                              style={{ outline: "none" }}
+                              className="row bgCover noBorder borderSolid border3px cornersAll radius0 shadow0 P0-top P0-bottom P0H noTopMargin"
+                              id="row-185"
+                              style={{
+                                paddingTop: "20px",
+                                paddingBottom: "20px",
+                                margin: "0px",
+                                outline: "none",
+                              }}
                             >
                               <div
-                                className="col-inner bgCover  noBorder borderSolid border3px cornersAll radius0 shadow0 P0-top P0-bottom P0H noTopMargin"
-                                style={{ padding: "0 10px" }}
+                                id="col-full-111-127"
+                                className="col-md-12 innerContent col_left"
+                                style={{ outline: "none" }}
                               >
                                 <div
-                                  className="de elHeadlineWrapper ui-droppable de-editable"
-                                  id="tmp_headline1-58698-155"
-                                  data-de-type="headline"
-                                  data-de-editing="false"
-                                  data-title="headline"
-                                  data-ce="true"
-                                  data-trigger="none"
-                                  data-animate="fade"
-                                  data-delay={500}
-                                  data-google-font="Fjalla+One"
-                                  aria-disabled="false"
-                                >
-                                  <h1
-                                    className="ne elHeadline hsSize3 lh4 elMargin0 elBGStyle0 hsTextShadow0 mfs_40"
-                                    style={{
-                                      textAlign: "center",
-                                      fontSize: "62px",
-                                      color: "rgb(0, 0, 0)",
-                                      lineHeight: "65px",
-                                    }}
-                                    data-bold="inherit"
-                                    data-gramm="false"
-                                    contentEditable="false"
-                                  >
-                                    Hodge Twins/Bigly VIP Club&nbsp;
-                                  </h1>
-                                </div>
-                                <div
-                                  className="de elHeadlineWrapper ui-droppable de-editable"
-                                  id="headline-45583-176"
-                                  data-de-type="headline"
-                                  data-de-editing="false"
-                                  data-title="headline"
-                                  data-ce="true"
-                                  data-trigger="none"
-                                  data-animate="fade"
-                                  data-delay={500}
-                                  data-google-font="Fjalla+One"
-                                  aria-disabled="false"
-                                >
-                                  <h1
-                                    className="ne elHeadline hsSize3 lh4 elMargin0 elBGStyle0 hsTextShadow0 mfs_28"
-                                    style={{
-                                      textAlign: "center",
-                                      fontSize: "32px",
-                                      color: "rgb(0, 0, 0)",
-                                    }}
-                                    data-bold="inherit"
-                                    data-gramm="false"
-                                    contentEditable="false"
-                                  >
-                                    {`(This ain't your ordinary Membership Club)`}
-                                  </h1>
-                                </div>
-                                <div
-                                  className="de elHeadlineWrapper ui-droppable de-editable"
-                                  id="tmp_paragraph-12989-100"
-                                  data-de-type="headline"
-                                  data-de-editing="false"
-                                  data-title="Paragraph"
-                                  data-ce="true"
-                                  data-trigger="none"
-                                  data-animate="fade"
-                                  data-delay={500}
-                                  data-google-font="Open+Sans"
-                                  aria-disabled="false"
+                                  className="col-inner bgCover  noBorder borderSolid border3px cornersAll radius0 shadow0 P0-top P0-bottom P0H noTopMargin"
+                                  style={{ padding: "0 10px" }}
                                 >
                                   <div
-                                    className="ne elHeadline hsSize1 lh5 elMargin0 elBGStyle0 hsTextShadow0 mfs_18"
-                                    data-bold="inherit"
-                                    style={{
-                                      textAlign: "center",
-                                      color: "rgb(0, 0, 0)",
-                                      fontSize: "24px",
-                                    }}
-                                    data-gramm="false"
-                                    contentEditable="false"
+                                    className="de elHeadlineWrapper ui-droppable de-editable"
+                                    id="tmp_headline1-58698-155"
                                   >
-                                    We got tired of seeing other boring
-                                    Membership Clubs that only offer overpriced
-                                    junk, so we made something way cooler and
-                                    more affordable.
+                                    <h1
+                                      className="ne elHeadline hsSize3 lh4 elMargin0 elBGStyle0 hsTextShadow0 mfs_40"
+                                      style={{
+                                        textAlign: "center",
+                                        fontSize: "62px",
+                                        color: "rgb(0, 0, 0)",
+                                        lineHeight: "65px",
+                                      }}
+                                    >
+                                      Hodge Twins/Bigly VIP Club&nbsp;
+                                    </h1>
+                                  </div>
+                                  <div
+                                    className="de elHeadlineWrapper ui-droppable de-editable"
+                                    id="headline-45583-176"
+                                  >
+                                    <h1
+                                      className="ne elHeadline hsSize3 lh4 elMargin0 elBGStyle0 hsTextShadow0 mfs_28"
+                                      style={{
+                                        textAlign: "center",
+                                        fontSize: "32px",
+                                        color: "rgb(0, 0, 0)",
+                                      }}
+                                    >
+                                      {`(This ain't your ordinary Membership Club)`}
+                                    </h1>
+                                  </div>
+                                  <div
+                                    className="de elHeadlineWrapper ui-droppable de-editable"
+                                    id="tmp_paragraph-12989-100"
+                                  >
+                                    <div
+                                      className="ne elHeadline hsSize1 lh5 elMargin0 elBGStyle0 hsTextShadow0 mfs_18"
+                                      style={{
+                                        textAlign: "center",
+                                        color: "rgb(0, 0, 0)",
+                                        fontSize: "24px",
+                                      }}
+                                    >
+                                      We got tired of seeing other boring
+                                      Membership Clubs that only offer
+                                      overpriced junk, so we made something way
+                                      cooler and more affordable.
+                                    </div>
                                   </div>
                                 </div>
                               </div>
                             </div>
-                          </div>
-                          <div
-                            className="row bgCover noBorder borderSolid border3px cornersAll radius0 shadow0 P0-top P0-bottom P0H noTopMargin"
-                            id="row-110"
-                            data-trigger="none"
-                            data-animate="fade"
-                            data-delay={500}
-                            data-title="2 column row"
-                            style={{
-                              paddingTop: "20px",
-                              paddingBottom: "20px",
-                              margin: "0px",
-                              outline: "none",
-                            }}
-                          >
                             <div
-                              id="col-left-124-170"
-                              className="col-md-6 innerContent col_left ui-resizable"
-                              data-col="left"
-                              data-trigger="none"
-                              data-animate="fade"
-                              data-delay={500}
-                              data-title="1st column"
-                              style={{ outline: "none" }}
+                              className="row bgCover noBorder borderSolid border3px cornersAll radius0 shadow0 P0-top P0-bottom P0H noTopMargin"
+                              id="row-110"
+                              style={{
+                                paddingTop: "20px",
+                                paddingBottom: "20px",
+                                margin: "0px",
+                                outline: "none",
+                              }}
                             >
                               <div
-                                className="col-inner bgCover  noBorder borderSolid border3px cornersAll radius0 shadow0 P0-top P0-bottom P0H noTopMargin"
-                                style={{ padding: "0 10px" }}
+                                id="col-left-124-170"
+                                className="col-md-6 innerContent col_left ui-resizable"
+                                style={{ outline: "none" }}
                               >
                                 <div
-                                  className="de elHeadlineWrapper ui-droppable de-editable"
-                                  id="headline-66246-163"
-                                  data-de-type="headline"
-                                  data-de-editing="false"
-                                  data-title="Paragraph"
-                                  data-ce="true"
-                                  data-trigger="none"
-                                  data-animate="fade"
-                                  data-delay={500}
-                                  aria-disabled="false"
+                                  className="col-inner bgCover  noBorder borderSolid border3px cornersAll radius0 shadow0 P0-top P0-bottom P0H noTopMargin"
+                                  style={{ padding: "0 10px" }}
                                 >
                                   <div
-                                    className="ne elHeadline hsSize1 lh5 elMargin0 elBGStyle0 hsTextShadow0 mfs_18"
-                                    data-bold="inherit"
-                                    style={{
-                                      textAlign: "center",
-                                      color: "rgb(0, 0, 0)",
-                                      fontSize: "24px",
-                                      marginBottom: "2rem",
-                                    }}
-                                    data-gramm="false"
-                                    contentEditable="false"
+                                    className="de elHeadlineWrapper ui-droppable de-editable"
+                                    id="headline-66246-163"
                                   >
-                                    Become a member of the Hodge Twins/Bigly VIP
-                                    Club and receive exclusive Members-Only
-                                    monthly coupons, giveaways, discounts,
-                                    benefits, &amp; more! <br />
-                                    <br />
-                                    VIP Members receive double bonus entries (18
-                                    entries/month) into each giveaway as long as
-                                    you are an active member!
-                                    <br />
+                                    <div
+                                      className="ne elHeadline hsSize1 lh5 elMargin0 elBGStyle0 hsTextShadow0 mfs_18"
+                                      style={{
+                                        textAlign: "center",
+                                        color: "rgb(0, 0, 0)",
+                                        fontSize: "24px",
+                                        marginBottom: "2rem",
+                                      }}
+                                    >
+                                      Become a member of the Hodge Twins/Bigly
+                                      VIP Club and receive exclusive
+                                      Members-Only monthly coupons, giveaways,
+                                      discounts, benefits, &amp; more! <br />
+                                      <br />
+                                      VIP Members receive double bonus entries
+                                      (18 entries/month) into each giveaway as
+                                      long as you are an active member!
+                                      <br />
+                                    </div>
                                   </div>
-                                </div>
-                                <div
-                                  className="de elBullet elMargin0 ui-droppable mfs_18 de-editable"
-                                  id="tmp_list-47178-160"
-                                  data-de-type="list"
-                                  data-de-editing="false"
-                                  data-title="icon bullet list"
-                                  data-ce="true"
-                                  data-trigger="none"
-                                  data-animate="fade"
-                                  data-delay={500}
-                                  data-gramm="false"
-                                  aria-disabled="false"
-                                >
-                                  <ul
-                                    className="ne elBulletList elBulletListNew elBulletList2 listBorder0"
-                                    data-bold="inherit"
-                                    data-gramm="false"
-                                    contentEditable="false"
-                                    data-list-type="icon"
-                                  >
-                                    <li style={{ fontSize: "24px" }}>
-                                      <i
-                                        contentEditable="false"
-                                        className="fa-fw fas fa-circle"
-                                      />
-                                      <b>Monthly Coupons:</b>&nbsp;VIP Club
+
+                                  <Upsell_ListItem
+                                    text={`<b>Monthly Coupons:</b>&nbsp;VIP Club
                                       Members receive TWO free $10.00 coupons to
                                       use at OfficialHodgetwins.com &amp;
                                       GoBigly.com. That is a free $20.00 that we
-                                      send to you each month!
-                                    </li>
-                                  </ul>
-                                </div>
-                                <div
-                                  className="de elBullet elMargin0 ui-droppable mfs_18 de-editable"
-                                  id="list-11260-174"
-                                  data-de-type="list"
-                                  data-de-editing="false"
-                                  data-title="icon bullet list"
-                                  data-ce="true"
-                                  data-trigger="none"
-                                  data-animate="fade"
-                                  data-delay={500}
-                                  data-gramm="false"
-                                  aria-disabled="false"
-                                >
-                                  <ul
-                                    className="ne elBulletList elBulletListNew elBulletList2 listBorder0"
-                                    data-bold="inherit"
-                                    data-gramm="false"
-                                    contentEditable="false"
-                                    data-list-type="icon"
+                                      send to you each month!`}
                                   />
-                                </div>
-                                <div
-                                  className="de elBullet elMargin0 ui-droppable mfs_18 de-editable"
-                                  id="list-25169-152"
-                                  data-de-type="list"
-                                  data-de-editing="false"
-                                  data-title="icon bullet list"
-                                  data-ce="true"
-                                  data-trigger="none"
-                                  data-animate="fade"
-                                  data-delay={500}
-                                  data-gramm="false"
-                                  aria-disabled="false"
-                                >
-                                  <ul
-                                    className="ne elBulletList elBulletListNew elBulletList2 listBorder0"
-                                    data-bold="inherit"
-                                    data-gramm="false"
-                                    contentEditable="false"
-                                    data-list-type="icon"
-                                  />
-                                </div>
-                                <div
-                                  className="de elBullet elMargin0 ui-droppable mfs_18 de-editable"
-                                  id="list-89340"
-                                  data-de-type="list"
-                                  data-de-editing="false"
-                                  data-title="icon bullet list"
-                                  data-ce="true"
-                                  data-trigger="none"
-                                  data-animate="fade"
-                                  data-delay={500}
-                                  data-gramm="false"
-                                  aria-disabled="false"
-                                >
-                                  <ul
-                                    className="ne elBulletList elBulletListNew elBulletList2 listBorder0"
-                                    data-bold="inherit"
-                                    data-gramm="false"
-                                    contentEditable="false"
-                                    data-list-type="icon"
-                                  >
-                                    <li style={{ fontSize: "24px" }}>
-                                      <i
-                                        contentEditable="false"
-                                        className="fa-fw fas fa-circle"
-                                      />
-                                      <b>Members Only Giveaways:&nbsp;</b>Club
+
+                                  <Upsell_ListItem
+                                    text={` <b>Members Only Giveaways:&nbsp;</b>Club
                                       Members have a chance to win exclusive
-                                      Members-Only prizes each month!
-                                    </li>
-                                  </ul>
-                                </div>
-                                <div
-                                  className="de elBullet elMargin0 ui-droppable mfs_18 de-editable"
-                                  id="list-58548-117"
-                                  data-de-type="list"
-                                  data-de-editing="false"
-                                  data-title="icon bullet list"
-                                  data-ce="true"
-                                  data-trigger="none"
-                                  data-animate="fade"
-                                  data-delay={500}
-                                  data-gramm="false"
-                                  aria-disabled="false"
-                                >
-                                  <ul
-                                    className="ne elBulletList elBulletListNew elBulletList2 listBorder0"
-                                    data-bold="inherit"
-                                    data-gramm="false"
-                                    contentEditable="false"
-                                    data-list-type="icon"
-                                  >
-                                    <li style={{ fontSize: "24px" }}>
-                                      <i
-                                        contentEditable="false"
-                                        className="fa-fw fas fa-circle"
-                                      />
-                                      <b>Exclusive Discounts: </b>Get 20% OFF
-                                      storewide, no exceptions!&nbsp;
-                                    </li>
-                                  </ul>
-                                </div>
-                                <div
-                                  className="de elBullet elMargin0 ui-droppable mfs_18 de-editable"
-                                  id="list-33017"
-                                  data-de-type="list"
-                                  data-de-editing="false"
-                                  data-title="icon bullet list"
-                                  data-ce="true"
-                                  data-trigger="none"
-                                  data-animate="fade"
-                                  data-delay={500}
-                                  data-gramm="false"
-                                  aria-disabled="false"
-                                >
-                                  <ul
-                                    className="ne elBulletList elBulletListNew elBulletList2 listBorder0"
-                                    data-bold="inherit"
-                                    data-gramm="false"
-                                    contentEditable="false"
-                                    data-list-type="icon"
-                                  >
-                                    <li style={{ fontSize: "24px" }}>
-                                      <i
-                                        contentEditable="false"
-                                        className="fa-fw fas fa-circle"
-                                      />
-                                      <b>Double Bonus Entries:&nbsp;</b>Club
+                                      Members-Only prizes each month!`}
+                                  />
+
+                                  <Upsell_ListItem
+                                    text={`<b>Exclusive Discounts: </b>Get 20% OFF
+                                      storewide, no exceptions!&nbsp;`}
+                                  />
+
+                                  <Upsell_ListItem
+                                    text={`<b>Double Bonus Entries:&nbsp;</b>Club
                                       Members receive 18 entries per month into
                                       the current giveaway, as long as you are
-                                      an active member!
-                                    </li>
-                                  </ul>
-                                </div>
-                                <div
-                                  className="de elBullet elMargin0 ui-droppable mfs_18 de-editable"
-                                  id="list-24664"
-                                  data-de-type="list"
-                                  data-de-editing="false"
-                                  data-title="icon bullet list"
-                                  data-ce="true"
-                                  data-trigger="none"
-                                  data-animate="fade"
-                                  data-delay={500}
-                                  data-gramm="false"
-                                  aria-disabled="false"
-                                >
-                                  <ul
-                                    className="ne elBulletList elBulletListNew elBulletList2 listBorder0"
-                                    data-bold="inherit"
-                                    data-gramm="false"
-                                    contentEditable="false"
-                                    data-list-type="icon"
-                                  >
-                                    <li style={{ fontSize: "24px" }}>
-                                      <i
-                                        contentEditable="false"
-                                        className="fa-fw fas fa-circle"
-                                      />
-                                      <b>Exclusive Products: </b>Access
+                                      an active member!`}
+                                  />
+
+                                  <Upsell_ListItem
+                                    text={`<b>Exclusive Products: </b>Access
                                       exclusive products only available to Club
-                                      Members!
-                                    </li>
-                                  </ul>
-                                </div>
-                                <div
-                                  className="de elBullet elMargin0 ui-droppable mfs_18 de-editable"
-                                  id="list-70623-188"
-                                  data-de-type="list"
-                                  data-de-editing="false"
-                                  data-title="icon bullet list"
-                                  data-ce="true"
-                                  data-trigger="none"
-                                  data-animate="fade"
-                                  data-delay={500}
-                                  data-gramm="false"
-                                  aria-disabled="false"
-                                >
-                                  <ul
-                                    className="ne elBulletList elBulletListNew elBulletList2 listBorder0"
-                                    data-bold="inherit"
-                                    data-gramm="false"
-                                    contentEditable="false"
-                                    data-list-type="icon"
-                                  >
-                                    <li style={{ fontSize: "24px" }}>
-                                      <i
-                                        contentEditable="false"
-                                        className="fa-fw fas fa-circle"
-                                      />
-                                      <b>Free Shipping: </b>Members get free
-                                      shipping on all orders!
-                                    </li>
-                                  </ul>
-                                </div>
-                                <div
-                                  className="de elBullet elMargin0 ui-droppable mfs_18 de-editable"
-                                  id="list-91866-142"
-                                  data-de-type="list"
-                                  data-de-editing="false"
-                                  data-title="icon bullet list"
-                                  data-ce="true"
-                                  data-trigger="none"
-                                  data-animate="fade"
-                                  data-delay={500}
-                                  data-gramm="false"
-                                  aria-disabled="false"
-                                >
-                                  <ul
-                                    className="ne elBulletList elBulletListNew elBulletList2 listBorder0"
-                                    data-bold="inherit"
-                                    data-gramm="false"
-                                    contentEditable="false"
-                                    data-list-type="icon"
+                                      Members!`}
+                                  />
+
+                                  <Upsell_ListItem
+                                    text={`<b>Free Shipping: </b>Members get free
+                                      shipping on all orders!`}
                                   />
                                 </div>
                               </div>
-                            </div>
-                            <div
-                              id="col-right-136-130"
-                              className="col-md-6 innerContent col_right ui-resizable"
-                              data-col="right"
-                              data-trigger="none"
-                              data-animate="fade"
-                              data-delay={500}
-                              data-title="2nd column"
-                              style={{ outline: "none" }}
-                            >
                               <div
-                                className="col-inner bgCover  noBorder borderSolid border3px cornersAll radius0 shadow0 P0-top P0-bottom P0H noTopMargin"
-                                style={{ padding: "0 10px" }}
+                                id="col-right-136-130"
+                                className="col-md-6 innerContent col_right ui-resizable"
+                                style={{ outline: "none" }}
                               >
                                 <div
-                                  className="de elImageWrapper de-editable de-image-block elAlign_center elMargin0 hiddenElementTools ui-droppable"
-                                  id="tmp_image-95784"
-                                  data-de-type="img"
-                                  data-de-editing="false"
-                                  data-title="image"
-                                  data-ce="false"
-                                  data-trigger="none"
-                                  data-animate="fade"
-                                  data-delay={500}
-                                  style={{
-                                    marginTop: "30px",
-                                    outline: "none",
-                                    cursor: "pointer",
-                                  }}
-                                  aria-disabled="false"
+                                  className="col-inner bgCover  noBorder borderSolid border3px cornersAll radius0 shadow0 P0-top P0-bottom P0H noTopMargin"
+                                  style={{ padding: "0 10px" }}
                                 >
-                                  <img
-                                    src="https://hodgetwins.goingbigly.com/hosted/images/66/006445ed4040ee96c3d3216b53b343/club-banner-funnel-png-transparent.png"
-                                    className="elIMG ximg"
-                                    alt=""
-                                    data-src="//hodgetwins.goingbigly.com/hosted/images/66/006445ed4040ee96c3d3216b53b343/club-banner-funnel-png-transparent.png"
-                                    tabIndex={0}
-                                  />
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div
-                            className="row bgCover noBorder borderSolid border3px cornersAll radius0 shadow0 P0-top P0-bottom P0H noTopMargin"
-                            id="row-173"
-                            data-trigger="none"
-                            data-animate="fade"
-                            data-delay={500}
-                            data-title="1 column row"
-                            style={{
-                              paddingTop: "20px",
-                              paddingBottom: "10px",
-                              margin: "0px",
-                              outline: "none",
-                            }}
-                          >
-                            <div
-                              id="col-full-143-145"
-                              className="col-md-12 innerContent col_left"
-                              data-col="full"
-                              data-trigger="none"
-                              data-animate="fade"
-                              data-delay={500}
-                              data-title="1st column"
-                              style={{ outline: "none" }}
-                            >
-                              <div
-                                className="col-inner bgCover  noBorder borderSolid border3px cornersAll radius0 shadow0 P0-top P0-bottom P0H noTopMargin"
-                                style={{ padding: "0 10px" }}
-                              >
-                                <div
-                                  className="de elBTN elAlign_center elMargin0 ui-droppable de-editable"
-                                  id="button-93414"
-                                  data-de-type="button"
-                                  data-de-editing="false"
-                                  data-title="button"
-                                  data-ce="false"
-                                  data-trigger="none"
-                                  data-animate="fade"
-                                  data-delay={500}
-                                  data-elbuttontype={1}
-                                  data-google-font="Fjalla+One"
-                                  aria-disabled="false"
-                                >
-                                  <a
-                                    href="upsell.html#tmp_button-70655"
-                                    className="elButton elButtonSize1 elButtonColor1 elButtonRounded elButtonPadding2 elButtonFluid no-button-effect elBtnVP_00 elBtnHP_00 mfs_21 elButtonCorner3 elBTN_b_1 elButtonShadow3 elButtonTxtColor5"
+                                  <div
+                                    className="de elImageWrapper de-editable de-image-block elAlign_center elMargin0 hiddenElementTools ui-droppable"
+                                    id="tmp_image-95784"
                                     style={{
-                                      color: "rgb(255, 255, 255)",
-                                      fontWeight: 600,
-                                      backgroundColor: "rgb(220, 10, 10)",
-                                      fontSize: "34px",
+                                      marginTop: "30px",
+                                      outline: "none",
+                                      cursor: "pointer",
                                     }}
-                                    rel="noopener noreferrer"
-                                    id="undefined-619-229-76"
                                   >
-                                    <span className="elButtonMain">
-                                      Sign me up! I want to WIN!
-                                    </span>
-                                    <span className="elButtonSub" />
-                                  </a>
+                                    <img
+                                      src="/images/club-banner-funnel-png-transparent.png"
+                                      className="elIMG ximg"
+                                      alt=""
+                                      tabIndex={0}
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              className="row bgCover noBorder borderSolid border3px cornersAll radius0 shadow0 P0-top P0-bottom P0H noTopMargin"
+                              id="row-173"
+                              style={{
+                                paddingTop: "20px",
+                                paddingBottom: "10px",
+                                margin: "0px",
+                                outline: "none",
+                              }}
+                            >
+                              <div
+                                id="col-full-143-145"
+                                className="col-md-12 innerContent col_left"
+                                style={{ outline: "none" }}
+                              >
+                                <div
+                                  className="col-inner bgCover  noBorder borderSolid border3px cornersAll radius0 shadow0 P0-top P0-bottom P0H noTopMargin"
+                                  style={{ padding: "0 10px" }}
+                                >
+                                  <div
+                                    className="de elBTN elAlign_center elMargin0 ui-droppable de-editable"
+                                    id="button-93414"
+                                  >
+                                    <a
+                                      href="upsell.html#tmp_button-70655"
+                                      className="elButton elButtonSize1 elButtonColor1 elButtonRounded elButtonPadding2 elButtonFluid no-button-effect elBtnVP_00 elBtnHP_00 mfs_21 elButtonCorner3 elBTN_b_1 elButtonShadow3 elButtonTxtColor5"
+                                      style={{
+                                        color: "rgb(255, 255, 255)",
+                                        fontWeight: 600,
+                                        backgroundColor: "rgb(220, 10, 10)",
+                                        fontSize: "34px",
+                                      }}
+                                      rel="noopener noreferrer"
+                                      id="undefined-619-229-76"
+                                    >
+                                      <span className="elButtonMain">
+                                        Sign me up! I want to WIN!
+                                      </span>
+                                      <span className="elButtonSub" />
+                                    </a>
+                                  </div>
                                 </div>
                               </div>
                             </div>
@@ -672,12 +430,11 @@ const Upsell = () => {
                         </div>
                       </div>
                     </div>
-                  </div>
-                  {/* end of accordion body */}
+                  )}
                 </div>
-                {/* end of accordion item */}
               </div>
             </div>
+
             <div className="div-block-63">
               <div className="div-block-62">
                 <img
@@ -709,32 +466,30 @@ const Upsell = () => {
                   receive bonus entries, bonus giveaways, discounts, and
                   additional benefits/offers.
                 </p>
-                <div className>
-                  <style
-                    dangerouslySetInnerHTML={{
-                      __html:
-                        "\n  @keyframes rocking {\n    0% {\n      transform: rotate(0deg);\n    }\n    25% {\n      transform: rotate(0deg);\n    }\n    50% {\n      transform: rotate(2deg);\n    }\n    75% {\n      transform: rotate(-2deg);\n    }\n    100% {\n      transform: rotate(0deg);\n    }\n  }\n  .offer-button {\n    color: #fff;\n    background: #dc0a0a;\n    font-size: 16px;\n    font-weight: 700;\n    line-height: 1.25rem;\n    border: none;\n    border-radius: 60px;\n    padding: 15px 25px;\n    display: block;\n    width: 100%;\n    margin-right: auto;\n    margin-left: auto;\n    text-align: center;\n    animation: rocking 2s infinite;\n    animation-timing-function: cubic-bezier(0, 0, 0.58, 1);\n    transition: 0.2s;\n  }\n  .cart-icon {\n    fill: #fff;\n    color: #fff;\n    height: 20px;\n    width: 20px;\n    vertical-align: middle;\n    margin-right: 10px;\n  }\n  @media all and (max-width: 768px) {\n    .offer-button {\n      font-size: 14px;\n    }\n    .cart-icon {\n      height: 18px;\n      width: 18px;\n      margin-right: 7px;\n    }\n  }\n  @media all and (max-width: 360px) {\n    .offer-button {\n      font-size: 12px;\n      border-radius: 20px;\n    }\n    .cart-icon {\n      height: 16px;\n      width: 16px;\n      margin-right: 5px;\n    }\n  }\n",
-                    }}
-                  />
-                  <div className="button-wrapper">
-                    <div className="offer-button congratsBtn">
-                      <svg
-                        className="cart-icon"
-                        xmlns="http://www.w3.org/2000/svg"
-                        aria-hidden="true"
-                        role="img"
-                        width="1.19em"
-                        height="1em"
-                        preserveAspectRatio="xMidYMid meet"
-                        viewBox="0 0 1664 1408"
-                      >
-                        <path
-                          fill="currentColor"
-                          d="M1280 448q0-26-19-45t-45-19t-45 19l-147 146V256q0-26-19-45t-45-19t-45 19t-19 45v293L749 403q-19-19-45-19t-45 19t-19 45t19 45l256 256q19 19 45 19t45-19l256-256q19-19 19-45zm-640 832q0 53-37.5 90.5T512 1408t-90.5-37.5T384 1280t37.5-90.5T512 1152t90.5 37.5T640 1280zm896 0q0 53-37.5 90.5T1408 1408t-90.5-37.5t-37.5-90.5t37.5-90.5t90.5-37.5t90.5 37.5t37.5 90.5zm128-1088v512q0 24-16 42.5t-41 21.5L563 890q1 7 4.5 21.5t6 26.5t2.5 22q0 16-24 64h920q26 0 45 19t19 45t-19 45t-45 19H448q-26 0-45-19t-19-45q0-14 11-39.5t29.5-59.5t20.5-38L268 128H64q-26 0-45-19T0 64t19-45T64 0h256q16 0 28.5 6.5t20 15.5t13 24.5T389 73t5.5 29.5T399 128h1201q26 0 45 19t19 45z"
-                        />
-                      </svg>
-                      Yes! Claim my Free Decals and Sign me up!
-                    </div>
+                <div className="button-wrapper">
+                  <div
+                    className="offer-button congratsBtn"
+                    disabled={isLoading}
+                    onClick={signUpForFreeDecals}
+                  >
+                    <svg
+                      className="cart-icon"
+                      xmlns="http://www.w3.org/2000/svg"
+                      aria-hidden="true"
+                      role="img"
+                      width="1.19em"
+                      height="1em"
+                      preserveAspectRatio="xMidYMid meet"
+                      viewBox="0 0 1664 1408"
+                    >
+                      <path
+                        fill="currentColor"
+                        d="M1280 448q0-26-19-45t-45-19t-45 19l-147 146V256q0-26-19-45t-45-19t-45 19t-19 45v293L749 403q-19-19-45-19t-45 19t-19 45t19 45l256 256q19 19 45 19t45-19l256-256q19-19 19-45zm-640 832q0 53-37.5 90.5T512 1408t-90.5-37.5T384 1280t37.5-90.5T512 1152t90.5 37.5T640 1280zm896 0q0 53-37.5 90.5T1408 1408t-90.5-37.5t-37.5-90.5t37.5-90.5t90.5-37.5t90.5 37.5t37.5 90.5zm128-1088v512q0 24-16 42.5t-41 21.5L563 890q1 7 4.5 21.5t6 26.5t2.5 22q0 16-24 64h920q26 0 45 19t19 45t-19 45t-45 19H448q-26 0-45-19t-19-45q0-14 11-39.5t29.5-59.5t20.5-38L268 128H64q-26 0-45-19T0 64t19-45T64 0h256q16 0 28.5 6.5t20 15.5t13 24.5T389 73t5.5 29.5T399 128h1201q26 0 45 19t19 45z"
+                      />
+                    </svg>
+                    {isLoading
+                      ? `Loading . . .`
+                      : `Yes! Claim my Free Decals and Sign me up!`}
                   </div>
                 </div>
               </div>
@@ -742,18 +497,15 @@ const Upsell = () => {
           </div>
         </div>
       </div>
-      <div className="wf-section">
+      <div
+        className="wf-section"
+        style={{ background: "#fff", borderBottom: "1px solid red" }}
+      >
         <div className="w-container">
           <div className="div-block-65">
             <div className="html-embed-7 w-embed declineBtn">
-              <style
-                dangerouslySetInnerHTML={{
-                  __html:
-                    "\n  .decline-button {\n    font-size: 16px;\n    font-weight: 700;\n    line-height: 1rem;\n    border: 3px solid #141826;\n    color: #141826;\n    background: transparent;\n    text-decoration: none;\n    padding: 5px 15px;\n    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 20%);\n    border-radius: 6px;\n    margin-right: auto;\n    margin-left: auto;\n    display: inline-block;\n  }\n  .thumbs-down {\n    fill: #000;\n    color: #000;\n    height: 14px;\n    width: 14px;\n    vertical-align: middle;\n    margin-right: 5px;\n  }\n  @media all and (max-width: 768px) {\n    .decline-button {\n      font-size: 14px;\n    }\n  }\n  @media all and (max-width: 360px) {\n    .decline-button {\n      font-size: 12px;\n    }\n  }\n",
-                }}
-              />
               <div className="button-wrapper">
-                <div className="decline-button">
+                <div className="decline-button" onClick={declineFreeDecals}>
                   <svg
                     className="thumbs-down"
                     xmlns="http://www.w3.org/2000/svg"
@@ -773,50 +525,14 @@ const Upsell = () => {
           </div>
         </div>
       </div>
-      <div className="section-9 wf-section">
-        <div className="w-container">
-          <div className="div-block-55">
-            <div className="div-block-57 img-wrapper">
-              <img
-                src="images/bigly-logo.png"
-                loading="lazy"
-                alt="Bigly logo"
-                className="image-13"
-              />
-            </div>
-            <div>
-              <p className="paragraph-31">
-                <a
-                  href="https://goingbigly.com/pages/privacy-policy"
-                  target="_parent"
-                >
-                  <span className="text-span-21">Privacy Policy</span>
-                </a>{" "}
-                |{" "}
-                <a
-                  href="https://goingbigly.com/pages/terms-of-service"
-                  target="_parent"
-                >
-                  <span className="text-span-20 footer-a">
-                    Terms of Service
-                  </span>
-                </a>{" "}
-                |{" "}
-                <a
-                  href="https://goingbigly.com/pages/contact-us"
-                  target="_parent"
-                >
-                  <span className="text-span-19 footer-a">Contact Us</span>
-                  <br />‍
-                </a>
-                GoingBigly © 2021 - All Rights Reserved
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+      <Footer />
     </div>
   );
 };
 
 export default Upsell;
+
+export async function getServerSideProps({ req }) {
+  sendPageViewEvent("UPSELL");
+  return { props: {} };
+}
