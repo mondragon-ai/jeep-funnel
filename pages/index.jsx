@@ -7,7 +7,6 @@ import IFrame from "../components/IFrame";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { sendPageViewEvent } from "../lib/analytics";
-<<<<<<< HEAD
 import { Context } from "../context";
 =======
 import GlobalContext from "../context/globalContext";
