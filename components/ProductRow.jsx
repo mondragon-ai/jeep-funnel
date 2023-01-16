@@ -28,7 +28,7 @@ const ProductRow = ({ title, price_str, price_num, piece, product_id, id }) => {
         </div>
       </div>
       <div className="div-block-91">
-        <div className="productrowsubheader">{price_str}</div>
+        <div className="productrowsubheader">{price_str?.replace(/\s/g, '')}</div>
       </div>
       <ErrorMessage name="address" component="div" />
     </div>
