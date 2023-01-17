@@ -81,7 +81,12 @@ const SignupForm = ({ initialValues, handleSubmit, isLoading }) => {
               </div>
             </div>
           </div>
-          <button type="submit" id="FORM_ONE_BTN" className="funnelbtn">
+          <button
+            type="submit"
+            id="FORM_ONE_BTN"
+            className="funnelbtn"
+            disabled={isLoading}
+          >
             <h4 className="btntext">
               {isLoading ? "Loading . . ." : "ENTER NOW"}
             </h4>
