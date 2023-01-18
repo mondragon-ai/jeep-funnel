@@ -3,6 +3,7 @@ import Footer from "../components/Footer";
 import { sendPageViewEvent } from "../lib/analytics";
 import { Context } from "../context";
 import LoadProducts from "../components/LoadProducts";
+import Link from "next/link";
 
 const Congratulations = () => {
   const [globalState] = useContext(Context);
@@ -57,14 +58,14 @@ const Congratulations = () => {
                   {`Here's a FREE $5.00 OFF to officialhodgetwins.com`}
                 </strong>
               </div>
-              <a
+              <Link
                 href="https://officialhodgetwins.com/"
                 className="div-block-115"
               >
                 <div className="div-block-114">
                   <h2 className="heading-35">CLAIM MY FREE $5 OFF</h2>
                 </div>
-              </a>
+              </Link>
               <div className="text-block-10">
                 <strong className="bold-text-11">
                   *Offer ONLY VALID for 24 Hours
