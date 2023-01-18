@@ -4,6 +4,7 @@ import Footer from "../components/Footer";
 import { imPoweredRequest } from "../lib/request";
 import { Context } from "../context";
 import { sendPageViewEvent } from "../lib/analytics";
+import Router from "next/router";
 
 const Upsell = () => {
   const [message, setMessage] = useState("");
@@ -16,6 +17,16 @@ const Upsell = () => {
     sendPageViewEvent("UPSELL"); // send page view event to google analytics
     setClientOrigin(window.location.origin); // set client origin
     setTimeout(() => setMessage(""), 5000);
+
+    const query = new URLSearchParams(window.location.search);
+    setGlobalState({
+      ...globalState,
+      cus_uuid: query.get("cus_uuid") || globalState.cus_uuid || "",
+      funnel_uuid: query.get("funnel_uuid") || globalState.funnel_uuid || "",
+      products: JSON.parse(query.get("products")) || globalState.products || [],
+      high_risk: false,
+      bump: query.get("bump") || globalState.bump || false,
+    });
   }, []);
 
   const signUpForFreeDecals = async () => {
@@ -28,20 +39,18 @@ const Upsell = () => {
         payload
       );
 
-      if (!response) {
-        throw new Error(
-          `We're sorry, you couldn't sign up. Please try refreshing the page and try again.`
-        );
+      if (response.ok) {
+        updateGlobalState(); // update global state
+        Router.push(`${clientOrigin}/congratulations`);
+        return;
       }
 
-      updateGlobalState(); // update global state
-
-      // if (response.ok) {
-      window.location.href = `${clientOrigin}/congratulations`;
-      // }
+      throw new Error(
+        `We're sorry, you couldn't sign up. Please try refreshing the page and try again.`
+      );
     } catch (e) {
       setMessage(e.message);
-      setTimeout(() => setMessage(""), 5000);
+      setTimeout(() => setMessage(""), 10000);
     } finally {
       setIsLoading(false);
     }
@@ -49,7 +58,7 @@ const Upsell = () => {
 
   const declineFreeDecals = async () => {
     setIsLoading(true);
-    window.location.href = "https://officialhodgetwins.com/";
+    Router.push("https://officialhodgetwins.com/");
     setIsLoading(false);
   };
 
@@ -190,120 +199,30 @@ const Upsell = () => {
                       style={{ overflow: "hidden" }}
                     >
                       <div className="accordion-body__contents">
-                        <div
-                          className="container fullContainer noTopMargin padding20-top padding20-bottom padding40H noBorder borderSolid border3px cornersAll radius0 shadow0 bgCover101 emptySection"
-                          id="section--44513"
-                          style={{
-                            paddingTop: "60px",
-                            paddingBottom: "100px",
-                            backgroundImage: 'url("/images/bottom-bg2.jpg")',
-                            outline: "none",
-                          }}
-                        >
-                          <div className="containerInner ui-sortable">
-                            <div
-                              className="row bgCover noBorder borderSolid border3px cornersAll radius0 shadow0 P0-top P0-bottom P0H noTopMargin"
-                              id="row-185"
-                              style={{
-                                paddingTop: "20px",
-                                paddingBottom: "20px",
-                                margin: "0px",
-                                outline: "none",
-                              }}
-                            >
-                              <div
-                                id="col-full-111-127"
-                                className="col-md-12 innerContent col_left"
-                                style={{ outline: "none" }}
-                              >
-                                <div
-                                  className="col-inner bgCover  noBorder borderSolid border3px cornersAll radius0 shadow0 P0-top P0-bottom P0H noTopMargin"
-                                  style={{ padding: "0 10px" }}
-                                >
-                                  <div
-                                    className="de elHeadlineWrapper ui-droppable de-editable"
-                                    id="tmp_headline1-58698-155"
-                                  >
-                                    <h1
-                                      className="ne elHeadline hsSize3 lh4 elMargin0 elBGStyle0 hsTextShadow0 mfs_40"
-                                      style={{
-                                        textAlign: "center",
-                                        fontSize: "62px",
-                                        color: "rgb(0, 0, 0)",
-                                        lineHeight: "65px",
-                                      }}
-                                    >
-                                      Hodge Twins/Bigly VIP Club&nbsp;
-                                    </h1>
-                                  </div>
-                                  <div
-                                    className="de elHeadlineWrapper ui-droppable de-editable"
-                                    id="headline-45583-176"
-                                  >
-                                    <h1
-                                      className="ne elHeadline hsSize3 lh4 elMargin0 elBGStyle0 hsTextShadow0 mfs_28"
-                                      style={{
-                                        textAlign: "center",
-                                        fontSize: "32px",
-                                        color: "rgb(0, 0, 0)",
-                                      }}
-                                    >
-                                      {`(This ain't your ordinary Membership Club)`}
-                                    </h1>
-                                  </div>
-                                  <div
-                                    className="de elHeadlineWrapper ui-droppable de-editable"
-                                    id="tmp_paragraph-12989-100"
-                                  >
-                                    <div
-                                      className="ne elHeadline hsSize1 lh5 elMargin0 elBGStyle0 hsTextShadow0 mfs_18"
-                                      style={{
-                                        textAlign: "center",
-                                        color: "rgb(0, 0, 0)",
-                                        fontSize: "24px",
-                                      }}
-                                    >
-                                      We got tired of seeing other boring
-                                      Membership Clubs that only offer
-                                      overpriced junk, so we made something way
-                                      cooler and more affordable.
-                                    </div>
-                                  </div>
+                        <div className="section--44513">
+                          <div className="containerInner">
+                            <div className="row-185">
+                              <div className="col-full-111-127">
+                                <div className="tmp_headline1-58698-155">
+                                  <h1>Hodge Twins/Bigly VIP Club&nbsp;</h1>
+                                </div>
+                                <div className="headline-45583-176">
+                                  <h1>
+                                    {`(This ain't your ordinary Membership Club)`}
+                                  </h1>
+                                </div>
+                                <div className="tmp_paragraph-12989-100">
+                                  We got tired of seeing other boring Membership
+                                  Clubs that only offer overpriced junk, so we
+                                  made something way cooler and more affordable.
                                 </div>
                               </div>
                             </div>
-                            <div
-                              className="row bgCover noBorder borderSolid border3px cornersAll radius0 shadow0 P0-top P0-bottom P0H noTopMargin"
-                              id="row-110"
-                              style={{
-                                paddingTop: "20px",
-                                paddingBottom: "20px",
-                                margin: "0px",
-                                outline: "none",
-                              }}
-                            >
-                              <div
-                                id="col-left-124-170"
-                                className="col-md-6 innerContent col_left ui-resizable"
-                                style={{ outline: "none" }}
-                              >
-                                <div
-                                  className="col-inner bgCover  noBorder borderSolid border3px cornersAll radius0 shadow0 P0-top P0-bottom P0H noTopMargin"
-                                  style={{ padding: "0 10px" }}
-                                >
-                                  <div
-                                    className="de elHeadlineWrapper ui-droppable de-editable"
-                                    id="headline-66246-163"
-                                  >
-                                    <div
-                                      className="ne elHeadline hsSize1 lh5 elMargin0 elBGStyle0 hsTextShadow0 mfs_18"
-                                      style={{
-                                        textAlign: "center",
-                                        color: "rgb(0, 0, 0)",
-                                        fontSize: "24px",
-                                        marginBottom: "2rem",
-                                      }}
-                                    >
+                            <div className="row-185 ">
+                              <div>
+                                <div style={{ padding: "0 10px" }}>
+                                  <div>
+                                    <div className="headline-66246-163">
                                       Become a member of the Hodge Twins/Bigly
                                       VIP Club and receive exclusive
                                       Members-Only monthly coupons, giveaways,
@@ -356,15 +275,10 @@ const Upsell = () => {
                               </div>
                               <div
                                 id="col-right-136-130"
-                                className="col-md-6 innerContent col_right ui-resizable"
                                 style={{ outline: "none" }}
                               >
-                                <div
-                                  className="col-inner bgCover  noBorder borderSolid border3px cornersAll radius0 shadow0 P0-top P0-bottom P0H noTopMargin"
-                                  style={{ padding: "0 10px" }}
-                                >
+                                <div style={{ padding: "0 10px" }}>
                                   <div
-                                    className="de elImageWrapper de-editable de-image-block elAlign_center elMargin0 hiddenElementTools ui-droppable"
                                     id="tmp_image-95784"
                                     style={{
                                       marginTop: "30px",
@@ -383,7 +297,6 @@ const Upsell = () => {
                               </div>
                             </div>
                             <div
-                              className="row bgCover noBorder borderSolid border3px cornersAll radius0 shadow0 P0-top P0-bottom P0H noTopMargin"
                               id="row-173"
                               style={{
                                 paddingTop: "20px",
@@ -394,28 +307,14 @@ const Upsell = () => {
                             >
                               <div
                                 id="col-full-143-145"
-                                className="col-md-12 innerContent col_left"
                                 style={{ outline: "none" }}
                               >
-                                <div
-                                  className="col-inner bgCover  noBorder borderSolid border3px cornersAll radius0 shadow0 P0-top P0-bottom P0H noTopMargin"
-                                  style={{ padding: "0 10px" }}
-                                >
-                                  <div
-                                    className="de elBTN elAlign_center elMargin0 ui-droppable de-editable"
-                                    id="button-93414"
-                                  >
+                                <div style={{ padding: "0 10px" }}>
+                                  <div id="button-93414">
                                     <a
-                                      href="upsell.html#tmp_button-70655"
-                                      className="elButton elButtonSize1 elButtonColor1 elButtonRounded elButtonPadding2 elButtonFluid no-button-effect elBtnVP_00 elBtnHP_00 mfs_21 elButtonCorner3 elBTN_b_1 elButtonShadow3 elButtonTxtColor5"
-                                      style={{
-                                        color: "rgb(255, 255, 255)",
-                                        fontWeight: 600,
-                                        backgroundColor: "rgb(220, 10, 10)",
-                                        fontSize: "34px",
-                                      }}
+                                      href="#tmp_button-70655"
+                                      className="upsell_signup"
                                       rel="noopener noreferrer"
-                                      id="undefined-619-229-76"
                                     >
                                       <span className="elButtonMain">
                                         Sign me up! I want to WIN!
@@ -468,6 +367,7 @@ const Upsell = () => {
                 </p>
                 <div className="button-wrapper">
                   <div
+                    id="tmp_button-70655"
                     className="offer-button congratsBtn"
                     disabled={isLoading}
                     onClick={signUpForFreeDecals}
