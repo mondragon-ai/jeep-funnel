@@ -5,6 +5,7 @@ import ProductRow from "./ProductRow";
 import { PaymentElement } from "@stripe/react-stripe-js";
 import AddressInput from "./AddressInput";
 import MyImage from "./MyImage";
+import SquareCard from "./SquareCard";
 
 const validationSchema = Yup.object().shape({
   shipping: Yup.object().shape({
@@ -19,14 +20,16 @@ const validationSchema = Yup.object().shape({
 function OrderForm({
   initialValues,
   handleSubmit,
+  handlePaymentMethodSubmission,
+  status,
   isLoading,
   message,
   stripe,
   elements,
+  // paymentType,
+  // setPaymentType,
+  high_risk,
 }) {
-  const paymentElementOptions = {
-    layout: "tabs",
-  };
   return (
     <div className="formcard" id="FORM_TWO">
       <div className="imgblock">
@@ -96,15 +99,45 @@ function OrderForm({
               </div>
               <div className="div-block-94" />
             </div>
+            {/* <div className="div-block-37 payment-methods">
+              <div
+                className={
+                  paymentType === "stripe"
+                    ? "payment-btn-active"
+                    : "payment-btn-inactive"
+                }
+                onClick={() => setPaymentType("stripe")}
+              >
+                Stripe
+              </div>
+              <div
+                className={
+                  paymentType === "square"
+                    ? "payment-btn-active"
+                    : "payment-btn-inactive"
+                }
+                onClick={() => setPaymentType("square")}
+              >
+                Square
+              </div>
+            </div> */}
+
             <div id="payment-form">
               <div className="div-block-98">
-                <div id="payment-element">
-                  {/*Stripe.js injects the Payment Element*/}
-                  <PaymentElement
-                    id="payment-element"
-                    options={paymentElementOptions}
-                  />
-                </div>
+                {high_risk ? (
+                  <div id="payment-element">
+                    <SquareCard
+                      handleSubmit={handlePaymentMethodSubmission}
+                      isLoading={isLoading}
+                      status={status}
+                    />
+                  </div>
+                ) : (
+                  <div id="payment-element">
+                    {/*Stripe.js injects the Payment Element*/}
+                    <PaymentElement id="payment-element" />
+                  </div>
+                )}
               </div>
               <div className="div-block-98">
                 <div className="div-block-96">
@@ -120,9 +153,11 @@ function OrderForm({
                     }}
                     className="productrow"
                   >
-                    <div className="boldtext">{values.product?.title}</div>
-                    <div className="productrowsubheader">
-                      {values.product?.price_str}
+                    <div className="boldtext productrowtitle">
+                      {values.product?.title}
+                    </div>
+                    <div className="productrowsubheader min">
+                      {values.product?.price_str?.replace(/\s/g, "")}
                     </div>
                   </div>
                   {values.bump && (
@@ -134,8 +169,10 @@ function OrderForm({
                       }}
                       className="productrow"
                     >
-                      <div className="boldtext">Rush & Ensure My Order</div>
-                      <div className="productrowsubheader">$3.99</div>
+                      <div className="boldtext productrowtitle">
+                        Rush & Ensure My Order
+                      </div>
+                      <div className="productrowsubheader min">$3.99</div>
                     </div>
                   )}
                   <div className="div-block-99">
