@@ -28,7 +28,7 @@ function OrderForm({
   elements,
   // paymentType,
   // setPaymentType,
-  high_risk,
+  // high_risk,
 }) {
   return (
     <div className="formcard" id="FORM_TWO">
