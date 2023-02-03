@@ -11,10 +11,10 @@ function Layout({ children }) {
         <meta content="Home" property="twitter:title" />
         <meta content="width=device-width, initial-scale=1" name="viewport" />
         <meta content="Webflow" name="generator" />
-        <script
+        {/* <script
           src="https://sandbox.web.squarecdn.com/v1/square.js"
           async
-        ></script>
+        ></script> */}
         <link
           href="/images/favicon.ico"
           rel="shortcut icon"
