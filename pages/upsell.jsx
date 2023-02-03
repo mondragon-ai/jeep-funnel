@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import Upsell_ListItem from "../components/Upsell_ListItem";
+import MyImage from "../components/MyImage"
 import Footer from "../components/Footer";
 import { imPoweredRequest } from "../lib/request";
 import { Context } from "../context";
@@ -12,8 +12,10 @@ const Upsell = () => {
   const [showVIP, setShowVIP] = useState("");
   const [globalState, setGlobalState] = useContext(Context);
   const [clientOrigin, setClientOrigin] = useState("http://localhost:3000");
+  const [windowWidth, setWindowWidth] = useState(0);
 
   useEffect(() => {
+    setWindowWidth(window.innerWidth);
     sendPageViewEvent("UPSELL"); // send page view event to google analytics
     setClientOrigin(window.location.origin); // set client origin
     setTimeout(() => setMessage(""), 5000);
@@ -181,7 +183,7 @@ const Upsell = () => {
                     className="accordion-header js-accordion-header"
                     onClick={showVIPClubInfo}
                   >
-                    <span style={{ fontSize: 14 }} className="boldtext">
+                    <span style={{ fontSize: windowWidth > 720 ? "45px" : "18px", fontFamily: "Fjalla" }} className="boldtext">
                       What is the Hodge Twins/Bigly VIP Club?
                     </span>
                     <img
@@ -200,102 +202,168 @@ const Upsell = () => {
                     >
                       <div className="accordion-body__contents">
                         <div className="section--44513">
-                          <div className="containerInner">
+                          <div className="containerInner" style={{ borderRadius: "6px" }}>
                             <div className="row-185">
                               <div className="col-full-111-127">
                                 <div className="tmp_headline1-58698-155">
-                                  <h1>Hodge Twins/Bigly VIP Club&nbsp;</h1>
+                                  <h1 style={{ fontSize: windowWidth > 720 ? "45px" : "35px", lineHeight: windowWidth > 720 ? "45px" : "45px", fontFamily: "Fjalla",  }} >Hodge Twins/Bigly < br /> VIP Club</h1>
                                 </div>
                                 <div className="headline-45583-176">
                                   <h1>
                                     {`(This ain't your ordinary Membership Club)`}
                                   </h1>
                                 </div>
-                                <div className="tmp_paragraph-12989-100">
-                                  We got tired of seeing other boring Membership
-                                  Clubs that only offer overpriced junk, so we
-                                  made something way cooler and more affordable.
-                                </div>
                               </div>
                             </div>
-                            <div className="row-185 ">
-                              <div>
-                                <div style={{ padding: "0 10px" }}>
-                                  <div>
-                                    <div className="headline-66246-163">
-                                      Become a member of the Hodge Twins/Bigly
-                                      VIP Club and receive exclusive
-                                      Members-Only monthly coupons, giveaways,
-                                      discounts, benefits, &amp; more! <br />
-                                      <br />
-                                      VIP Members receive double bonus entries
-                                      (18 entries/month) into each giveaway as
-                                      long as you are an active member!
-                                      <br />
-                                    </div>
-                                  </div>
 
-                                  <Upsell_ListItem
-                                    text={`<b>Monthly Coupons:</b>&nbsp;VIP Club
-                                      Members receive TWO free $10.00 coupons to
-                                      use at OfficialHodgetwins.com &amp;
-                                      GoBigly.com. That is a free $20.00 that we
-                                      send to you each month!`}
-                                  />
+                            <div style={{
+                              display: "flex",
+                              flexDirection: windowWidth > 720 ? "row" : "column",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              width: "100%"
+                            }}>
+                              <div style={{
+                                display: "flex",
+                                flexDirection: "column",
+                                justifyContent: "flex-start",
+                                alignItems: "center",
+                                textAlign: "center",
+                                width: "300px",
+                              }}>
 
-                                  <Upsell_ListItem
-                                    text={` <b>Members Only Giveaways:&nbsp;</b>Club
-                                      Members have a chance to win exclusive
-                                      Members-Only prizes each month!`}
-                                  />
-
-                                  <Upsell_ListItem
-                                    text={`<b>Exclusive Discounts: </b>Get 20% OFF
-                                      storewide, no exceptions!&nbsp;`}
-                                  />
-
-                                  <Upsell_ListItem
-                                    text={`<b>Double Bonus Entries:&nbsp;</b>Club
-                                      Members receive 18 entries per month into
-                                      the current giveaway, as long as you are
-                                      an active member!`}
-                                  />
-
-                                  <Upsell_ListItem
-                                    text={`<b>Exclusive Products: </b>Access
-                                      exclusive products only available to Club
-                                      Members!`}
-                                  />
-
-                                  <Upsell_ListItem
-                                    text={`<b>Free Shipping: </b>Members get free
-                                      shipping on all orders!`}
-                                  />
+                                <div style={{
+                                  display: "flex",
+                                  flexDirection: "column",
+                                  justifyContent: "center",
+                                  height: "100px",
+                                  width: "100px",
+                                }}>
+                                  <MyImage src={"https://hodgetwins.goingbigly.com/hosted/images/d1/09d9b098c740b28b727b900bcb99b6/Coins.png"} />
                                 </div>
+                                <h3 style={{
+                                  fontSize: "20px",
+                                  padding: "0 2rem",}}>Monthly <br />Member Credits</h3>
                               </div>
-                              <div
-                                id="col-right-136-130"
-                                style={{ outline: "none" }}
-                              >
-                                <div style={{ padding: "0 10px" }}>
-                                  <div
-                                    id="tmp_image-95784"
-                                    style={{
-                                      marginTop: "30px",
-                                      outline: "none",
-                                      cursor: "pointer",
-                                    }}
-                                  >
-                                    <img
-                                      src="/images/club-banner-funnel-png-transparent.png"
-                                      className="elIMG ximg"
-                                      alt=""
-                                      tabIndex={0}
-                                    />
-                                  </div>
+
+                              <div style={{
+                                display: "flex",
+                                flexDirection: "column",
+                                justifyContent: "flex-start",
+                                alignItems: "center",
+                                width: "300px",
+                                textAlign: "center",
+                                padding: "0 2rem",
+                              }}>
+
+                                <div style={{
+                                  display: "flex",
+                                  flexDirection: "column",
+                                  justifyContent: "center",
+                                  height: "100px",
+                                  width: "100px",
+                                }}>
+                                  <MyImage src={"https://hodgetwins.goingbigly.com/hosted/images/dc/5821281242414c9c54cf107ac9a173/Winner.png"} />
                                 </div>
+                                <h3 style={{fontSize: "20px"}}>Automatic DOUBLE Entries into ALL Giveaways</h3>
                               </div>
+
+                              <div style={{
+                                display: "flex",
+                                flexDirection: "column",
+                                justifyContent: "flex-start",
+                                alignItems: "center",
+                                width: "300px",
+                                textAlign: "center",
+                                padding: "0 2rem",
+                              }}>
+
+                                <div style={{
+                                  display: "flex",
+                                  flexDirection: "column",
+                                  justifyContent: "center",
+                                  height: "100px",
+                                  width: "100px",
+                                }}>
+                                  <MyImage src={"https://hodgetwins.goingbigly.com/hosted/images/a7/16a9dc49e24f3eb88e8e70161f9ed7/Sale.png"} />
+                                </div>
+                                <h3 style={{fontSize: "20px"}}>Hodgetwins Gear at the Best Prices</h3>
+                              </div>
+
+                              <div style={{
+                                display: "flex",
+                                flexDirection: "column",
+                                justifyContent: "flex-start",
+                                alignItems: "center",
+                                width: "300px",
+                                textAlign: "center",
+                              }}>
+
+                                <div style={{
+                                  display: "flex",
+                                  flexDirection: "column",
+                                  justifyContent: "center",
+                                  height: "100px",
+                                  width: "100px",
+                                }}>
+                                  <MyImage src={"https://hodgetwins.goingbigly.com/hosted/images/62/360aa636b541ff8fca64a957b49400/VIPexclusive.png"} />
+                                </div>
+                                <h3 style={{fontSize: "20px"}}>#Exclusive Monthly VIP-ONLY Giveaways</h3>
+                              </div>
+
+                              <div style={{
+                                display: "flex",
+                                flexDirection: "column",
+                                justifyContent: "flex-start",
+                                alignItems: "center",
+                                width: "300px",
+                                textAlign: "center",
+                                padding: "0 2rem",
+                              }}>
+
+                                <div style={{
+                                  display: "flex",
+                                  flexDirection: "column",
+                                  justifyContent: "center",
+                                  height: "100px",
+                                  width: "100px",
+                                }}>
+                                  <MyImage src={"https://hodgetwins.goingbigly.com/hosted/images/6d/0c3cec709647df8bb8b4372d104f5b/Exclusive.png"} />
+                                </div>
+                                <h3 style={{fontSize: "20px"}}>Early Access to Products, Promos, and Giveaways</h3>
+                              </div>
+
+                              <div style={{
+                                display: "flex",
+                                flexDirection: "column",
+                                justifyContent: "flex-start",
+                                alignItems: "center",
+                                width: "300px",
+                                padding: "0 2rem",
+                                textAlign: "center",
+                              }}>
+
+                                <div style={{
+                                  display: "flex",
+                                  flexDirection: "column",
+                                  justifyContent: "center",
+                                  height: "100px",
+                                  width: "100px",
+                                }}>
+                                  <MyImage src={"https://hodgetwins.goingbigly.com/hosted/images/5b/3d058c28214449ac015923f85fd466/Calendar.png"} />
+                                </div>
+                                <h3 style={{fontSize: "20px"}}>Unlimited Skips</h3>
+                              </div>
+
                             </div>
+
+                          <div style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "center",
+                          }}>
+                            <MyImage src={"https://hodgetwins.goingbigly.com/hosted/images/86/7c101b9eb140fbae19453daa888e22/official-hodge-twins-4-.png"} />
+                          </div>
                             <div
                               id="row-173"
                               style={{
@@ -310,13 +378,24 @@ const Upsell = () => {
                                 style={{ outline: "none" }}
                               >
                                 <div style={{ padding: "0 10px" }}>
-                                  <div id="button-93414">
+                                  <div id="button-93414"  style={{
+                                    justifyContent: "center",
+                                    display: "flex"
+                                  }}>
                                     <a
                                       href="#tmp_button-70655"
                                       className="upsell_signup"
                                       rel="noopener noreferrer"
+                                      style={{
+                                        textDecoration: "none",
+                                        padding: "1.5rem 1rem",
+                                        borderRadius: "5px",
+                                      }}
                                     >
-                                      <span className="elButtonMain">
+                                      <span className="elButtonMain" 
+                                      style={{
+                                        fontFamily: "Fjalla",
+                                      }}>
                                         Sign me up! I want to WIN!
                                       </span>
                                       <span className="elButtonSub" />

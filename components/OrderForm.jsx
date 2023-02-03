@@ -154,7 +154,8 @@ function OrderForm({
                     className="productrow"
                   >
                     <div className="boldtext productrowtitle">
-                      {values.product?.title}
+                      <p>{values.product?.title}</p>
+                      <p style={{ fontSize: "10px", color: "grey" }}>{values.product?.piece}</p>
                     </div>
                     <div className="productrowsubheader min">
                       {values.product?.price_str?.replace(/\s/g, "")}
@@ -188,7 +189,7 @@ function OrderForm({
                       <div className="listheadertext o">
                         <strong>
                           Yes! <em>{`Rush & Insure`}</em>
-                          {` My Order for $3.99`}
+                          {` My Order for $3.99 `}
                         </strong>
                       </div>
                       <div>
@@ -197,6 +198,7 @@ function OrderForm({
                           loading="lazy"
                           alt=""
                           style={{
+                            marginLeft: "1rem",
                             WebkitTransform: "scaleX(-1)",
                             transform: "scaleX(-1)",
                           }}
@@ -207,7 +209,7 @@ function OrderForm({
                       <div className="text-block-6">
                         <strong>
                           Put me in the front of the shipping line & insure my
-                          order:
+                          order: 
                         </strong>
                         {` This will give your order priority in the fulfillment center
                   (There is a huge demand for these) as well as shipping
@@ -218,7 +220,10 @@ function OrderForm({
                   </div>
                 </div>
               </div>
-              <div className="text-block-7">
+              <div className="text-block-7" 
+                style={{
+                  margin: '1rem 0'
+                }}>
                 <em className="italic-text">
                   {`By clicking "Enter Now" below, I certify that I am 18 years of age
             or older, and agree to the GoingBigly.com`}
@@ -243,8 +248,11 @@ function OrderForm({
                 id="submit"
                 disabled={isLoading || !stripe || !elements || isSubmitting}
                 type="submit"
+                style={{
+                  fontFamily: "Fjalla"
+                }}
               >
-                {isLoading ? "Loading . . ." : "Submit"}
+                {isLoading ? "Loading . . ." : "ENTER NOW"}
               </button>
             </div>
           </Form>

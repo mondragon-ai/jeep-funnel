@@ -195,6 +195,16 @@ strong {
 dfn {
   font-style: italic;
 }
+@font-face {
+  font-family: "Fjalla";
+  src: url('../fonts/FjallaOne-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  /* font-family: 'Fjalla', sans-serif; */
+}
 /**
  * Address variable `h1` font-size and margin within `section` and `article`
  * contexts in Firefox 4+, Safari, and Chrome.
@@ -305,6 +315,7 @@ textarea {
  * Address `overflow` set to `hidden` in IE 8/9/10/11.
  */
 button {
+  font-family: 'Fjalla', sans-serif;
   overflow: visible;
 }
 /**
@@ -356,6 +367,13 @@ input::-moz-focus-inner {
 input {
   line-height: normal;
 }
+/* input:-internal-autofill-selected {
+  background-color: transparent !important;
+  appearance: menulist-button;
+  background-image: none !important;
+  background-color: none !important;
+  color: black !important;
+} */
 /**
  * It's recommended that you don't attempt to style these elements.
  * Firefox's implementation doesn't respect box-sizing, padding, or width.
@@ -2402,9 +2420,10 @@ img {
   padding-top: 40px;
   padding-bottom: 40px;
   background-color: #dc0a0a;
-  background-image: url("/images/faq-bg.jpg");
+  background-image: url("https://hodgetwins.goingbigly.com/hosted/images/1a/7681202d474dc7872c5239078a6b92/red-blackground.png");
   background-position: 50% 50%;
-  background-size: cover;
+  background-size:cover;
+  /* background-repeat: no-repeat; */
 }
 
 .div-block-11 {
@@ -6331,7 +6350,9 @@ img {
   display: block;
   width: 100%;
   max-width: 100%;
-  height: 35px;
+  height: 50px;
+  border-radius: 6px;
+  border: 1px solid rgb(215, 164, 164) !important;
   border: 0;
   background-color: #f2f2f2;
   border-radius: 6px;
@@ -6355,7 +6376,7 @@ img {
   background-color: rgba(255, 255, 255, 0);
   top: 2px;
   font-size: 10px;
-  /* height: 65px; */
+  height: 50px;
   width: 100%;
   padding: 0 10px;
   box-sizing: border-box;
@@ -6374,6 +6395,11 @@ img {
 .input-group input:focus,
 .input-group input:not(:placeholder-shown) {
   top: 8px;
+  /* border-radius: 6px;
+  background-color: #ffffff !important;
+  border-radius: 6px;
+  border: 1px solid rgb(215, 164, 164) !important; */
+  border-radius: 6px;
 }
 
 .input-group label {
@@ -6394,7 +6420,7 @@ img {
 
 .input-group input:focus + label,
 .input-group input:not(:placeholder-shown) + label {
-  top: -10px;
+  top: -15px;
   font-size: 10px;
   opacity: 0.7;
   bottom: auto;
@@ -6428,6 +6454,7 @@ img {
   z-index: 4;
   border: 1px solid #000;
   box-shadow: 0px 0px 9px rgb(0 0 0 / 57%);
+  padding: 10px 10px 10px 0;
 }
 
 #BEST_DEAL div {
@@ -6447,11 +6474,9 @@ img {
   padding-bottom: 0.5rem;
 }
 #BEST_DEAL:hover {
-  background-color: #001d3ab7;
   border-radius: 6px;
 }
 #BEST_DEAL:hover div {
-  color: rgba(255, 255, 255, 0.723);
 }
 
 .productcontainer .checkbox {
@@ -6739,7 +6764,9 @@ img {
 .section--44513 {
   padding-top: 60px;
   padding-bottom: 100px;
-  background-image: url("/images/bottom-bg2.jpg");
+  background: #A3C8D3;
+  border-radius: 6px;
+  /* background-image: url("/images/bottom-bg2.jpg"); */
 }
 
 /* CSS for containerInner */
@@ -6824,4 +6851,15 @@ img {
   width: 48%;
   border: 1px solid #d8d8d8; /* gray border */
   cursor: pointer;
+}
+
+
+.input-group input:-internal-autofill-selected {
+  
+  background-color: transparent !important;
+  /* appearance: menulist-button; */
+  background-image: #f2f2f2 !important;
+  background-color: #f2f2f2 !important;
+  background: #f2f2f2 !important;
+  color: black !important;
 }

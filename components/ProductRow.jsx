@@ -3,7 +3,7 @@ import { Field, useFormikContext, ErrorMessage } from "formik";
 const ProductRow = ({ title, price_str, price_num, piece, product_id, id }) => {
   const { values, setFieldValue } = useFormikContext();
   return (
-    <div id={id ? "BEST_DEAL" : ""} className="productrow">
+    <div id={id ? "BEST_DEAL" : ""} className="productrow" style={{cursor: "pointer"}}>
       <div className="checkbox">
         <Field
           type="checkbox"

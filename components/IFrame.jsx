@@ -4,7 +4,10 @@ const IFrame = ({
   title,
 }) => {
   return (
-    <div style={{ paddingTop: "56.17021276595745%" }} className={className}>
+    <div style={{
+      paddingTop: "56.17021276595745%",
+      borderRadius: "10px"}}
+      className={className}>
       <iframe
         src={`https://www.youtube.com/embed/${videoId}?rel=0&controls=1&autoplay=0&mute=0&start=0`}
         frameBorder={0}
@@ -15,6 +18,7 @@ const IFrame = ({
           width: "100%",
           height: "100%",
           pointerEvents: "auto",
+          borderRadius: "10px"
         }}
         allow="autoplay; encrypted-media"
         allowFullScreen

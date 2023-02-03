@@ -14,9 +14,17 @@ const validationSchema = Yup.object({
 
 const SignupForm = ({ initialValues, handleSubmit, isLoading }) => {
   return (
-    <div className="formcard" id="FORM_ONE">
+    <div className="formcard" id="FORM_ONE" 
+    style={{
+      background: "#CCCCCC",
+      border: " none",
+      boxShadow: "none",
+      width: "100%",
+      padding: "0",
+      marginBottom: "0"
+    }}>
       <div>
-        <MyImage src="/images/wtb-wb-dtom-decal.png" />
+        <MyImage src="https://hodgetwins.goingbigly.com/hosted/images/cc/192d9b9aae4dd8b528dee143eec444/wtb-wb-dtom-decal.png" />
       </div>
       <Formik
         initialValues={initialValues}
@@ -24,7 +32,13 @@ const SignupForm = ({ initialValues, handleSubmit, isLoading }) => {
         onSubmit={handleSubmit}
       >
         <Form>
-          <div className="div-block-37">
+          <div className="div-block-37"
+            style={{
+              background: "#fff",
+              border: " none",
+              width: "100%",
+              padding: "3rem 1rem 1rem 1rem"
+            }}>
             <div className="input-group">
               <Field
                 className="form-control"
@@ -36,15 +50,25 @@ const SignupForm = ({ initialValues, handleSubmit, isLoading }) => {
               <label htmlFor="first_name">First Name</label>
               <div className="req-mark">!</div>
             </div>
-            <div className="input-group">
+            <div className="input-group" 
+                style={{
+                  border: "1px solid black",
+                  height: "50px"
+                }}>
               <Field
                 className="form-control"
+                style={{
+                  height: "50px"
+                }}
                 type="text"
                 name="email"
                 id="email"
                 placeholder="Email"
               />
-              <label htmlFor="email">Email</label>
+              <label htmlFor="email" 
+                style={{
+                  borderRadius: "6px",
+                }}>Email</label>
               <div className="req-mark">!</div>
             </div>
             <div
@@ -66,7 +90,13 @@ const SignupForm = ({ initialValues, handleSubmit, isLoading }) => {
               style={{ fontSize: 14, margin: "10px 0" }}
             />
           </div>
-          <div className="checkboxtextcontainer">
+          <div className="checkboxtextcontainer" 
+            style={{
+              background: "#fff",
+              border: " none",
+              width: "100%",
+              padding: "1rem"
+            }}>
             <div className="checkbox">
               <Field
                 type="checkbox"
@@ -81,16 +111,31 @@ const SignupForm = ({ initialValues, handleSubmit, isLoading }) => {
               </div>
             </div>
           </div>
-          <button
-            type="submit"
-            id="FORM_ONE_BTN"
-            className="funnelbtn"
-            disabled={isLoading}
-          >
-            <h4 className="btntext">
-              {isLoading ? "Loading . . ." : "ENTER NOW"}
-            </h4>
-          </button>
+          <div style={{
+                width: "100%",
+                background: "white",
+                alignContent: "center",
+                justifyContent: "center",
+                display: "flex"
+              }}>
+            <button
+              type="submit"
+              id="FORM_ONE_BTN"
+              className="funnelbtn"
+              disabled={isLoading}
+              style={{
+                width: "95%",
+                fontFamily: "Fjalla"
+              }}
+            >
+              <h4 className="btntext" style={{
+                background: "transparent",
+                fontFamily: "Fjalla"
+                }}>
+                {isLoading ? "Loading . . ." : "ENTER NOW"}
+              </h4>
+            </button>
+          </div>
         </Form>
       </Formik>
     </div>
