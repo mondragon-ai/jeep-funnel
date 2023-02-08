@@ -744,7 +744,7 @@ export default function Home() {
               display: "flex",
               flexDirection: windowWidth > 720 ? "row" : "column",
               justifyContent: "center",
-              width: "80%"
+              width: windowWidth > 720 ? "80%" : '100%'
             }}>
               <div style={{
                 display: "flex",

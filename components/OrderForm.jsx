@@ -1,5 +1,5 @@
-import React from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import React, { useState } from "react";
+import { Formik, Form, Field, ErrorMessage, useFormikContext } from "formik";
 import * as Yup from "yup";
 import ProductRow from "./ProductRow";
 import { PaymentElement } from "@stripe/react-stripe-js";
@@ -30,6 +30,9 @@ function OrderForm({
   // setPaymentType,
   high_risk,
 }) {
+
+  const [bump, setBump] = useState();
+
   return (
     <div className="formcard" id="FORM_TWO">
       <div className="imgblock">
@@ -177,14 +180,26 @@ function OrderForm({
                     </div>
                   )}
                   <div className="div-block-99">
-                    <div className="div-block-100">
+                    <div 
+                        onClick={(e) => setBump(!bump)}
+                        className="div-block-100" 
+                        style={{
+                          cursor: "pointer"
+                        }}>
                       <div
                         style={{
                           minWidth: "25px",
                           padding: "4px 0",
+                          cursor: 'pointer'
                         }}
                       >
-                        <Field type="checkbox" name="bump" id="rush" />
+                        <Field
+                          type="checkbox"
+                          name="bump"
+                          id="rush"
+                          checked={bump}
+                          // onChange={(e) => setBump(!bump)}
+                        />
                       </div>
                       <div className="listheadertext o">
                         <strong>

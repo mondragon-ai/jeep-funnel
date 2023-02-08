@@ -1,9 +1,19 @@
 import { Field, useFormikContext, ErrorMessage } from "formik";
+import { useState } from "react";
 
 const ProductRow = ({ title, price_str, price_num, piece, product_id, id }) => {
   const { values, setFieldValue } = useFormikContext();
   return (
-    <div id={id ? "BEST_DEAL" : ""} className="productrow" style={{cursor: "pointer"}}>
+    <div id={id ? "BEST_DEAL" : ""} 
+      onClick={(e) => {
+        setFieldValue("product", {
+          title,
+          price_str,
+          price_num,
+          piece,
+          product_id,
+        });
+      }} className="productrow" style={{cursor: "pointer"}}>
       <div className="checkbox">
         <Field
           type="checkbox"

@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import { sendPageViewEvent } from "../lib/analytics";
 import { Context } from "../context";
@@ -7,8 +7,10 @@ import Link from "next/link";
 
 const Congratulations = () => {
   const [globalState] = useContext(Context);
+  const [windowWidth, setWindowWidth] = useState(0);
 
   useEffect(() => {
+    setWindowWidth(window.innerWidth);
     sendPageViewEvent("CONFIRMED"); // send page view event to google analytics
   }, []);
 
@@ -17,7 +19,15 @@ const Congratulations = () => {
       <div className="container-9 w-container">
         <div className="div-block-44">
           <h1 className="heading-20">
-            <strong className="bold-text-10">Congrats - Order Complete!</strong>
+            <strong className="bold-text-10" 
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              color: "#C31E25",
+              fontFamily: "'Fjalla'",
+            }}>Congrats - Order Complete!</strong>
           </h1>
           <div className="div-block-51">
             <div className="div-block-47 receipt-dividers">
@@ -35,7 +45,10 @@ const Congratulations = () => {
                   />
                 </svg>
               </div>
-              <h2 className="heading-21 receipt-headers">
+              <h2 className="heading-21 receipt-headers" 
+                style={{
+                  fontFamily: "'Fjalla'",
+                }}>
                 Your Product Receipt:
               </h2>
             </div>
@@ -48,13 +61,19 @@ const Congratulations = () => {
                   width={35}
                 />
               </div>
-              <h2 className="heading-21 receipt-headers">
+              <h2 className="heading-21 receipt-headers" 
+                style={{
+                  fontFamily: "'Fjalla'",
+                }}>
                 Thank you for supporting a Veteran Owned Business!
               </h2>
             </div>
             <div className="div-block-53">
               <div className="text-block-10">
-                <strong className="bold-text-11">
+                <strong className="bold-text-11" 
+                style={{
+                  fontFamily: "'Fjalla'",
+                }}>
                   {`Here's a FREE $5.00 OFF to officialhodgetwins.com`}
                 </strong>
               </div>
@@ -62,12 +81,22 @@ const Congratulations = () => {
                 href="https://officialhodgetwins.com/"
                 className="div-block-115"
               >
-                <div className="div-block-114">
-                  <h2 className="heading-35">CLAIM MY FREE $5 OFF</h2>
+                <div className="div-block-114" 
+                style={{
+                  background: "#C31E25",
+                }}>
+                  <h2 className="heading-35" 
+                style={{
+                  fontFamily: "'Fjalla'",
+                }}>CLAIM MY FREE $5 OFF</h2>
                 </div>
               </Link>
               <div className="text-block-10">
-                <strong className="bold-text-11">
+                <strong className="bold-text-11" 
+                  style={{
+                    fontFamily: "'Fjalla'",
+                    fontSize: windowWidth > 720 ? "" : "30px"
+                  }}>
                   *Offer ONLY VALID for 24 Hours
                   <br />
                 </strong>
@@ -88,7 +117,10 @@ const Congratulations = () => {
                   />
                 </svg>
               </div>
-              <h2 className="heading-21 receipt-headers">Our Guarantee:</h2>
+              <h2 className="heading-21 receipt-headers" 
+                style={{
+                  fontFamily: "'Fjalla'",
+                }}>Our Guarantee:</h2>
             </div>
             <div className="div-block-45">
               <div className="div-block-46">
@@ -101,7 +133,10 @@ const Congratulations = () => {
                   />
                 </div>
                 <div className="div-block-48">
-                  <h2 className="heading-22">No Questions Asked Guarantee</h2>
+                  <h2 className="heading-22" 
+                style={{
+                  fontFamily: "'Fjalla'",
+                }}>No Questions Asked Guarantee</h2>
                   <p className="paragraph-28">
                     {` Questions or concerns about your order? Reach out to our
                     team at info@shophodgetwins.com and we'll make sure you're

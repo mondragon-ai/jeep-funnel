@@ -24,7 +24,7 @@ const LoadProducts = ({ products }) => {
                 className="productrowsubheader final-product"
                 style={{ left: "auto" }}
               >
-                {product.price_str?.replace(/\s/g, "") || product.price_num}
+                {product.price_str?.replace(/\s/g, "") || numberFormat(Number(product.price_num)/100)}
               </div>
             </div>
           </div>
@@ -33,5 +33,22 @@ const LoadProducts = ({ products }) => {
     </div>
   );
 };
+
+export const numberFormat = (num) =>{
+  // return new Intl.NumberFormat('en-IN', {
+  //     style: 'currency',
+  //     currency: 'USD'
+  // }).format(value);
+  if (num < 1000) {
+      return "$" + num.toFixed(2);
+  } else if (num >= 1000 && num < 1000000) {
+      return "$" + (num/1000).toFixed(1) + "k";
+  } else if (num >= 1000000 && num < 1000000000) {
+      return "$" + (num/1000000).toFixed(1) + "M";
+  } else {
+      return "$" + (num/1000000000).toFixed(1) + "B";
+  }
+}
+
 
 export default LoadProducts;
