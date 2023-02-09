@@ -127,18 +127,26 @@ function OrderForm({
 
             <div id="payment-form">
               <div className="div-block-98">
-                {high_risk ? (
-                  <div id="payment-element">
-                    <SquareCard
-                      handleSubmit={handlePaymentMethodSubmission}
-                      isLoading={isLoading}
-                      status={status}
-                    />
-                  </div>
+                {high_risk ? ( null
+                  // <div id="payment-element">
+                  //   <SquareCard
+                  //     handleSubmit={handlePaymentMethodSubmission}
+                  //     isLoading={isLoading}
+                  //     status={status}
+                  //   />
+                  // </div>
                 ) : (
                   <div id="payment-element">
                     {/*Stripe.js injects the Payment Element*/}
-                    <PaymentElement id="payment-element" />
+                    <PaymentElement
+                      id="payment-element"
+                      options={{
+                        layout: "tabs",
+                        terms: {
+                          card: "never"
+                        },
+                      }}
+                      />
                   </div>
                 )}
               </div>
@@ -164,7 +172,7 @@ function OrderForm({
                       {values.product?.price_str?.replace(/\s/g, "")}
                     </div>
                   </div>
-                  {values.bump && (
+                  {bump && (
                     <div
                       style={{
                         displex: "flex",
@@ -199,15 +207,6 @@ function OrderForm({
                           id="rush"
                           checked={bump}
                           values={bump}
-                          onChange={(e) => {
-                            setFieldValue("product", {
-                              title,
-                              price_str,
-                              price_num,
-                              piece,
-                              product_id,
-                            });
-                          }}
                         />
                       </div>
                       <div className="listheadertext o">
