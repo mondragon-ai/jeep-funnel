@@ -182,18 +182,25 @@ const Upsell = () => {
                   <div
                     className="accordion-header js-accordion-header"
                     onClick={showVIPClubInfo}
+                    style={{
+                      padding: "15px 10px",
+                      justifyContent: "center",
+                      alignContent: "center",
+                      alignItems: "center",
+                      display: "flex"
+                    }}
                   >
                     <span style={{ fontSize: windowWidth > 720 ? "45px" : "18px", fontFamily: "Fjalla" }} className="boldtext">
                       What is the Hodge Twins/Bigly VIP Club?
                     </span>
-                    {/* <img
-                      src="/images/1947308-200.png"
+                    <img
+                      src="/images/plus-icon-13062.png"
                       loading="lazy"
                       alt="Bigly logo"
                       className
-                      width={20}
-                      height={20}
-                    /> */}
+                      width={windowWidth > 720 ? 40: 30}
+                      height={windowWidth > 720 ? 40: 30}
+                    />
                   </div>
                   {showVIP && (
                     <div
@@ -205,11 +212,11 @@ const Upsell = () => {
                           <div className="containerInner" style={{ borderRadius: "6px" }}>
                             <div className="row-185">
                               <div className="col-full-111-127">
-                                <div className="tmp_headline1-58698-155">
-                                  <h1 style={{ fontSize: windowWidth > 720 ? "45px" : "35px", lineHeight: windowWidth > 720 ? "45px" : "45px", fontFamily: "Fjalla",  }} >Hodge Twins/Bigly < br /> VIP Club</h1>
+                                <div className="" style={{textAlign: "center"}}>
+                                  <h1 style={{ fontSize: windowWidth > 720 ? "45px" : "35px", lineHeight: windowWidth > 720 ? "45px" : "35px", fontFamily: "Fjalla",  }} >Hodge Twins/Bigly < br /> VIP Club</h1>
                                 </div>
-                                <div className="headline-45583-176">
-                                  <h1>
+                                <div className="" style={{textAlign: "center"}}>
+                                  <h1 style={{ fontSize: windowWidth > 720 ? "45px" : "25px", lineHeight: windowWidth > 720 ? "45px" : "30px", fontFamily: "Fjalla",  }}>
                                     {`(This ain't your ordinary Membership Club)`}
                                   </h1>
                                 </div>
