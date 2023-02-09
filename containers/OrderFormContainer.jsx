@@ -37,6 +37,7 @@ const OrderFormContainer = () => {
       zip: "",
     },
     bump: true,
+    external: "SHOPIFY"
   };
 
   useEffect(() => {
@@ -205,6 +206,7 @@ const OrderFormContainer = () => {
       bump,
       high_risk,
       funnel_uuid,
+      external: "SHOPIFY"
     };
     return payload;
   };

@@ -13,6 +13,7 @@ export const ContextProvider = ({ children }) => {
     products: [],
     high_risk: false,
     bump: true,
+    external: "SHOPIFY"
   });
   useEffect(() => {
     const {
@@ -24,6 +25,7 @@ export const ContextProvider = ({ children }) => {
       products,
       high_risk,
       bump,
+      external
     } = getItem("funnel_data") || state;
     setState({
       first_name,
@@ -34,6 +36,7 @@ export const ContextProvider = ({ children }) => {
       products,
       high_risk,
       bump,
+      external
     });
   }, []);
 
