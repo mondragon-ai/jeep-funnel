@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { Formik, Form, Field, ErrorMessage, useFormikContext } from "formik";
+import React, { useEffect, useState } from "react";
+import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import ProductRow from "./ProductRow";
 import { PaymentElement } from "@stripe/react-stripe-js";
 import AddressInput from "./AddressInput";
 import MyImage from "./MyImage";
-import SquareCard from "./SquareCard";
+// import SquareCard from "./SquareCard";
 
 const validationSchema = Yup.object().shape({
   shipping: Yup.object().shape({
@@ -32,6 +32,11 @@ function OrderForm({
 }) {
 
   const [bump, setBump] = useState(true);
+  const [windowWidth, setWindowWidth] = useState(0);
+
+  useEffect(() => {
+    setWindowWidth(window.innerWidth);
+  }, [])
 
   return (
     <div className="formcard" id="FORM_TWO">
@@ -141,9 +146,32 @@ function OrderForm({
                     <PaymentElement
                       id="payment-element"
                       options={{
-                        layout: "tabs",
+                        wallets: {
+                          googlePay: "never"
+                        },
+                        layout: {
+                          type: "accordion",
+                          defaultCollapsed: true
+                        },
                         terms: {
                           card: "never"
+                        },
+                        
+                        style: {
+                          base: {
+                            color: "#32325d",
+                            fontSmoothing: "antialiased",
+                            fontSize: windowWidth > 720 ? "35px" : " 18px",
+                            lineHeight: windowWidth > 720 ? "85px" : "25px",
+                            fontFamily: 'Roboto, Open Sans, Segoe UI, sans-serif',
+                            "::placeholder": {
+                              color: "#ff5858"
+                            }
+                          },
+                          invalid: {
+                            color: "#fa755a",
+                            iconColor: "#fa755a",
+                          },
                         },
                       }}
                       />
