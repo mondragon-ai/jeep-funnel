@@ -36,7 +36,7 @@ const OrderFormContainer = () => {
       city: "",
       zip: "",
     },
-    bump: false,
+    bump: true,
   };
 
   useEffect(() => {
@@ -155,6 +155,7 @@ const OrderFormContainer = () => {
 
   const fetchCustomerData = async (order) => {
     const payload = createPayloadFromOrder(order);
+    console.log(payload)
     // Make the request to the server to store the card after a successful submission
     const response = await imPoweredRequest(
       "POST",

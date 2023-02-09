@@ -12,7 +12,7 @@ export const ContextProvider = ({ children }) => {
     funnel_uuid: "fun_7626c00357",
     products: [],
     high_risk: false,
-    bump: false,
+    bump: true,
   });
   useEffect(() => {
     const {

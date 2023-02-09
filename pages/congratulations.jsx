@@ -74,11 +74,11 @@ const Congratulations = () => {
                 style={{
                   fontFamily: "'Fjalla'",
                 }}>
-                  {`Here's a FREE $5.00 OFF to officialhodgetwins.com`}
+                  We appreciate and value feedback to bring you better products, soon
                 </strong>
               </div>
               <Link
-                href="https://officialhodgetwins.com/"
+                href="https://forms.gle/383V4sEDBLeaxYhy7"
                 className="div-block-115"
               >
                 <div className="div-block-114" 
@@ -88,7 +88,7 @@ const Congratulations = () => {
                   <h2 className="heading-35" 
                 style={{
                   fontFamily: "'Fjalla'",
-                }}>CLAIM MY FREE $5 OFF</h2>
+                }}>SHARE FEED BACK HERE</h2>
                 </div>
               </Link>
               <div className="text-block-10">
@@ -97,7 +97,8 @@ const Congratulations = () => {
                     fontFamily: "'Fjalla'",
                     fontSize: windowWidth > 720 ? "" : "30px"
                   }}>
-                  *Offer ONLY VALID for 24 Hours
+                  Thank you!
+                
                   <br />
                 </strong>
               </div>

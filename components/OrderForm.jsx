@@ -31,7 +31,7 @@ function OrderForm({
   high_risk,
 }) {
 
-  const [bump, setBump] = useState();
+  const [bump, setBump] = useState(true);
 
   return (
     <div className="formcard" id="FORM_TWO">
@@ -198,7 +198,16 @@ function OrderForm({
                           name="bump"
                           id="rush"
                           checked={bump}
-                          // onChange={(e) => setBump(!bump)}
+                          values={bump}
+                          onChange={(e) => {
+                            setFieldValue("product", {
+                              title,
+                              price_str,
+                              price_num,
+                              piece,
+                              product_id,
+                            });
+                          }}
                         />
                       </div>
                       <div className="listheadertext o">
