@@ -1,5 +1,10 @@
 import { Field, useFormikContext, ErrorMessage } from "formik";
+import Image from "next/image";
 import { useState } from "react";
+
+import wb from "../public/images/wb.png"
+import decal from "../public/images/decal.png"
+import ts from "../public/images/ts.png"
 
 const ProductRow = ({ title, price_str, price_num, piece, product_id, id, options1 }) => {
   const { values, setFieldValue } = useFormikContext();
@@ -14,7 +19,11 @@ const ProductRow = ({ title, price_str, price_num, piece, product_id, id, option
           product_id,
           options1
         });
-      }} className="productrow" style={{cursor: "pointer"}}>
+      }} className="productrow" style={{
+        cursor: "pointer",
+        height: "70px",
+        padding: "10px 0 0.5rem 0"
+      }}>
       <div className="checkbox">
         <Field
           type="checkbox"
@@ -35,8 +44,15 @@ const ProductRow = ({ title, price_str, price_num, piece, product_id, id, option
       </div>
       <div className="div-block-90">
         <div className="div-block-92">
-          <div className="productrowtitle">{options1}</div>
-          <div className="productrowsubheader">{piece}</div>
+          <div className="productrowtitle" style={{lineHeight: "12px", fontSize: "12px"}}>{title}</div>
+          <div className="productrowsubheader" style={{lineHeight: "15px", fontSize: "15px", width: "100%"}}>
+            <p style={{
+              lineHeight: id !== "BEST_DEAL" ?  "10px" : "",
+              fontSize: id !== "BEST_DEAL" ? "10px" : "",
+              width: "100%",
+              padding: "0 0 0.5rem 0"
+            }}>{piece}</p>
+          </div>
         </div>
       </div>
       <div className="div-block-91">

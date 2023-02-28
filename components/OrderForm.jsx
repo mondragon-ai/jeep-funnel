@@ -8,6 +8,7 @@ import AddressInput from "./AddressInput";
 import MyImage from "./MyImage";
 // import SquareCard from "./SquareCard";
 
+// import check_img from "../public/images/check.png"
 const validationSchema = Yup.object().shape({
   shipping: Yup.object().shape({
     line1: Yup.string().required("Address is required"),
@@ -43,7 +44,7 @@ function OrderForm({
   return (
     <div className="formcard" id="FORM_TWO">
       <div className="imgblock">
-        <MyImage src={"/images/decal-wb-patriot-bundle.png"} />
+        <MyImage src={"/images/EntryTickets.png"} />
       </div>
       <Formik
         initialValues={initialValues}
@@ -58,40 +59,49 @@ function OrderForm({
                 <div className="listheadertext">Price</div>
               </div>
               <ProductRow
-                title="(14 Giveaway Entries)"
-                price_str="$7.00 / pc"
+                title="Bronze Box (45 GIVEAWAY ENTRIES)"
+                price_str="$9.00 / pc"
                 price_num={4500}
-                piece="2 Products (1 Wristband/1 Decal)"
+                piece="$60 value in products"
                 product_id="42235971567788"
                 sku="HT-BOX"
                 options1="Bronze Entries ($60 Value)"
               />
               <ProductRow
-                title="(24 Giveaway Entries)"
-                price_str="$6.00 / pc"
+                title="Silver Box (60 GIVEAWAY ENTRIES)"
+                price_str="$8.50 / pc"
                 price_num={6000}
-                piece="4 Products (2 Wristbands/2 Decals) Save 15%"
+                piece="$85 value in products"
                 options1="Silver Entries ($85 Value)"
                 product_id="42235972780204"
               />
               <ProductRow
-                title="30 GIVEAWAY ENTRIES (BEST DEAL!!)"
-                price_str="$5.00 / pc"
+                title="Gold Box - 100 GIVEAWAY ENTRIES (BEST DEAL!!)"
+                price_str="$8.30 / pc"
                 price_num={10000}
-                piece="6 Products (3 Wristbands/3 Decals) Save 30%"
+                piece="$150 value in products"
                 product_id="42235974189228"
                 options1="Gold Entries ($150 Value)"
                 id="BEST_DEAL"
               />
               <ProductRow
-                title="(40 Giveaway Entries)"
-                price_str="$4.00 / pc"
+                title="Platinum Box (200 GIVEAWAY ENTRIES)"
+                price_str="$11.00 / pc"
                 price_num={20000}
-                piece="10 Products (5 Wristbands/5 Decals) Save 40%"
+                piece="$310 value in products"
                 options1="Platinum Entries ($310 Value)"
                 product_id="42235974877356"
               />
               <CustomSelect />
+            </div>
+            <div>
+              <h5>What You Get:</h5>
+              <ul style={{ listStyleImage: ""}}>
+                <li style={{ listStyleImage: `url(../public/images/check.png)`, margin: '0px 0', fontSize: "13px" }}>Bronze Box (45 Entries) = $60 in Products</li>
+                <li style={{ listStyleImage: `url(../public/images/check.png)`, margin: '0px 0', fontSize: "13px"  }}>Silver Box (60 Entries) = $85 in Products</li>
+                <li style={{ listStyleImage: `url(../public/images/check.png)`, margin: '0px 0', fontSize: "13px"  }}>Gold Box (100 Entries) = $150 in Products</li>
+                <li style={{ listStyleImage: `url(../public/images/check.png)`, margin: '0px 0', fontSize: "13px"  }}>Platinum Box (200 Entries) = $310 in Products</li>
+              </ul>
             </div>
             <div className="div-block-93">
               <div className="div-block-95">
@@ -197,11 +207,12 @@ function OrderForm({
                       displex: "flex",
                       justifyContent: "space-between",
                       padding: "10px 10px 10px 17px",
+                      height: "auto"
                     }}
                     className="productrow"
                   >
                     <div className="boldtext productrowtitle">
-                      <p>{values.product?.title}</p>
+                      {/* <p style={{ lineHeight: "15px", fontSize: "15px", color: "grey" }}>{values.product?.title}</p> */}
                       <p style={{ fontSize: "10px", color: "grey" }}>{values.product?.piece}</p>
                     </div>
                     <div className="productrowsubheader min">
@@ -214,6 +225,7 @@ function OrderForm({
                         displex: "flex",
                         justifyContent: "space-between",
                         padding: "10px 10px 10px 17px",
+                        height: "auto"
                       }}
                       className="productrow"
                     >

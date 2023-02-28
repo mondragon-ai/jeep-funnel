@@ -88,7 +88,7 @@ export default function Home() {
                       fontFamily: "'Fjalla'"
                     }}
                   >
-                    {`EVERY $1 SPENT = 5 ENTRIES`}
+                    {`EVERY $1 SPENT = 1 ENTRIES`}
                   </h4>
                   <h4 className="heading-34" style={{
                     textAlign: "center",

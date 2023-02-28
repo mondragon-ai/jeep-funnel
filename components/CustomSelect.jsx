@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 const CustomSelect = ({ title, price_str, price_num, piece, product_id, id }) => {
   const { values, setFieldValue } = useFormikContext();
-  const [size, setSize] = useState("");
+  const [size, setSize] = useState("M");
   const [windowWidth, setWindowWidth] = useState(0);
 
   useEffect(() => {
@@ -32,7 +32,7 @@ const CustomSelect = ({ title, price_str, price_num, piece, product_id, id }) =>
       <div
         style={{
             width:"100%",
-            padding: "40px 0 40px 0",
+            padding: "10px 0 40px 0",
             color: "black",
             fontSize: windowWidth > 720 ? "20px" : "15px",
             lineHeight: "20px"

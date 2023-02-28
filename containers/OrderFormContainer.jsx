@@ -27,9 +27,10 @@ const OrderFormContainer = () => {
       title: "Gold Entries ($150 Value) (BEST DEAL!!)",
       price_str: "$5.00 / pc",
       price_num: 5000,
-      piece: "6 Products (3 Wristbands/3 Decals) Save 30%",
+      piece: "$150 value in products",
       options1: "Gold Entries ($150 Value)",
-      options2: "M"
+      options2: "M",
+      product_id: "42235974189228"
     },
     shipping: {
       line1: "",

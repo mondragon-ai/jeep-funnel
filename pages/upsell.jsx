@@ -234,6 +234,7 @@ const Upsell = () => {
                                 display: "flex",
                                 flexDirection: windowWidth > 720 ? "row" : "column",
                                 justifyContent: "center",
+                                alignItems: windowWidth > 720 ?  "" : "center",
                                 width: windowWidth > 720 ? "80%" : '100%'
                               }}>
                                 <div style={{
@@ -430,9 +431,9 @@ const Upsell = () => {
             <div className="div-block-63">
               <div className="div-block-62">
                 <img
-                  src="images/patriot-pack-2.png"
+                  src="/images/wpc.jpg"
                   loading="lazy"
-                  srcSet="images/patriot-pack-2.png 500w"
+                  srcSet="/images/wpc.jpg 500w"
                   sizes="(max-width: 479px) 57vw, (max-width: 767px) 50vw, (max-width: 991px) 23vw, 24vw"
                   alt="Patriot decal pack"
                   className="image-15"
@@ -440,7 +441,7 @@ const Upsell = () => {
               </div>
               <div className="div-block-64">
                 <h3 className="heading-26">
-                  PATRIOT PACK - Decals (1 Of Each Style)
+                  Official White Privilege Card
                 </h3>
                 <p className="paragraph-34">
                   Patriot Pack Cost: <span className="text-span-28">FREE</span>
@@ -482,7 +483,7 @@ const Upsell = () => {
                     </svg>
                     {isLoading
                       ? `Loading . . .`
-                      : `Yes! Claim my Free Decals and Sign me up!`}
+                      : `Yes! Claim my Free Card and Sign me up!`}
                   </div>
                 </div>
               </div>
