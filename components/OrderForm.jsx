@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import ProductRow from "./ProductRow";
+import CustomSelect from "./CustomSelect"
 import { PaymentElement } from "@stripe/react-stripe-js";
 import AddressInput from "./AddressInput";
 import MyImage from "./MyImage";
@@ -38,6 +39,7 @@ function OrderForm({
     setWindowWidth(window.innerWidth);
   }, [])
 
+
   return (
     <div className="formcard" id="FORM_TWO">
       <div className="imgblock">
@@ -58,32 +60,38 @@ function OrderForm({
               <ProductRow
                 title="(14 Giveaway Entries)"
                 price_str="$7.00 / pc"
-                price_num={900}
+                price_num={4500}
                 piece="2 Products (1 Wristband/1 Decal)"
                 product_id="42235971567788"
+                sku="HT-BOX"
+                options1="Bronze Entries ($60 Value)"
               />
               <ProductRow
                 title="(24 Giveaway Entries)"
                 price_str="$6.00 / pc"
-                price_num={1200}
+                price_num={6000}
                 piece="4 Products (2 Wristbands/2 Decals) Save 15%"
+                options1="Silver Entries ($85 Value)"
                 product_id="42235972780204"
               />
               <ProductRow
                 title="30 GIVEAWAY ENTRIES (BEST DEAL!!)"
                 price_str="$5.00 / pc"
-                price_num={5000}
+                price_num={10000}
                 piece="6 Products (3 Wristbands/3 Decals) Save 30%"
                 product_id="42235974189228"
+                options1="Gold Entries ($150 Value)"
                 id="BEST_DEAL"
               />
               <ProductRow
                 title="(40 Giveaway Entries)"
                 price_str="$4.00 / pc"
-                price_num={1600}
+                price_num={20000}
                 piece="10 Products (5 Wristbands/5 Decals) Save 40%"
+                options1="Platinum Entries ($310 Value)"
                 product_id="42235974877356"
               />
+              <CustomSelect />
             </div>
             <div className="div-block-93">
               <div className="div-block-95">

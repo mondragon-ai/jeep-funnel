@@ -6,7 +6,10 @@ const IFrame = ({
   return (
     <div style={{
       paddingTop: "56.17021276595745%",
-      borderRadius: "10px"}}
+      borderRadius: "10px",
+      height: "600px",
+      padding: "1rem 0"
+    }}
       className={className}>
       <iframe
         src={`https://www.youtube.com/embed/${videoId}?rel=0&controls=1&autoplay=0&mute=0&start=0`}

@@ -1,7 +1,7 @@
 import { Field, useFormikContext, ErrorMessage } from "formik";
 import { useState } from "react";
 
-const ProductRow = ({ title, price_str, price_num, piece, product_id, id }) => {
+const ProductRow = ({ title, price_str, price_num, piece, product_id, id, options1 }) => {
   const { values, setFieldValue } = useFormikContext();
   return (
     <div id={id ? "BEST_DEAL" : ""} 
@@ -12,6 +12,7 @@ const ProductRow = ({ title, price_str, price_num, piece, product_id, id }) => {
           price_num,
           piece,
           product_id,
+          options1
         });
       }} className="productrow" style={{cursor: "pointer"}}>
       <div className="checkbox">
@@ -26,6 +27,7 @@ const ProductRow = ({ title, price_str, price_num, piece, product_id, id }) => {
               price_num,
               piece,
               product_id,
+              options1
             });
           }}
           id={product_id}
@@ -33,7 +35,7 @@ const ProductRow = ({ title, price_str, price_num, piece, product_id, id }) => {
       </div>
       <div className="div-block-90">
         <div className="div-block-92">
-          <div className="productrowtitle">{title}</div>
+          <div className="productrowtitle">{options1}</div>
           <div className="productrowsubheader">{piece}</div>
         </div>
       </div>

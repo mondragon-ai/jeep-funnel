@@ -1,9 +1,11 @@
 import { createContext, useEffect, useState } from "react";
+import { imPoweredRequest } from "../lib/request";
 import { getItem, saveItem } from "../lib/storage";
 
 export const Context = createContext({});
 
 export const ContextProvider = ({ children }) => {
+
   const [state, setState] = useState({
     first_name: "",
     email: "",
@@ -13,7 +15,8 @@ export const ContextProvider = ({ children }) => {
     products: [],
     high_risk: false,
     bump: true,
-    external: "SHOPIFY"
+    external: "SHOPIFY",
+    variants: []
   });
   useEffect(() => {
     const {
@@ -25,7 +28,8 @@ export const ContextProvider = ({ children }) => {
       products,
       high_risk,
       bump,
-      external
+      external,
+      variants
     } = getItem("funnel_data") || state;
     setState({
       first_name,
@@ -36,8 +40,23 @@ export const ContextProvider = ({ children }) => {
       products,
       high_risk,
       bump,
-      external
+      external,
+      variants
     });
+    async function fetchData() {
+      try {
+        const response = await imPoweredRequest("POST","https://us-central1-impowered-funnel.cloudfunctions.net/funnel/products", {
+          product_uuid: "pro_60d547e7d9"
+        })
+        const products = response.data.result;
+        if (products) {
+          setState({ ...state, variants: products[0].variants  });
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchData();
   }, []);
 
   const setGlobalState = (data) => {

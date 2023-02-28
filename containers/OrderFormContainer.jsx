@@ -24,11 +24,12 @@ const OrderFormContainer = () => {
 
   const initialValues = {
     product: {
-      title: "30 GIVEAWAY ENTRIES (BEST DEAL!!)",
+      title: "Gold Entries ($150 Value) (BEST DEAL!!)",
       price_str: "$5.00 / pc",
       price_num: 5000,
       piece: "6 Products (3 Wristbands/3 Decals) Save 30%",
-      product_id: "42235974189228",
+      options1: "Gold Entries ($150 Value)",
+      options2: "M"
     },
     shipping: {
       line1: "",
@@ -132,7 +133,33 @@ const OrderFormContainer = () => {
       setIsLoading(true);
 
       const updatedState = createNewState(values); // update global state with the order data
-      const queryString = objectToQueryString(updatedState); // get the query string from new state
+      console.log("ONSUBIMT")
+      console.log(updatedState);
+
+      let payload = {
+        bump: false,
+        clientSecret: "",
+        cus_uuid:"",
+        email: "",
+        external: "",
+        first_name: "",
+        funnel_uuid: "",
+        high_risk: false,
+        products: [],
+        ...updatedState
+      };
+
+      const queryString = objectToQueryString({
+        bump: payload.bump,
+        clientSecret: payload.clientSecret,
+        cus_uuid: payload.cus_uuid,
+        email: payload.email,
+        external: payload.external,
+        first_name: payload.first_name,
+        funnel_uuid: payload.funnel_uuid,
+        high_risk: payload.high_risk,
+        products: payload.products
+      }); // get the query string from new state
 
       setTimeout(() => {
         fetchCustomerData(values); // simulate a delay
@@ -173,8 +200,31 @@ const OrderFormContainer = () => {
   const createPayloadFromOrder = (order) => {
     const { product, shipping, bump } = order;
     const { line1, state, city, zip } = shipping;
-    const { title, price_num, product_id } = product;
-    const { cus_uuid, first_name, high_risk, funnel_uuid } = globalState;
+    const { title, price_num, product_id, product_sku, options1, options2, options3 } = product;
+    const { cus_uuid, first_name, high_risk, funnel_uuid, variants } = globalState;
+    let variant_list = [...variants];
+
+    let variant_id = "";
+    let variant = {
+      sku: "",
+      options1: "",
+      options2: "",
+      options3: "",
+      external_id: "",
+      price: "",
+      product_id: "",
+      weight: "",
+      high_risk: false
+    };
+
+    variant_list.filter((v)=> {
+      if (v.options1 == product.options1 && v.options2 == product.options2) {
+          console.log(v)
+          variant_id = v.variant_id;
+          variant = v
+          return false
+      } else {return true}
+    });
     const payload = {
       cus_uuid,
       shipping: {
@@ -189,19 +239,21 @@ const OrderFormContainer = () => {
         title: "Home",
       },
       product: {
-        high_risk: true,
+        high_risk: variant.high_risk ? variant.high_risk : false,
         title,
-        price: price_num,
-        product_id,
-        sku: "D8-kUSH-GUM",
+        price:  variant.price ? variant.price : 0,
+        product_id: variant.product_id ? variant.product_id : "",
+        sku: variant.sku ? variant.sku : "HT-BOX",
         compare_at_price: 0,
-        handle: "delta-8-strawberry-gummies",
-        option1: "4-Pack",
-        option2: "",
-        option3: "",
-        weight: 0.1,
-        variant_id: 42235971567788,
+        handle: String(title).toLocaleLowerCase().replaceAll(" ", "-"),
+        options1: variant.options1 ? variant.options1 : "",
+        options2: variant.options2 ? variant.options2 : "",
+        options3: variant.options3 ? variant.options3 : "",
+        weight: variant.weight ? ((variant.weight ) * 16 * 10) : 0,
+        variant_id: variant.external_type == "SHOPIFY" ? variant.external_id : variant_id ? variant_id : 7174179979436,
         quantity: 1,
+        external_id: variant.external_id,
+        external_type: variant.external_type,
       },
       bump,
       high_risk,
