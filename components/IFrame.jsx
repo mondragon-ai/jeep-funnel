@@ -1,13 +1,20 @@
+import { useEffect, useState } from "react";
+
 const IFrame = ({
   videoId,
   className = "w-embed-youtubevideo youtube-2",
   title,
 }) => {
+  const [windowWidth, setWindowWidth] = useState(0);
+
+  useEffect(() => {
+    setWindowWidth(window.innerWidth);
+  }, [])
   return (
     <div style={{
       paddingTop: "56.17021276595745%",
       borderRadius: "10px",
-      height: "600px",
+      height: windowWidth > 720 ? "500px" : "300px",
       padding: "1rem 0"
     }}
       className={className}>

@@ -60,7 +60,7 @@ function OrderForm({
               </div>
               <ProductRow
                 title="Bronze Box (45 GIVEAWAY ENTRIES)"
-                price_str="$9.00 / pc"
+                price_str="$45.00"
                 price_num={4500}
                 piece="$60 value in products"
                 product_id="42235971567788"
@@ -69,7 +69,7 @@ function OrderForm({
               />
               <ProductRow
                 title="Silver Box (60 GIVEAWAY ENTRIES)"
-                price_str="$8.50 / pc"
+                price_str="$60.00"
                 price_num={6000}
                 piece="$85 value in products"
                 options1="Silver Entries ($85 Value)"
@@ -77,7 +77,7 @@ function OrderForm({
               />
               <ProductRow
                 title="Gold Box - 100 GIVEAWAY ENTRIES (BEST DEAL!!)"
-                price_str="$8.30 / pc"
+                price_str="$100.00"
                 price_num={10000}
                 piece="$150 value in products"
                 product_id="42235974189228"
@@ -86,12 +86,13 @@ function OrderForm({
               />
               <ProductRow
                 title="Platinum Box (200 GIVEAWAY ENTRIES)"
-                price_str="$11.00 / pc"
+                price_str="$200.00"
                 price_num={20000}
                 piece="$310 value in products"
                 options1="Platinum Entries ($310 Value)"
                 product_id="42235974877356"
               />
+              <h5>Select our Size</h5>
               <CustomSelect />
             </div>
             <div>

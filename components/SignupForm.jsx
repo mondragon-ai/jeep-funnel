@@ -24,14 +24,16 @@ const SignupForm = ({ initialValues, handleSubmit, isLoading }) => {
       marginBottom: "0"
     }}>
       <div>
-        <MyImage src="https://hodgetwins.goingbigly.com/hosted/images/cc/192d9b9aae4dd8b528dee143eec444/wtb-wb-dtom-decal.png" />
+        <MyImage src={"/images/EntryTickets.png"} />
       </div>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        <Form>
+        <Form style={{
+              width: "100%",
+            }}>
           <div className="div-block-37"
             style={{
               background: "#fff",
@@ -95,7 +97,7 @@ const SignupForm = ({ initialValues, handleSubmit, isLoading }) => {
               background: "#fff",
               border: " none",
               width: "100%",
-              padding: "1rem"
+              padding: "0 1rem  1rem 1rem"
             }}>
             <div className="checkbox">
               <Field
@@ -105,7 +107,10 @@ const SignupForm = ({ initialValues, handleSubmit, isLoading }) => {
               />
             </div>
             <div>
-              <div className="text-block-5">
+              <div className="text-block-5" style={{
+                fontSize: "12px",
+                lineHeight: "12px",
+              }}>
                 I agree to the Terms of Service and Privacy Policy. I agree to
                 receive news, updates, exclusive offers.
               </div>
