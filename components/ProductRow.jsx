@@ -2,9 +2,9 @@ import { Field, useFormikContext, ErrorMessage } from "formik";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-import wb from "../public/images/wb.png"
-import decal from "../public/images/decal.png"
-import ts from "../public/images/ts.png"
+// import wb from "../public/images/wb.png"
+// import decal from "../public/images/decal.png"
+// import ts from "../public/images/ts.png"
 
 const ProductRow = ({ title, price_str, price_num, piece, product_id, id, options1 }) => {
   const { values, setFieldValue } = useFormikContext();

@@ -67,6 +67,9 @@ const Upsell = () => {
   const createPayloadFromOrder = () => {
     try {
       const { cus_uuid, high_risk, funnel_uuid } = globalState;
+      console.log(cus_uuid);
+      console.log(high_risk);
+      console.log(funnel_uuid);
       return {
         cus_uuid,
         product: {
@@ -82,6 +85,8 @@ const Upsell = () => {
           weight: 0,
           variant_id: 42235971567788,
           quantity: 1,
+          product_id: "",
+          is_recurring: true
         },
         high_risk,
         funnel_uuid,
