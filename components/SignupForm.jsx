@@ -29,6 +29,7 @@ const SignupForm = ({ initialValues, handleSubmit, isLoading, timeLeft }) => {
         <MyImage src={"/images/entry.png"} />
       </div>
       <div style={{
+        display: "none",
         width: "100%",
         flexDirection: "column",
         justifyContent: "flex-start",

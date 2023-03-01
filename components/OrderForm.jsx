@@ -28,8 +28,6 @@ function OrderForm({
   message,
   stripe,
   elements,
-  // paymentType,
-  // setPaymentType,
   high_risk,
 }) {
 
@@ -92,21 +90,21 @@ function OrderForm({
                 options1="Platinum Entries ($310 Value)"
                 product_id="42235974877356"
               />
-              <h5>Select our Size</h5>
+              <h5>Select Your Size:</h5>
               <CustomSelect />
             </div>
-            <div>
+            <div  style={{fontSize: "0px" }}>
               <h5>What You Get:</h5>
               <ul style={{ listStyleImage: ""}}>
-                <li style={{ listStyleImage: `url(../public/images/check.png)`, margin: '0px 0', fontSize: "13px" }}>Bronze Box (45 Entries) = $60 in Products</li>
-                <li style={{ listStyleImage: `url(../public/images/check.png)`, margin: '0px 0', fontSize: "13px"  }}>Silver Box (60 Entries) = $85 in Products</li>
-                <li style={{ listStyleImage: `url(../public/images/check.png)`, margin: '0px 0', fontSize: "13px"  }}>Gold Box (100 Entries) = $150 in Products</li>
-                <li style={{ listStyleImage: `url(../public/images/check.png)`, margin: '0px 0', fontSize: "13px"  }}>Platinum Box (200 Entries) = $310 in Products</li>
+                <li style={{ listStyleImage: `url(../public/images/check.png)`, margin: '0px 0', fontSize: "15px" }}>Bronze Box (45 Entries) = $60 in Products</li>
+                <li style={{ listStyleImage: `url(../public/images/check.png)`, margin: '0px 0', fontSize: "15px"  }}>Silver Box (60 Entries) = $85 in Products</li>
+                <li style={{ listStyleImage: `url(../public/images/check.png)`, margin: '0px 0', fontSize: "15px"  }}>Gold Box (100 Entries) = $150 in Products</li>
+                <li style={{ listStyleImage: `url(../public/images/check.png)`, margin: '0px 0', fontSize: "15px"  }}>Platinum Box (200 Entries) = $310 in Products</li>
               </ul>
             </div>
-            <div className="div-block-93">
+            <div className="div-block-93"  style={{padding: "30px 0" }}>
               <div className="div-block-95">
-                <div className="headerdividertext">PRIZE DELIVERY ADDRESS</div>
+                <div className="headerdividertext" style={{fontSize: "15px" }}>PRIZE DELIVERY ADDRESS</div>
               </div>
               <div className="div-block-94" />
             </div>
@@ -122,7 +120,7 @@ function OrderForm({
             </div>
             <div className="div-block-93">
               <div className="div-block-95">
-                <div className="headerdividertext">PAYMENT INFORMATION</div>
+                <div className="headerdividertext" style={{fontSize: "15px" }}>PAYMENT INFORMATION</div>
               </div>
               <div className="div-block-94" />
             </div>
@@ -207,7 +205,7 @@ function OrderForm({
                     style={{
                       displex: "flex",
                       justifyContent: "space-between",
-                      padding: "10px 10px 10px 17px",
+                      padding: "10px 10px 0px 17px",
                       height: "auto"
                     }}
                     className="productrow"
@@ -216,8 +214,10 @@ function OrderForm({
                       {/* <p style={{ lineHeight: "15px", fontSize: "15px", color: "grey" }}>{values.product?.title}</p> */}
                       <p style={{ fontSize: "10px", color: "grey" }}>{values.product?.piece}</p>
                     </div>
-                    <div className="productrowsubheader min">
-                      {values.product?.price_str?.replace(/\s/g, "")}
+                    <div className="boldtext productrowtitle">
+                      <p style={{ fontSize: "10px", color: "grey" }}>
+                        {values.product?.price_str?.replace(/\s/g, "")}
+                      </p>
                     </div>
                   </div>
                   {bump && (
@@ -225,15 +225,21 @@ function OrderForm({
                       style={{
                         displex: "flex",
                         justifyContent: "space-between",
-                        padding: "10px 10px 10px 17px",
+                        padding: "0px 10px 0px 17px",
                         height: "auto"
                       }}
                       className="productrow"
                     >
-                      <div className="boldtext productrowtitle">
-                        Rush & Ensure My Order
+                    <div className="boldtext productrowtitle">
+                        <p style={{ fontSize: "10px", color: "grey" }}>
+                          Rush & Ensure My Order
+                        </p>
                       </div>
-                      <div className="productrowsubheader min">$3.99</div>
+                      <div className="boldtext productrowtitle">
+                        <p style={{ fontSize: "10px", color: "grey" }}>
+                          $3.99
+                        </p>
+                      </div>
                     </div>
                   )}
                   <div className="div-block-99">

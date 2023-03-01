@@ -28,11 +28,18 @@ const CustomSelect = ({ title, price_str, price_num, piece, product_id, id }) =>
     { value: '3XL', label: '3XLarge' },
   ];
   return (
-    <div className="div-block-89">
+    <div className="" 
+    style={{
+        width:"100%",
+        padding: "",
+        color: "black",
+        fontSize: windowWidth > 720 ? "20px" : "15px",
+        lineHeight: "20px"
+    }}>
       <div
         style={{
             width:"100%",
-            padding: "10px 0 40px 0",
+            padding: "10px 0 20px 0",
             color: "black",
             fontSize: windowWidth > 720 ? "20px" : "15px",
             lineHeight: "20px"

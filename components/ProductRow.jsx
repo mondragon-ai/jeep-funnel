@@ -81,16 +81,16 @@ const ProductRow = ({ title, price_str, price_num, piece, product_id, id, option
         }}>
           <div className="" style={{
             paddingTop: "0.5rem",
-            lineHeight: windowWidth > 720 ? "25px" : "15px",
-            fontSize: windowWidth > 720 ? "25px" : "15px",
+            lineHeight: windowWidth > 720 ? "18px" : "15px",
+            fontSize: windowWidth > 720 ? "18px" : "15px",
             fontWeight:  600
           }}>
             <p>{title}</p>
           </div>
           <div className="" style={{lineHeight: "15px", fontSize: "15px", width: "100%"}}>
             <p style={{
-              lineHeight:  windowWidth > 720 ?  "25px" : "15px",
-              fontSize:  windowWidth > 720 ?  "25px" : "15px",
+              lineHeight:  windowWidth > 720 ?  "18px" : "15px",
+              fontSize:  windowWidth > 720 ?  "18px" : "15px",
               width: "100%",
               padding: "0 0 0.5rem 0",
               fontWeight: id === "BEST_DEAL"  ? 500 : 300
