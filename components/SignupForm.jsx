@@ -35,9 +35,13 @@ const SignupForm = ({ initialValues, handleSubmit, isLoading, timeLeft }) => {
         alignItems: "center",
         padding: "0 1rem",
         textAlign: 'center',
-        fontFamily: "Fjalla"
+        fontFamily: "Fjalla",
+        marginTop: 0
       }}>
-        <h1>TIME LEFT</h1>
+        <h1 style={{
+          padding: "0rem 0 1rem 0",
+          marginTop: 0
+        }}>TIME LEFT</h1>
         <CountdownTimer timeLeft={timeLeft} />
       </div>
       <Formik

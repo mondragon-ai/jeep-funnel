@@ -1,11 +1,19 @@
 
 // import './CountdownTimer.css';
 
+import { useEffect, useState } from "react";
+
 // interface CountdownTimerProps {
 //   targetDate: Date;
 // }
 
 const CountdownTimer = ({ timeLeft }) => {
+    const [windowWidth, setWindowWidth] = useState(0);
+  
+    useEffect(() => {
+      setWindowWidth(window.innerWidth);
+    }, [])
+  
 
   return (
     <div className="" style={{
@@ -19,7 +27,8 @@ const CountdownTimer = ({ timeLeft }) => {
             flexDirection: "column",
             justifyContent: "flex-start",
             alignItems: "center",
-            width: "25%"
+            width: "25%",
+            fontSize: windowWidth < 720 ? "" : "25px"
         }}>
         <div className=""><p>{timeLeft.days ? timeLeft.days : 0}</p></div>
         <div className="">DAYS</div>
@@ -29,7 +38,8 @@ const CountdownTimer = ({ timeLeft }) => {
             flexDirection: "column",
             justifyContent: "flex-start",
             alignItems: "center",
-            width: "25%"
+            width: "25%",
+            fontSize: windowWidth < 720 ? "" : "25px"
         }}>
         <div className=""><p>{timeLeft.hours ? timeLeft.hours : 0}</p></div>
         <div className="">HOURS</div>
@@ -39,7 +49,8 @@ const CountdownTimer = ({ timeLeft }) => {
             flexDirection: "column",
             justifyContent: "flex-start",
             alignItems: "center",
-            width: "25%"
+            width: "25%",
+            fontSize: windowWidth < 720 ? "" : "25px"
         }}>
         <div className=""><p>{timeLeft.minutes ? timeLeft.minutes : 0}</p></div>
         <div className="">MINUTES</div>
@@ -49,7 +60,8 @@ const CountdownTimer = ({ timeLeft }) => {
             flexDirection: "column",
             justifyContent: "flex-start",
             alignItems: "center",
-            width: "25%"
+            width: "25%",
+            fontSize: windowWidth < 720 ? "" : "25px"
         }}>
         <div className=""><p>{timeLeft.seconds ? timeLeft.seconds : 0}</p></div>
         <div className="">SECONDS</div>
