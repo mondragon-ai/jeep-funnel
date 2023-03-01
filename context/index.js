@@ -31,7 +31,7 @@ export const ContextProvider = ({ children }) => {
       external,
       variants
     } = getItem("funnel_data") || state;
-    
+
     setState({
       first_name,
       email,
@@ -44,21 +44,30 @@ export const ContextProvider = ({ children }) => {
       external,
       variants
     });
-
-    async function fetchData() {
-      try {
-        const response = await imPoweredRequest("POST","https://us-central1-impowered-funnel.cloudfunctions.net/funnel/products", {
-          product_uuid: "pro_60d547e7d9"
-        })
-        const products = response.data.result;
-        if (products) {
-          setState({ ...state, variants: products[0].variants  });
+    // check if the product data is cached
+    const cachedProductData = getItem("product_data");
+    if (cachedProductData) {
+      setState({ ...state, variants: cachedProductData });
+    } else {
+      // fetch product data and cache it
+      async function fetchData() {
+        try {
+          const response = await imPoweredRequest(
+            "POST",
+            "https://us-central1-impowered-funnel.cloudfunctions.net/funnel/products",
+            { product_uuid: "pro_60d547e7d9" }
+          );
+          const products = response.data.result;
+          if (products) {
+            setState({ ...state, variants: products[0].variants });
+            saveItem("product_data", products[0].variants);
+          }
+        } catch (error) {
+          console.error(error);
         }
-      } catch (error) {
-        console.error(error);
       }
+      fetchData();
     }
-    fetchData();
   }, []);
 
   const setGlobalState = (data) => {

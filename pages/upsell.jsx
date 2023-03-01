@@ -71,8 +71,10 @@ const Upsell = () => {
     try {
       const { cus_uuid, high_risk, funnel_uuid } = globalState;
       console.log(cus_uuid);
+      const query = new URLSearchParams(window.location.search);
+      console.log( query.get("cus_uuid") );
       return {
-        cus_uuid,
+        cus_uuid: query.get("cus_uuid") || cus_uuid,
         product: {
           high_risk: false,
           title: "VIP Membership",
@@ -90,7 +92,7 @@ const Upsell = () => {
           is_recurring: true
         },
         high_risk,
-        funnel_uuid,
+        funnel_uuid: query.get("funnel_uuid") || funnel_uuid,
       };
     } catch (error) {
       console.log(error.message);
