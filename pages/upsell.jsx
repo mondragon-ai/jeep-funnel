@@ -100,12 +100,24 @@ const Upsell = () => {
   };
 
   const updateGlobalState = () => {
+    console.log("UPSELL");
+    const query = new URLSearchParams(window.location.search);
+    console.log( query.get("cus_uuid") );
+    const p_list = (JSON.parse(query.get("products")) || globalState.products || []);
     setGlobalState({
       ...globalState,
+      cus_uuid: query.get("cus_uuid") || globalState.cus_uuid || "",
+      funnel_uuid: query.get("funnel_uuid") || globalState.funnel_uuid || "",
       products: [
-        ...globalState.products,
+        ...p_list,
         { title: "VIP Membership", price_num: 900 },
       ],
+      high_risk:  query.get("high_risk") || globalState.high_risk || false,
+      bump: query.get("bump") || globalState.bump || false,
+    });
+
+    setGlobalState({
+      ...globalState,
     });
   };
 
