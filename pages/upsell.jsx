@@ -116,9 +116,6 @@ const Upsell = () => {
       bump: query.get("bump") || globalState.bump || false,
     });
 
-    setGlobalState({
-      ...globalState,
-    });
   };
 
   const showVIPClubInfo = () => setShowVIP(!showVIP);

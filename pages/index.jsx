@@ -8,6 +8,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { sendPageViewEvent } from "../lib/analytics";
 import { Context } from "../context";
+import Head from "next/head";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
@@ -29,6 +30,21 @@ export default function Home() {
 
   return (
     <div className="body-4">
+      <Head>
+        <title>Hodge Twins Sweeps Stakes</title>
+        <meta name="description" content={"Enter a chance to win a new vehicle & $10,000 Cash!"} />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="shortcut icon" href="/images/favicon.ico" />
+        <meta property="og:title" content="Enter a chance to win a new vehicle & $10,000 Cash!" />
+        <meta
+          property="og:description"
+          content="Enter a chance to win a new vehicle & $10,000 Cash!"
+        />
+        <meta
+          property="og:image"
+          content="https://hodgetwins.goingbigly.com/hosted/images/5c/272d0ce18c44cb851c7459279df8a7/Jeep-Giveaway.png"
+        />
+      </Head>
       <div className="section-2 wf-section">
         <div className="div-block-110" />
         <div className="container-7 w-container" style={{
