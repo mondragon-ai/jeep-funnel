@@ -11,7 +11,7 @@ const Upsell = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showVIP, setShowVIP] = useState("");
   const [globalState, setGlobalState] = useContext(Context);
-  const [clientOrigin, setClientOrigin] = useState("http://localhost:3000");
+  const [clientOrigin, setClientOrigin] = useState("127.0.0.1");
   const [windowWidth, setWindowWidth] = useState(0);
 
   useEffect(() => {
@@ -20,7 +20,9 @@ const Upsell = () => {
     setClientOrigin(window.location.origin); // set client origin
     setTimeout(() => setMessage(""), 5000);
 
+    console.log("UPSELL");
     const query = new URLSearchParams(window.location.search);
+    console.log( query.get("cus_uuid") );
     setGlobalState({
       ...globalState,
       cus_uuid: query.get("cus_uuid") || globalState.cus_uuid || "",
@@ -35,13 +37,14 @@ const Upsell = () => {
     try {
       setIsLoading(true);
       const payload = createPayloadFromOrder();
+      console.log("PAYLOAD");
       const response = await imPoweredRequest(
         "POST",
         "https://us-central1-impowered-funnel.cloudfunctions.net/funnel/payments/quick-sub",
         payload
       );
 
-      if (response.ok) {
+      if (response) {
         updateGlobalState(); // update global state
         Router.push(`${clientOrigin}/congratulations`);
         return;
@@ -68,8 +71,6 @@ const Upsell = () => {
     try {
       const { cus_uuid, high_risk, funnel_uuid } = globalState;
       console.log(cus_uuid);
-      console.log(high_risk);
-      console.log(funnel_uuid);
       return {
         cus_uuid,
         product: {

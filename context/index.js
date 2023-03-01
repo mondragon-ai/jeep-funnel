@@ -31,6 +31,7 @@ export const ContextProvider = ({ children }) => {
       external,
       variants
     } = getItem("funnel_data") || state;
+    
     setState({
       first_name,
       email,
@@ -43,6 +44,7 @@ export const ContextProvider = ({ children }) => {
       external,
       variants
     });
+
     async function fetchData() {
       try {
         const response = await imPoweredRequest("POST","https://us-central1-impowered-funnel.cloudfunctions.net/funnel/products", {

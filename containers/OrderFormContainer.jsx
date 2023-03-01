@@ -18,7 +18,7 @@ const OrderFormContainer = () => {
 
   const [message, setMessage] = useState("");
   const [paymentType, setPaymentType] = useState("stripe");
-  const [clientOrigin, setClientOrigin] = useState("http://localhost:3000");
+  const [clientOrigin, setClientOrigin] = useState("127.0.0.1");
   const [globalState, setGlobalState] = useContext(Context);
   const { high_risk } = globalState;
 
@@ -266,6 +266,9 @@ const OrderFormContainer = () => {
 
   function createNewState(values) {
     const { title, price_num, price_str, piece } = values.product;
+
+    console.log("CREATE NEW STATE")
+    console.log(globalState)
 
     const newState = {
       ...globalState,
