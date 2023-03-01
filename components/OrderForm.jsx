@@ -44,7 +44,7 @@ function OrderForm({
   return (
     <div className="formcard" id="FORM_TWO">
       <div className="imgblock">
-        <MyImage src={"/images/EntryTickets.png"} />
+        <MyImage src={"/images/entry.png"} />
       </div>
       <Formik
         initialValues={initialValues}

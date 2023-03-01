@@ -24,7 +24,7 @@ const SignupForm = ({ initialValues, handleSubmit, isLoading }) => {
       marginBottom: "0"
     }}>
       <div>
-        <MyImage src={"/images/EntryTickets.png"} />
+        <MyImage src={"/images/entry.png"} />
       </div>
       <Formik
         initialValues={initialValues}
