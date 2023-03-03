@@ -15,21 +15,31 @@ const Congratulations = () => {
     sendPageViewEvent("CONFIRMED"); // send page view event to google analytics
   }, []);
 
+  const description = `Enter for a chance to win a new Jeep & $10,000.00 cash. PIck your size and get discounted items and more importantly, FAST ENTRIES to enter to win!`;
+  const canonicalUrl = "https://www.hodgetwinssweepstakes.com";
+  const ogImgUrl =  "https://hodgetwins.goingbigly.com/hosted/images/5c/272d0ce18c44cb851c7459279df8a7/Jeep-Giveaway.png";
+  const t = "Hodge Twins Sweepsstake" 
+
   return (
     <div className="section-7 newt wf-section">
-    <Head>
-      <title>Hodge Twins Sweeps Stakes</title>
-      <meta property="og:title" content="Enter a chance to win a new vehicle & $10,000 Cash!" />
-      <meta name="description" content={"Buy discounted items and fast entries to enter to win the new Jeep & $10,000"} />
-      <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <link rel="shortcut icon" href="/favicon.ico" />
-      <meta name="og:image" content={"/images/vegas-truck-shoot-10-plate.jpg"} />
-      <meta property="og:url" content={"https://www.hodgetwinssweepstakes.com/"} />
-      <meta
-        property="og:image"
-        content="/images/vegas-truck-shoot-10-plate.jpg"
-      />
-    </Head>
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+        <title>{t}</title>
+        <meta name="description" content={description} />
+        <link rel="canonical" href={canonicalUrl} />
+  
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.ico" />
+  
+        <meta property="og:locale" content="en_US" />
+        <meta property="og:type" content={"artcle"} />
+        <meta property="og:description" content={description} />
+        <meta property="og:image" content={ogImgUrl} />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:title" content={t} />
+        
+      </Head>
       <div className="container-9 w-container">
         <div className="div-block-44">
           <h1 className="heading-20">
