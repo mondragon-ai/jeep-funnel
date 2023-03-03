@@ -1,7 +1,7 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import MyImage from "./MyImage";
-import CountdownTimer from "../components/countdown"
+// import CountdownTimer from "../components/countdown"
 
 const validationSchema = Yup.object({
   first_name: Yup.string().required("Name is required! "),
@@ -43,7 +43,7 @@ const SignupForm = ({ initialValues, handleSubmit, isLoading, timeLeft }) => {
           padding: "0rem 0 1rem 0",
           marginTop: 0
         }}>TIME LEFT</h1>
-        <CountdownTimer timeLeft={timeLeft} />
+        {/* <CountdownTimer timeLeft={timeLeft} /> */}
       </div>
       <Formik
         initialValues={initialValues}

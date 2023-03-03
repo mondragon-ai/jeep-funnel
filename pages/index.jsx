@@ -30,21 +30,19 @@ export default function Home() {
 
   return (
     <div className="body-4">
-      <Head>
-        <title>Hodge Twins Sweeps Stakes</title>
-        <meta name="description" content={"Enter a chance to win a new vehicle & $10,000 Cash!"} />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="shortcut icon" href="/images/favicon.ico" />
-        <meta property="og:title" content="Enter a chance to win a new vehicle & $10,000 Cash!" />
-        <meta
-          property="og:description"
-          content="Enter a chance to win a new vehicle & $10,000 Cash!"
-        />
-        <meta
-          property="og:image"
-          content="https://hodgetwins.goingbigly.com/hosted/images/5c/272d0ce18c44cb851c7459279df8a7/Jeep-Giveaway.png"
-        />
-      </Head>
+    <Head>
+      <title>Hodge Twins Sweeps Stakes</title>
+      <meta property="og:title" content="Enter a chance to win a new vehicle & $10,000 Cash!" />
+      <meta name="description" content={"Buy discounted items and fast entries to enter to win the new Jeep & $10,000"} />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <link rel="shortcut icon" href="/favicon.ico" />
+      <meta name="og:image" content={"/images/vegas-truck-shoot-10-plate.jpg"} />
+      <meta property="og:url" content={"https://www.hodgetwinssweepstakes.com/"} />
+      <meta
+        property="og:image"
+        content="/images/vegas-truck-shoot-10-plate.jpg"
+      />
+    </Head>
       <div className="section-2 wf-section">
         <div className="div-block-110" />
         <div className="container-7 w-container" style={{

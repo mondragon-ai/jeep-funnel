@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react";
+import Head from "next/head";
 import Footer from "../components/Footer";
 import { sendPageViewEvent } from "../lib/analytics";
 import { Context } from "../context";
@@ -16,6 +17,19 @@ const Congratulations = () => {
 
   return (
     <div className="section-7 newt wf-section">
+    <Head>
+      <title>Hodge Twins Sweeps Stakes</title>
+      <meta property="og:title" content="Enter a chance to win a new vehicle & $10,000 Cash!" />
+      <meta name="description" content={"Buy discounted items and fast entries to enter to win the new Jeep & $10,000"} />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <link rel="shortcut icon" href="/favicon.ico" />
+      <meta name="og:image" content={"/images/vegas-truck-shoot-10-plate.jpg"} />
+      <meta property="og:url" content={"https://www.hodgetwinssweepstakes.com/"} />
+      <meta
+        property="og:image"
+        content="/images/vegas-truck-shoot-10-plate.jpg"
+      />
+    </Head>
       <div className="container-9 w-container">
         <div className="div-block-44">
           <h1 className="heading-20">
