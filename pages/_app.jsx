@@ -3,6 +3,7 @@ import Layout from "../components/Layout";
 import { ContextProvider } from "../context";
 import { useEffect } from "react";
 import { hotjar } from 'react-hotjar';
+import { Analytics } from '@vercel/analytics/react';
 
 export default function App({ Component, pageProps }) {
   useEffect(() => {
@@ -13,6 +14,7 @@ export default function App({ Component, pageProps }) {
     <ContextProvider>
       <Layout>
         <Component {...pageProps} />
+        <Analytics />
       </Layout>
     </ContextProvider>
   );

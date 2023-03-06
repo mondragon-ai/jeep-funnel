@@ -184,18 +184,19 @@ const OrderFormContainer = () => {
 
   const fetchCustomerData = async (order) => {
     const payload = createPayloadFromOrder(order);
+    console.log(" ==> [PAYLOAD]")
     console.log(payload)
     // Make the request to the server to store the card after a successful submission
-    const response = await imPoweredRequest(
-      "POST",
-      "https://us-central1-impowered-funnel.cloudfunctions.net/funnel/checkout/quick",
-      payload
-    );
-    if (!response) {
-      setMessage(
-        `We're sorry, but there was an issue processing your payment. Please try resubmitting the form or refreshing the page and trying again.`
-      );
-    }
+    // const response = await imPoweredRequest(
+    //   "POST",
+    //   "https://us-central1-impowered-funnel.cloudfunctions.net/funnel/checkout/quick",
+    //   payload
+    // );
+    // if (!response) {
+    //   setMessage(
+    //     `We're sorry, but there was an issue processing your payment. Please try resubmitting the form or refreshing the page and trying again.`
+    //   );
+    // }
   };
 
   const createPayloadFromOrder = (order) => {
