@@ -186,24 +186,26 @@ const OrderFormContainer = () => {
     const payload = createPayloadFromOrder(order);
     console.log(" ==> [PAYLOAD]")
     console.log(payload)
-    // Make the request to the server to store the card after a successful submission
-    // const response = await imPoweredRequest(
-    //   "POST",
-    //   "https://us-central1-impowered-funnel.cloudfunctions.net/funnel/checkout/quick",
-    //   payload
-    // );
-    // if (!response) {
-    //   setMessage(
-    //     `We're sorry, but there was an issue processing your payment. Please try resubmitting the form or refreshing the page and trying again.`
-    //   );
-    // }
+    // Make the request to the server to store the card after a successful submission // http://127.0.0.1:5001/impowered-funnel/us-central1 // https://us-central1-impowered-funnel.cloudfunctions.net
+    const response = await imPoweredRequest(
+      "POST",
+      "https://us-central1-impowered-funnel.cloudfunctions.net/funnel/checkout/quick",
+      payload
+    );
+    if (!response) {
+      setMessage(
+        `We're sorry, but there was an issue processing your payment. Please try resubmitting the form or refreshing the page and trying again.`
+      );
+    }
   };
 
   const createPayloadFromOrder = (order) => {
     const { product, shipping, bump } = order;
     const { line1, state, city, zip } = shipping;
-    const { title, price_num, product_id, product_sku, options1, options2, options3 } = product;
+    const { title, price_num } = product;
     const { cus_uuid, first_name, high_risk, funnel_uuid, variants } = globalState;
+    console.log(" == [CREATE_PAYLOAD] => ")
+    console.log(order)
     let variant_list = [...variants];
 
     let variant_id = "";
@@ -227,6 +229,7 @@ const OrderFormContainer = () => {
           return false
       } else {return true}
     });
+
     const payload = {
       cus_uuid,
       shipping: {
@@ -243,7 +246,7 @@ const OrderFormContainer = () => {
       product: {
         high_risk: variant.high_risk ? variant.high_risk : false,
         title,
-        price:  variant.price ? variant.price : 0,
+        price:  price_num || 0,
         product_id: variant.product_id ? variant.product_id : "",
         sku: variant.sku ? variant.sku : "HT-BOX",
         compare_at_price: 0,
@@ -252,7 +255,7 @@ const OrderFormContainer = () => {
         options2: variant.options2 ? variant.options2 : "",
         options3: variant.options3 ? variant.options3 : "",
         weight: variant.weight ? ((variant.weight ) * 16 * 10) : 0,
-        variant_id: variant.external_type == "SHOPIFY" ? variant.external_id : variant_id ? variant_id : 7174179979436,
+        variant_id: variant.external_id  ? variant.external_id : variant_id ? variant_id : 7174179979436,
         quantity: 1,
         external_id: variant.external_id,
         external_type: variant.external_type,
@@ -266,15 +269,18 @@ const OrderFormContainer = () => {
   };
 
   function createNewState(values) {
-    const { title, price_num, price_str, piece } = values.product;
+    const { title, price_num, price_str, piece, options1, options2} = values.product;
 
     console.log("CREATE NEW STATE")
     console.log(globalState)
 
+    const oTwo = options2 !== "" && options2 !== undefined ? options2 : "M";
+    const oOne = options1 ? options1 : "Bronze Entries ($60 Value)";
+
     const newState = {
       ...globalState,
       bump: values.bump,
-      products: [{ title, price_num, price_str, piece }],
+      products: [{ title, price_num, price_str, piece, oOne, oTwo }],
     };
 
     setGlobalState(newState);

@@ -14,11 +14,11 @@ const ProductRow = ({ title, price_str, price_num, piece, product_id, id, option
     setWindowWidth(window.innerWidth);
   }, [])
 
-
   return (
     <div id={id ? "BEST_DEAL" : ""} 
       onClick={(e) => {
         setFieldValue("product", {
+          ...values.product,
           title,
           price_str,
           price_num,
@@ -53,12 +53,13 @@ const ProductRow = ({ title, price_str, price_num, piece, product_id, id, option
           checked={values.product?.product_id === product_id}
           onChange={(e) => {
             setFieldValue("product", {
+              ...values.product,
               title,
               price_str,
               price_num,
               piece,
               product_id,
-              options1
+              options1,
             });
           }}
           id={product_id}
