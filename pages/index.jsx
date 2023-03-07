@@ -74,7 +74,7 @@ export default function Home() {
                   <span className="text-span-9"> JEEP WRANGLER <br/> UNLIMITED</span> + $10,000 CASH
                 </h1>
                 <IFrame
-                  videoId="3tgjwAbWxto"
+                  videoId="AXG0b0qkjnY"
                   className="w-embed-youtubevideo"
                   title="Veteran wins a Ford Raptor! (Hodgetwins Giveaway)"
                 />
@@ -120,7 +120,7 @@ export default function Home() {
                     lineHeight: windowWidth > 720 ? "40px" : "25px",
                     fontFamily: "'Fjalla'"
                     }}>
-                    Sign up & get your Patriot<br />  Bundle to Enter to WIN!
+                    Sign up & get your Entry<br />  Box to Enter to WIN!
                   </h4>
                 </div>
                 <div className="div-block-37" style={{
@@ -152,7 +152,7 @@ export default function Home() {
                 background: "white"
               }}>
                   <a
-                    href="https://goingbigly.com/pages/privacy-policy"
+                    href="https://gobigly.com/policies/privacy-policy"
                     target="_parent"
                   >
                     <span className="text-span-18 entry-form-footer">
@@ -161,7 +161,7 @@ export default function Home() {
                   </a>
                  {` | `}
                   <a
-                    href="https://goingbigly.com/pages/terms-of-service"
+                    href="https://goingbigly.com/policies/terms-of-service"
                     target="_parent"
                   >
                     <span className="text-span-17 entry-form-footer">
@@ -172,7 +172,7 @@ export default function Home() {
                   <br />
                   {`See `}
                   <a
-                    href="https://cdn.shopify.com/s/files/1/0612/0593/8348/files/Hodgetwins_Gas_Giveaway_1_pdf.pdf?v=1658242977"
+                    href="https://cdn.shopify.com/s/files/1/0612/0593/8348/files/Hodgetwins_Sweepstakes_8_Official_Rules_pdf.pdf?v=1674836416"
                     target="_parent"
                   >
                     <span className="text-span-16 entry-form-footer">
@@ -541,7 +541,7 @@ export default function Home() {
                 >
                   <ul role="list" className="list-5">
                     <li className="accordianlist">
-                      {`Our new promotion is LIVE...enter to win a Jeep Wrangler Unlimited High Altitude 4x4 + $10,000 CASH! With each purchase, you are automatically entered into our giveaway to WIN! Every $1 you spend gets you 5 entries into the giveaway...it's that easy!`}
+                      {`Our new promotion is LIVE...enter to win a Jeep Wrangler Unlimited High Altitude 4x4 + $10,000 CASH! With each purchase, you are automatically entered into our giveaway to WIN! Every $1 you spend gets you 1 entry into the giveaway...it's that easy!`}
                     </li>
                     <li className="accordianlist">
                       {`Become a member of the Hodge Twins/Bigly VIP Club and receive exclusive coupons, discounts, benefits, & more for only $9/month! VIP Club Members receive double bonus entries (18 entries/month) into each giveaway as long as they are an active member!`}
@@ -567,7 +567,7 @@ export default function Home() {
                   <ul role="list" className="list-5">
                     <li className="accordianlist">
                       <span className="boldtext">Yeaahhhh!! </span> We are
-                      really giving away a Ram 2500 DIESEL + $10k Cash! No BS!
+                      really giving away a Jeep Wrangler Unlimited High Altitude 4x4 + $10k Cash! No BS!
                       No gimmicks! You support the Twins and we give back to our
                       fans!
                     </li>
@@ -618,7 +618,7 @@ export default function Home() {
                   borderBottomLeftRadius: 0,
                   borderBottomRightRadius: 0,
                 }} onClick={() => setViewItem(3)}>
-                  <h3 className="heading-31 boldtext" >WHO IS BIGLY?</h3>
+                  <h3 className="heading-31 boldtext" style={{fontFamily: "'Fjalla'"}}>WHO IS BIGLY?</h3>
                   <h3 className="heading-31">🔍</h3>
                 </div>
                 <div
@@ -662,14 +662,14 @@ export default function Home() {
                 >
                   <ul role="list" className="list-5">
                     <li className="accordianlist">
-                      <a href="#TOP_OF_FORM">Learn More</a>
+                      <a href="#VIP_INFO">Learn More</a>
                     </li>
                   </ul>
                 </div>
               </div>
               <div>
                 <div className="div-block-107" onClick={() => setViewItem(5)}>
-                  <h3 className="heading-31 boldtext" style={{fontFamily: "'Fjalla'"}}>WHO IS BIGLY?</h3>
+                  <h3 className="heading-31 boldtext" style={{fontFamily: "'Fjalla'"}}>Coontact Us?</h3>
                   <h3 className="heading-31">🔍</h3>
                 </div>
                 <div
@@ -731,7 +731,7 @@ export default function Home() {
       }}>
         <div className="">
           <div className="div-block-22">
-            <h2 className="heading-16" style={{
+            <h2 className="heading-16" id={"VIP_INFO"} style={{
               fontSize:  windowWidth > 720 ? "" : "25px",
               lineHeight:  windowWidth > 720 ? "" : "25px",
               color: "rgb(16, 40, 76)",

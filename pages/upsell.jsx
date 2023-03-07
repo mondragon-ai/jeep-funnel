@@ -214,7 +214,7 @@ const Upsell = () => {
               <p className="paragraph-32">
                 Become a member of the{" "}
                 <span className="text-span-26">Hodgetwins/Bigly VIP Club</span>{" "}
-                for just $9.00 and claim your FREE Decals below!
+                for just $9.00 and claim your FREE White Privelage Card below!
               </p>
             </div>
 

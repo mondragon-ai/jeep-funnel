@@ -10,7 +10,7 @@ function Footer({ home }) {
                   {`* * * LIMIT OF ONE THOUSAND (1,020) ENTRIES PER PERSON * * * NO PURCHASE OR PAYMENT OF ANY KIND IS NECESSARY TO ENTER OR WIN. PURCHASE OR PAYMENT DOES NOT IMPROVE YOUR CHANCE OF WINNING. The Hodgetwins #8 is open only to legal residents of the 48 contiguous U.S. States and D.C. (excluding FL and NY) who have reached the age of majority. Void elsewhere and where prohibited. Promotion ends 3/31/2023. Winner must pick up vehicle from a location in Nevada or Arkansas, designated by Sponsor. Subject to complete `}
                 </strong>
                 <a
-                  href="https://cdn.shopify.com/s/files/1/0612/0593/8348/files/Hodgetwins_Sweepstakes_6_Diesel.pdf?v=1664821548"
+                  href="https://cdn.shopify.com/s/files/1/0612/0593/8348/files/Hodgetwins_Sweepstakes_8_Official_Rules_pdf.pdf?v=1674836416"
                   target="_parent"
                 >
                   <strong>Official Rules</strong>
@@ -45,21 +45,21 @@ function Footer({ home }) {
         <div className="div-block-35">
           <p className="paragraph-22">
             <a
-              href="https://goingbigly.com/pages/privacy-policy"
+              href="https://gobigoingbiglygly.com/policies/privacy-policy"
               target="_parent"
             >
               <span className="text-span-15 footer-a">Privacy Policy</span>
             </a>
             {" | "}
             <a
-              href="https://goingbigly.com/pages/terms-of-service"
+              href="https://goingbigly.com/policies/terms-of-service"
               target="_parent"
             >
               <span className="text-span-13 footer-a">Terms of Service</span>
             </a>
 
             {" | "}
-            <a href="https://goingbigly.com/pages/contact-us" target="_parent">
+            <a href="https://gobigly.com/pages/team-bigly" target="_parent">
               <span className="text-span-12 footer-a">Contact Us</span>
               <br />
             </a>

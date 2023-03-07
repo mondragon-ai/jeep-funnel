@@ -90,7 +90,7 @@ function OrderForm({
                 options1="Platinum Entries ($310 Value)"
                 product_id="42235974877356"
               />
-              <h5>Select Your Size:</h5>
+              <h5>Select Your Shirt Size:</h5>
               <CustomSelect />
             </div>
             <div  style={{fontSize: "0px" }}>
@@ -212,11 +212,11 @@ function OrderForm({
                   >
                     <div className="boldtext productrowtitle">
                       {/* <p style={{ lineHeight: "15px", fontSize: "15px", color: "grey" }}>{values.product?.title}</p> */}
-                      <p style={{ fontSize: "10px", color: "grey" }}>{values.product?.piece}</p>
+                      <p style={{ fontSize: "10px", color: "grey" }}>{values.product?.title}</p>
                     </div>
                     <div className="boldtext productrowtitle">
                       <p style={{ fontSize: "10px", color: "grey" }}>
-                        {values.product?.price_str?.replace(/\s/g, "")}
+                        {"$" + Number(values.product?.price_num/100).toFixed(2)}
                       </p>
                     </div>
                   </div>
