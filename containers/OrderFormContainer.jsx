@@ -187,16 +187,16 @@ const OrderFormContainer = () => {
     console.log(" ==> [PAYLOAD]")
     console.log(payload)
     // Make the request to the server to store the card after a successful submission // http://127.0.0.1:5001/impowered-funnel/us-central1 // https://us-central1-impowered-funnel.cloudfunctions.net
-    const response = await imPoweredRequest(
-      "POST",
-      "https://us-central1-impowered-funnel.cloudfunctions.net/funnel/checkout/quick",
-      payload
-    );
-    if (!response) {
-      setMessage(
-        `We're sorry, but there was an issue processing your payment. Please try resubmitting the form or refreshing the page and trying again.`
-      );
-    }
+    // const response = await imPoweredRequest(
+    //   "POST",
+    //   "https://us-central1-impowered-funnel.cloudfunctions.net/funnel/checkout/quick",
+    //   payload
+    // );
+    // if (!response) {
+    //   setMessage(
+    //     `We're sorry, but there was an issue processing your payment. Please try resubmitting the form or refreshing the page and trying again.`
+    //   );
+    // }
   };
 
   const createPayloadFromOrder = (order) => {
@@ -246,7 +246,7 @@ const OrderFormContainer = () => {
       product: {
         high_risk: variant.high_risk ? variant.high_risk : false,
         title,
-        price:  price_num || 0,
+        price: variant.price ? variant.price : (price_num || 0),
         product_id: variant.product_id ? variant.product_id : "",
         sku: variant.sku ? variant.sku : "HT-BOX",
         compare_at_price: 0,
