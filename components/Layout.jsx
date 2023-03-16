@@ -31,6 +31,16 @@ function Layout({ children }) {
           rel="shortcut icon"
           type="image/x-icon"
         />
+        <script async src="https://www.googletagmanager.com/gtag/js?id=AW-10793712364"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'AW-10793712364');`
+          }}
+        ></script>
         <link href="/images/webclip.png" rel="apple-touch-icon" />
       </Head>
       <main>{children}</main>

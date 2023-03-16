@@ -6,6 +6,8 @@ import { Context } from "../context";
 import { sendPageViewEvent } from "../lib/analytics";
 import Router from "next/router";
 import Head from "next/head";
+import * as gtags from "../lib/analytics";
+import * as crypto from "crypto";
 
 
 const Upsell = () => {
@@ -40,6 +42,8 @@ const Upsell = () => {
       setIsLoading(true);
       const payload = createPayloadFromOrder();
       console.log("PAYLOAD");
+
+      gtags.event('conversion', { 'send_to': 'AW-10793712364/Ifg6CN6BkpIYEOz165oo', 'value': Number(payload.product.price), 'currency': 'USD', 'transaction_id': "txt_" + crypto.randomBytes(10).toString("hex").substring(0,10) });
       const response = await imPoweredRequest(
         "POST",
         "https://us-central1-impowered-funnel.cloudfunctions.net/funnel/payments/quick-sub",

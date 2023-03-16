@@ -3,6 +3,8 @@ import { imPoweredRequest } from "../lib/request";
 import { useElements, useStripe } from "@stripe/react-stripe-js";
 import OrderForm from "../components/OrderForm";
 import { Context } from "../context";
+import * as gtags from "../lib/analytics";
+import * as crypto from "crypto";
 
 const OrderFormContainer = () => {
   const stripe = useStripe();
@@ -186,6 +188,10 @@ const OrderFormContainer = () => {
     const payload = createPayloadFromOrder(order);
     console.log(" ==> [PAYLOAD]")
     console.log(payload)
+
+    const price =  payload.bump ? Number(payload.product.price )+ 399 : Number(payload.product.price);
+
+    gtags.event('conversion', { 'send_to': 'AW-10793712364/Knd8CNuBkpIYEOz165oo', 'value': price, 'currency': 'USD', 'transaction_id': "txt_" + crypto.randomBytes(10).toString("hex").substring(0,10) });
     // Make the request to the server to store the card after a successful submission // http://127.0.0.1:5001/impowered-funnel/us-central1 // https://us-central1-impowered-funnel.cloudfunctions.net
     const response = await imPoweredRequest(
       "POST",

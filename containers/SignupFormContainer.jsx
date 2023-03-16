@@ -2,6 +2,8 @@ import { useState, useContext, useEffect } from "react";
 import { imPoweredRequest } from "../lib/request";
 import SignupForm from "../components/SignupForm";
 import { Context } from "../context";
+import * as gtags from "../lib/analytics";
+import * as crypto from "crypto";
 
 const targetDate = new Date('2023-03-29T23:59:59');
 
@@ -61,6 +63,8 @@ const SignupFormContainer = () => {
       funnel_uuid,
       high_risk,
     };
+    await gtags.event('conversion', {'send_to': 'AW-10793712364/xSshCNiBkpIYEOz165oo'});
+
     const response = await imPoweredRequest(
       "POST",
       "https://us-central1-impowered-funnel.cloudfunctions.net/funnel/customers/create",
