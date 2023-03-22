@@ -42,8 +42,10 @@ const Upsell = () => {
       setIsLoading(true);
       const payload = createPayloadFromOrder();
       console.log("PAYLOAD");
+      const price =  payload.bump ? Number(payload.product.price )+ 399 : Number(payload.product.price);
+      const conversion_price = price ? (price/100) : 0
 
-      gtags.event('conversion', { 'send_to': 'AW-10793712364/Ifg6CN6BkpIYEOz165oo', 'value': Number(payload.product.price), 'currency': 'USD', 'transaction_id': "txt_" + crypto.randomBytes(10).toString("hex").substring(0,10) });
+      gtags.event('conversion', { 'send_to': 'AW-10793712364/Ifg6CN6BkpIYEOz165oo', 'value': conversion_price, 'currency': 'USD', 'transaction_id': "txt_" + crypto.randomBytes(10).toString("hex").substring(0,10) });
       const response = await imPoweredRequest(
         "POST",
         "https://us-central1-impowered-funnel.cloudfunctions.net/funnel/payments/quick-sub",
