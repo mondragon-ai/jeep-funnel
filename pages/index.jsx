@@ -30,7 +30,7 @@ export default function Home() {
   const description = `Enter for a chance to win a new Jeep & $10,000.00 cash. PIck your size and get discounted items and more importantly, FAST ENTRIES to enter to win!`;
   const canonicalUrl = "https://www.hodgetwinssweepstakes.com/";
   const ogImgUrl =  "https://hodgetwins.goingbigly.com/hosted/images/5c/272d0ce18c44cb851c7459279df8a7/Jeep-Giveaway.png";
-  const t = "Hodge Twins Sweepsstake" 
+  const t = "Hodge Twins Sweepsstake";
 
   return (
     <div className="body-4">

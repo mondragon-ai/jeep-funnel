@@ -31,6 +31,11 @@ function Layout({ children }) {
           rel="shortcut icon"
           type="image/x-icon"
         />
+        <link
+          href="/images/favicon.ico"
+          rel="shortcut icon"
+          type="image/x-icon"
+        />
         <link href="/images/webclip.png" rel="apple-touch-icon" />
       </Head>
       <main>{children}</main>
