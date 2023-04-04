@@ -63,6 +63,12 @@ export default function Home() {
               paddingRight: windowWidth > 720 ? "" : "1rem",
             }}>
               <div className="div-block-10">
+
+                <div style={{
+                  padding:' 1rem 0'
+                }}>
+                  <MyImage src="/images/High-Country-Funnel-Banner.png" />
+                </div>
                 <h1 className="heading-10" style={{
                   fontFamily: "'Fjalla One', Helvetica, sans-serif",
                   fontSize: windowWidth > 720 ? "47px" : "35px",
@@ -70,14 +76,14 @@ export default function Home() {
                   padding:' 1rem 0',
                   fontFamily: "'Fjalla'"
                 }}>
-                WIN THIS 
-                  <span className="text-span-9"> JEEP WRANGLER <br/> UNLIMITED</span> + $10,000 CASH
+                WIN THIS CHEVY 2500HD
+                  <span className="text-span-9"> DURAMAX DIESEL </span> + $10,000 CASH
                 </h1>
-                <IFrame
+                {/* <IFrame
                   videoId="AXG0b0qkjnY"
                   className="w-embed-youtubevideo"
                   title="Veteran wins a Ford Raptor! (Hodgetwins Giveaway)"
-                />
+                /> */}
               </div>
                 <div style={{
                   padding:' 1rem 0'
@@ -92,7 +98,7 @@ export default function Home() {
                 <div style={{
                   padding:' 1rem 2rem'
                 }}>
-                  <MyImage src="https://hodgetwins.goingbigly.com/hosted/images/5c/272d0ce18c44cb851c7459279df8a7/Jeep-Giveaway.png" />
+                  <MyImage src="/images/chevy-funnel-banner.jpg" />
                 </div>
                 <div 
                     style={{
@@ -111,7 +117,7 @@ export default function Home() {
                       fontFamily: "'Fjalla'"
                     }}
                   >
-                    {`EVERY $1 SPENT = 1 ENTRIES`}
+                    {`EVERY $1 SPENT = 5 ENTRIES`}
                   </h4>
                   <h4 className="heading-34" style={{
                     textAlign: "center",
@@ -172,7 +178,7 @@ export default function Home() {
                   <br />
                   {`See `}
                   <a
-                    href="https://cdn.shopify.com/s/files/1/0612/0593/8348/files/Hodgetwins_Sweepstakes_8_Official_Rules_pdf.pdf?v=1674836416"
+                    href="https://cdn.shopify.com/s/files/1/0612/0593/8348/files/Hodgetwins_9_Official_Rules_Final_16658e9e-03ed-4df7-a49d-7c976480bc9e.pdf?v=1679742006"
                     target="_parent"
                   >
                     <span className="text-span-16 entry-form-footer">
@@ -212,12 +218,12 @@ export default function Home() {
             alignContent: "center",
             marginBottom: "1rem"
             }}>
-          <div className="" style={{ 
+          {/* <div className="" style={{ 
             width: windowWidth > 720 ? "50%" : "80%",
             padding: "2rem 0"
             }}>
             <MyImage src={"https://hodgetwins.goingbigly.com/hosted/images/fd/0032b19687400baedb5c05ad884e87/Jeep.png"} />
-          </div>
+          </div> */}
         </div>
         <div className="" style={{ 
             display: "flex",
@@ -226,12 +232,12 @@ export default function Home() {
             background: "black",
             marginBottom: "3rem"
             }}>
-          <div className="" style={{ 
+          {/* <div className="" style={{ 
             width: windowWidth > 720 ? "70%" : "93%",
             padding: "2rem 0"
             }}>
             <MyImage src={"https://hodgetwins.goingbigly.com/hosted/images/35/7f7e1c0e174d22a2b827fce86039a3/FINAL-JEEP-SPECS-1-.png"} />
-          </div>
+          </div> */}
         </div>
         <div className="container-11" style={{ 
             display: "flex",
@@ -246,11 +252,11 @@ export default function Home() {
             padding: windowWidth > 720 ? "1rem 0.5rem" : "1rem",
             }}>
             <p className="faq-p">
-              {`People ask us, "Why are y'all giving away cash, free gas and trucks!?", and we'll tell you why...we got tired of paying big tech for expensive advertising and marketing, so we decided to do it our own way, and give back to you, our fans. `}
+              {`People ask us, "Why are y'all giving away cash, free gas and trucks!?", and we'll tell you why...we got tired of paying big tech for expensive advertising and marketing, so we decided to do it our own way, and give back to you, our fans.People ask us, "Why are y'all giving away cash, free gas and trucks!?", and we'll tell you why...we got tired of paying big tech for expensive advertising and marketing, so we decided to do it our own way, and give back to you, our fans. `}
               <span className="text-span-37">give back to you, our fans</span>.
             </p>
             <p className="faq-p">
-              {`We've been fortunate enough to give away over $500k+ worth of vehicles and prizes to our fans this year alone, and for our new promo, every purchase you make gets you entered to WIN A JEEP WRANGLER UNLIMITED HIGH ALTITUDE 4X4 + $10,000 CASH! 🔥`}
+              {`We've been fortunate enough to give away over $500k+ worth of vehicles and prizes to our fans this year alone, and for our new promo, every purchase you make gets you entered to WIN A CHEVY 2500HD DURAMAX DIESEL + $10,000 CASH! 🔥`}
               <span style={{ display: "block", marginTop: 70 }}>
                 {`Thank you for all the support!`}
               </span>
@@ -279,13 +285,13 @@ export default function Home() {
             alignContent: "center",
             alignItems: "center",
             }}>
-
               <div style={{ 
                 display: "flex",
                 flexDirection: windowWidth > 720 ? "row" : "column",
                 justifyContent: "center",
                 alignContent: "center",
                 alignItems: "center",
+                height: windowWidth > 720 ? "600px" : "auto",
               }}>
                 <div style={{ 
                   display: "flex",
@@ -294,22 +300,10 @@ export default function Home() {
                   alignContent: "center",
                   alignItems: "center",
                   height: windowWidth > 720 ? "500px" : "auto",
-                  width: windowWidth > 720 ? "600px" : "95%",
-                  padding: "1rem",
-                }}>
-                  <MyImage src="https://hodgetwins.goingbigly.com/hosted/images/9d/e98b59a0ac482b81083ba5e82bc1a1/IMG_3470.jpg" className="" />
-                </div>
-                <div style={{ 
-                  display: "flex",
-                  flexDirection: windowWidth > 720 ? "row" : "column",
-                  justifyContent: "center",
-                  alignContent: "center",
-                  alignItems: "center",
-                  height: windowWidth > 720 ? "500px" : "auto",
-                  width: windowWidth > 720 ? "600px" : "95%",
+                  width: windowWidth > 720 ? "60%" : "95%",
                   padding: "1rem"
                 }}>
-                  <MyImage src="https://hodgetwins.goingbigly.com/hosted/images/40/cf273177a0460f9df19572c4b8a4a2/IMG_7810.jpg" className="" />
+                  <MyImage src="https://hodgetwins.gobigly.com/hosted/images/0e/0abace4c2d4dd0bdf5cce336986343/High-Country-Funnel-Banner.png" className="" />
                 </div>
               </div>
 
@@ -319,6 +313,7 @@ export default function Home() {
                 justifyContent: "center",
                 alignContent: "center",
                 alignItems: "center",
+                height: windowWidth > 720 ? "700px" : "auto",
               }}>
                 <div style={{ 
                   display: "flex",
@@ -330,7 +325,7 @@ export default function Home() {
                   width: windowWidth > 720 ? "600px" : "95%",
                   padding: "1rem"
                 }}>
-                  <MyImage src="https://hodgetwins.goingbigly.com/hosted/images/79/88ad48c8a84505adb68cf8ce595aa7/IMG_7848.jpg" className="" />
+                  <MyImage src="https://hodgetwins.gobigly.com/hosted/images/c0/f58440569142c5bf8903379c5d8b81/chevy-5.jpg" className="" />
                 </div>
                 <div style={{ 
                   display: "flex",
@@ -342,7 +337,29 @@ export default function Home() {
                   height: windowWidth > 720 ? "500px" : "auto",
                   padding: "1rem"
                 }}>
-                  <MyImage src="https://hodgetwins.goingbigly.com/hosted/images/04/5fa801f63d40d19d1ef39fd884238a/IMG_7814.jpg" className="" />
+                  <MyImage src="https://hodgetwins.gobigly.com/hosted/images/9c/5651915a5642ff81f0c33083ec6748/IMG_2224.jpg" className="" />
+                </div>
+              </div>
+              
+              <div style={{ 
+                display: "flex",
+                flexDirection: windowWidth > 720 ? "row" : "column",
+                justifyContent: "center",
+                alignContent: "center",
+                alignItems: "center",
+                height: windowWidth > 720 ? "700px" : "auto",
+              }}>
+                <div style={{ 
+                  display: "flex",
+                  flexDirection: windowWidth > 720 ? "row" : "column",
+                  justifyContent: "center",
+                  alignContent: "center",
+                  alignItems: "center",
+                  height: windowWidth > 720 ? "500px" : "auto",
+                  width: windowWidth > 720 ? "600px" : "95%",
+                  padding: "1rem"
+                }}>
+                  <MyImage src="https://hodgetwins.gobigly.com/hosted/images/ab/b6f50f09d54aa78aac1fd68511f37d/IMG_2225.jpg" className="" />
                 </div>
               </div>
           </div>
@@ -363,22 +380,22 @@ export default function Home() {
                 color: "white"
               }}>
                 <span className="redtext boldtext">
-                  {`JEEP WRANGLER UNLIMITED HIGH ALTITUDE `}
+                  {`CHEVY 2500HD DURAMAX DIESEL `}
                 </span>
                 {`4X4`}
               </div>
               <div>
-                <span className="redtext boldtext">{`3.6L V6 24V VVT® `} </span>
-                {`Etorque Engine `}
+                <span className="redtext boldtext">{`6.6L V8 Duramax`} </span>
+                {`Diesel Engine `}
               </div>
               <div>
-                <span className="redtext boldtext">{`‍SKY ONE-TOUCH® `}</span>
-                {`Power-Top`}
+                <span className="redtext boldtext">{`‍AUTOMATIC`}</span>
+                {`Power Running Boards`}
               </div>
               <span className="redtext boldtext">
                 ‍{`20" FUEL PERFORMANCE WHEELS  `}
               </span>
-              {`Wrapped in 37" Mastercraft Courser Trail HD Tires `}
+              {`Wrapped in 35" Mastercraft Courser Trail HD Tires  `}
             </div>
           </div>
           <div className="div-block-11">
@@ -471,8 +488,6 @@ export default function Home() {
                   </div>
                 </div>
 
-
-
                 <div style={{ 
                   display: "flex",
                   flexDirection: windowWidth > 720 ? "row" : "column",
@@ -506,7 +521,26 @@ export default function Home() {
                   </div>
                 </div>
 
-                
+                <div style={{ 
+                  display: "flex",
+                  flexDirection: windowWidth > 720 ? "row" : "column",
+                  justifyContent: "center",
+                  alignContent: "center",
+                  alignItems: "center",
+                }}>
+                  <div style={{ 
+                    display: "flex",
+                    flexDirection: windowWidth > 720 ? "row" : "column",
+                    justifyContent: "center",
+                    alignContent: "center",
+                    alignItems: "center",
+                    width: windowWidth > 720 ? "600px" : "95%",
+                    height: windowWidth > 720 ? "auto" : "auto",
+                    padding: "2rem 1rem"
+                  }}>
+                    <MyImage src="/images/Giveaway - Teresa.png" className="" />
+                  </div>
+                </div>
                 
             </div>
           </div>
@@ -541,7 +575,7 @@ export default function Home() {
                 >
                   <ul role="list" className="list-5">
                     <li className="accordianlist">
-                      {`Our new promotion is LIVE...enter to win a Jeep Wrangler Unlimited High Altitude 4x4 + $10,000 CASH! With each purchase, you are automatically entered into our giveaway to WIN! Every $1 you spend gets you 1 entry into the giveaway...it's that easy!`}
+                      {`Our new promotion is LIVE...enter to win a Chevy 2500HD High Country Diesel + $10,000 CASH! With each purchase, you are automatically entered into our giveaway to WIN! Every $1 you spend gets you 5 entries into the giveaway...it's that easy!`}
                     </li>
                     <li className="accordianlist">
                       {`Become a member of the Hodge Twins/Bigly VIP Club and receive exclusive coupons, discounts, benefits, & more for only $9/month! VIP Club Members receive double bonus entries (18 entries/month) into each giveaway as long as they are an active member!`}
@@ -715,7 +749,7 @@ export default function Home() {
           </div>
           <div className="div-block-16">
             <IFrame
-              videoId="_rCqBqFxiFE"
+              videoId="5CqxDD5ob8k"
               title="Veteran wins a Ford Raptor! (Hodgetwins Giveaway)"
             />
           </div>

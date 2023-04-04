@@ -7,10 +7,10 @@ function Footer({ home }) {
             <div className="div-block-20">
               <p className="paragraph-19 footer-p">
                 <strong>
-                  {`* * * LIMIT OF ONE THOUSAND (1,020) ENTRIES PER PERSON * * * NO PURCHASE OR PAYMENT OF ANY KIND IS NECESSARY TO ENTER OR WIN. PURCHASE OR PAYMENT DOES NOT IMPROVE YOUR CHANCE OF WINNING. The Hodgetwins #8 is open only to legal residents of the 48 contiguous U.S. States and D.C. (excluding FL and NY) who have reached the age of majority. Void elsewhere and where prohibited. Promotion ends 3/31/2023. Winner must pick up vehicle from a location in Nevada or Arkansas, designated by Sponsor. Subject to complete `}
+                  {`* * * LIMIT OF ONE THOUSAND (1,020) ENTRIES PER PERSON * * * NO PURCHASE OR PAYMENT OF ANY KIND IS NECESSARY TO ENTER OR WIN. PURCHASE OR PAYMENT DOES NOT IMPROVE YOUR CHANCE OF WINNING. The Hodgetwins #9 is open only to legal residents of the 48 contiguous U.S. States and D.C. (excluding FL and NY) who have reached the age of majority. Void elsewhere and where prohibited. Promotion ends 6/1/2023. Winner must pick up vehicle from a location in Nevada or Arkansas, designated by Sponsor. Subject to complete `}
                 </strong>
                 <a
-                  href="https://cdn.shopify.com/s/files/1/0612/0593/8348/files/Hodgetwins_Sweepstakes_8_Official_Rules_pdf.pdf?v=1674836416"
+                  href="https://cdn.shopify.com/s/files/1/0612/0593/8348/files/Hodgetwins_9_Official_Rules_Final_16658e9e-03ed-4df7-a49d-7c976480bc9e.pdf?v=1679742006"
                   target="_parent"
                 >
                   <strong>Official Rules</strong>
