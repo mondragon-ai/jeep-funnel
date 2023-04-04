@@ -26,7 +26,7 @@ const SignupForm = ({ initialValues, handleSubmit, isLoading, timeLeft }) => {
       marginBottom: "0"
     }}>
       <div>
-        <MyImage src={"/images/entry.png"} />
+        <MyImage src={"/images/Entry_Tickets.png"} />
       </div>
       <div style={{
         display: "none",
