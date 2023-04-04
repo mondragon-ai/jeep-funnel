@@ -15,9 +15,9 @@ const Congratulations = () => {
     sendPageViewEvent("CONFIRMED"); // send page view event to google analytics
   }, []);
 
-  const description = `Enter for a chance to win a new Jeep & $10,000.00 cash. PIck your size and get discounted items and more importantly, FAST ENTRIES to enter to win!`;
+  const description = `Enter for a chance to win a new Chevy 2500HD Duramax Diesel & $10,000.00 cash. PIck your size and get discounted items and more importantly, FAST ENTRIES to enter to win!`;
+  const ogImgUrl =  "https://www.hodgetwinssweepstakes.com/images/High-Country-Funnel-Banner.png";
   const canonicalUrl = "https://www.hodgetwinssweepstakes.com";
-  const ogImgUrl =  "https://hodgetwins.goingbigly.com/hosted/images/5c/272d0ce18c44cb851c7459279df8a7/Jeep-Giveaway.png";
   const t = "Hodge Twins Sweepsstake" 
 
   return (
