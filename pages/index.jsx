@@ -601,7 +601,7 @@ export default function Home() {
                   <ul role="list" className="list-5">
                     <li className="accordianlist">
                       <span className="boldtext">Yeaahhhh!! </span> We are
-                      really giving away a Jeep Wrangler Unlimited High Altitude 4x4 + $10k Cash! No BS!
+                      really giving away a Chevy 2500HD High Country Diesel + $10k Cash! No BS!
                       No gimmicks! You support the Twins and we give back to our
                       fans!
                     </li>
