@@ -193,7 +193,7 @@ const OrderFormContainer = () => {
     const conversion_price = price ? (price/100) : 0
 
     gtags.event('conversion', { 'send_to': 'AW-10793712364/Knd8CNuBkpIYEOz165oo', 'value': conversion_price, 'currency': 'USD', 'transaction_id': "txt_" + crypto.randomBytes(10).toString("hex").substring(0,10) });
-    gtags.event('conversion', { 'send_to': 'AW-10793712364/Knd8CNuBkpIYEOz165oo', 'value': conversion_price, 'currency': 'USD', 'transaction_id': "txt_" + crypto.randomBytes(10).toString("hex").substring(0,10) });
+    gtags.twitterEvent(globalState.email, conversion_price);
     // Make the request to the server to store the card after a successful submission // http://127.0.0.1:5001/impowered-funnel/us-central1 // https://us-central1-impowered-funnel.cloudfunctions.net
     const response = await imPoweredRequest(
       "POST",
