@@ -64,6 +64,16 @@ export default function App({ Component, pageProps }) {
         `
       }}>
       </Script>
+{/*       
+      <script type="text/javascript">
+  // Insert Twitter Event ID
+  twq('event', 'tw-od5o9-oeiwz', {
+    value: null, // use this to pass the value of the conversion (e.g. 5.00)
+    currency: null, // use this to pass the currency of the conversion with an ISO 4217 code (e.g. ‘USD’)
+    conversion_id: null, // use this to pass a unique ID for the conversion event for deduplication (e.g. order id '1a2b3c')
+    email_address: null // use this to pass a user’s email address
+  });
+</script> */}
 
       {/* Twitter Pixel */}
       <Script 
@@ -76,8 +86,7 @@ export default function App({ Component, pageProps }) {
           a=t.getElementsByTagName(n)[0],a.parentNode.insertBefore(u,a))}(window,document,'script');
           twq('config','od5o9');
         `
-      }}>
-      </Script>
+      }}/>
       <ContextProvider>
         <Layout>
           <Component {...pageProps} />

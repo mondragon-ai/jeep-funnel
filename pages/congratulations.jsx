@@ -98,7 +98,7 @@ const Congratulations = () => {
                 style={{
                   fontFamily: "'Fjalla'",
                 }}>
-                  We appreciate and value feedback to bring you better products, soon
+                  Here's a FREE $5.00 OFF to officialhodgetwins.com
                 </strong>
               </div>
               <Link
@@ -112,7 +112,7 @@ const Congratulations = () => {
                   <h2 className="heading-35" 
                 style={{
                   fontFamily: "'Fjalla'",
-                }}>SHARE FEED BACK HERE</h2>
+                }}>CLAIM MY FREE $5.00 OFF </h2>
                 </div>
               </Link>
               <div className="text-block-10">
@@ -121,8 +121,7 @@ const Congratulations = () => {
                     fontFamily: "'Fjalla'",
                     fontSize: windowWidth > 720 ? "" : "30px"
                   }}>
-                  Thank you!
-                
+                  * ONLY VALID FOR 24 HOURS
                   <br />
                 </strong>
               </div>
