@@ -153,6 +153,7 @@ const Upsell = () => {
       <meta property="og:title" content={t} />
       
     </Head>
+    
       <div className="section-8 wf-section">
         <div className="w-container">
           <div className="div-block-54">
@@ -539,6 +540,7 @@ const Upsell = () => {
           </div>
         </div>
       </div>
+
       <div
         className="wf-section"
         style={{ background: "#fff", borderBottom: "1px solid red" }}
@@ -567,6 +569,7 @@ const Upsell = () => {
           </div>
         </div>
       </div>
+
       <Footer />
     </div>
   );
