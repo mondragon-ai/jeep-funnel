@@ -102,7 +102,7 @@ const Congratulations = () => {
                 </strong>
               </div>
               <Link
-                href="https://forms.gle/383V4sEDBLeaxYhy7"
+                href="https://officialhodgetwins.com/"
                 className="div-block-115"
               >
                 <div className="div-block-114" 
