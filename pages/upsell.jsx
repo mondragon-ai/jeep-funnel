@@ -8,6 +8,7 @@ import Router from "next/router";
 import Head from "next/head";
 import * as gtags from "../lib/analytics";
 import * as crypto from "crypto";
+import * as gtags from "../lib/analytics";
 
 
 const Upsell = () => {
@@ -40,10 +41,14 @@ const Upsell = () => {
     const p_list = (JSON.parse(query.get("products")) || globalState.products || []);
     const email = (JSON.parse(query.get("email")) || globalState.email || []);
     const bump = (JSON.parse(query.get("bump")) || globalState.bump || []);
+    console.log( email);
+    console.log( bump);
 
     // calc vars
     const price =  payload.bump ? Number(p_list[0].price )+ 399 : Number(p_list[0].price);
     const conversion_price = price && bump ? (price/100) + 3.99 : price ? (price/100) : 0;
+    console.log( price);
+    console.log( conversion_price);
 
     // push 3rd party analytics
     gtags.twitterEvent(email, conversion_price);
