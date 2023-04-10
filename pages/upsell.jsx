@@ -19,33 +19,48 @@ const Upsell = () => {
   const [windowWidth, setWindowWidth] = useState(0);
 
   useEffect(() => {
+    setClientOrigin(window.location.origin); // set client origin
+    const query = new URLSearchParams(window.location.search);
     setWindowWidth(window.innerWidth);
     sendPageViewEvent("UPSELL"); // send page view event to google analytics
-    setClientOrigin(window.location.origin); // set client origin
-    setTimeout(() => setMessage(""), 5000);
-
-    console.log("UPSELL");
-    const query = new URLSearchParams(window.location.search);
+    // setTimeout(() => setMessage(""), 5000);
+    
+    console.log(" [UPSELL]");
     console.log( query.get("cus_uuid") );
     setGlobalState({
       ...globalState,
       cus_uuid: query.get("cus_uuid") || globalState.cus_uuid || "",
       funnel_uuid: query.get("funnel_uuid") || globalState.funnel_uuid || "",
       products: JSON.parse(query.get("products")) || globalState.products || [],
-      high_risk: false,
       bump: query.get("bump") || globalState.bump || false,
+      high_risk: false,
     });
+
+    // extract vars
+    const p_list = (JSON.parse(query.get("products")) || globalState.products || []);
+    const email = (JSON.parse(query.get("email")) || globalState.email || []);
+    const bump = (JSON.parse(query.get("bump")) || globalState.bump || []);
+
+    // calc vars
+    const price =  payload.bump ? Number(p_list[0].price )+ 399 : Number(p_list[0].price);
+    const conversion_price = price && bump ? (price/100) + 3.99 : price ? (price/100) : 0;
+
+    // push 3rd party analytics
+    gtags.twitterEvent(email, conversion_price);
+    gtags.event('conversion', {
+      'send_to': 'AW-10793712364/Knd8CNuBkpIYEOz165oo',
+      'value': conversion_price,
+      'currency': 'USD',
+      'transaction_id': "txt_" + crypto.randomBytes(10).toString("hex").substring(0,10)
+    });
+    
   }, []);
 
   const signUpForFreeDecals = async () => {
     try {
       setIsLoading(true);
       const payload = createPayloadFromOrder();
-      console.log("PAYLOAD");
-      const price =  payload.bump ? Number(payload.product.price )+ 399 : Number(payload.product.price);
-      const conversion_price = price ? (price/100) : 0
 
-      // gtags.event('conversion', { 'send_to': 'AW-10793712364/Ifg6CN6BkpIYEOz165oo', 'value': conversion_price, 'currency': 'USD', 'transaction_id': "txt_" + crypto.randomBytes(10).toString("hex").substring(0,10) });
       const response = await imPoweredRequest(
         "POST",
         "https://us-central1-impowered-funnel.cloudfunctions.net/funnel/payments/quick-sub",
@@ -108,10 +123,7 @@ const Upsell = () => {
   };
 
   const updateGlobalState = () => {
-    console.log("UPSELL");
     const query = new URLSearchParams(window.location.search);
-    console.log( query.get("cus_uuid") );
-    const p_list = (JSON.parse(query.get("products")) || globalState.products || []);
     setGlobalState({
       ...globalState,
       cus_uuid: query.get("cus_uuid") || globalState.cus_uuid || "",
@@ -153,7 +165,7 @@ const Upsell = () => {
       <meta property="og:title" content={t} />
       
     </Head>
-    
+
       <div className="section-8 wf-section">
         <div className="w-container">
           <div className="div-block-54">
