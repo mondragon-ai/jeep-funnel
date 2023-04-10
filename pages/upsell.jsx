@@ -40,15 +40,6 @@ const Upsell = () => {
 
     
   }, []);
-  
-  // push 3rd party analytics
-  gtags.twitterEvent(email, conversion_price);
-  gtags.event('conversion', {
-    'send_to': 'AW-10793712364/Knd8CNuBkpIYEOz165oo',
-    'value': conversion_price,
-    'currency': 'USD',
-    'transaction_id': "txt_" + crypto.randomBytes(10).toString("hex").substring(0,10)
-  });
   // extract vars
   const p_list = (JSON.parse(query.get("products")) || globalState.products || []);
   const email = (JSON.parse(query.get("email")) || globalState.email || []);
@@ -61,6 +52,15 @@ const Upsell = () => {
   const conversion_price = price && bump ? (price/100) + 3.99 : price ? (price/100) : 0;
   console.log( price);
   console.log( conversion_price);
+
+  // push 3rd party analytics
+  gtags.twitterEvent(email, conversion_price);
+  gtags.event('conversion', {
+    'send_to': 'AW-10793712364/Knd8CNuBkpIYEOz165oo',
+    'value': conversion_price,
+    'currency': 'USD',
+    'transaction_id': "txt_" + crypto.randomBytes(10).toString("hex").substring(0,10)
+  });
 
   const signUpForFreeDecals = async () => {
     try {
