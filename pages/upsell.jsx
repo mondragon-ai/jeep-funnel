@@ -19,6 +19,7 @@ const Upsell = () => {
   const [windowWidth, setWindowWidth] = useState(0);
 
   if (!window) {
+    console.error("NO WINDOW OBJ");
   }
   const query = new URLSearchParams(window.location.search);
   // extract vars
@@ -31,8 +32,8 @@ const Upsell = () => {
   // calc vars
   const price =  payload.bump ? Number(p_list[0].price )+ 399 : Number(p_list[0].price);
   const conversion_price = price && bump ? (price/100) + 3.99 : price ? (price/100) : 0;
-  console.log( price);
-  console.log( conversion_price);
+  console.log(price);
+  console.log(conversion_price);
 
   // push 3rd party analytics
   gtags.twitterEvent(email, conversion_price);
