@@ -18,12 +18,24 @@ const Upsell = () => {
   const [clientOrigin, setClientOrigin] = useState("127.0.0.1");
   const [windowWidth, setWindowWidth] = useState(0);
 
-  let query = null;
 
-  if (!window) {
-    console.error("NO WINDOW OBJ");
-  } else {
-    query = new URLSearchParams(window.location.search);
+  useEffect(() => {
+    let query = window ? (new URLSearchParams(window.location.search)) : null;
+    setClientOrigin(window ? window.location.origin : ""); // set client origin
+    setWindowWidth(window? window.innerWidth : 0);
+    sendPageViewEvent("UPSELL"); // send page view event to google analytics
+    // setTimeout(() => setMessage(""), 5000);
+    
+    console.log(" [UPSELL]");
+    setGlobalState({
+      ...globalState,
+      cus_uuid: query.get("cus_uuid") || globalState.cus_uuid || "",
+      funnel_uuid: query.get("funnel_uuid") || globalState.funnel_uuid || "",
+      products: JSON.parse(query.get("products")) || globalState.products || [],
+      bump: query.get("bump") || globalState.bump || false,
+      high_risk: false,
+    });
+
     // extract vars
     const p_list = (JSON.parse(query.get("products")) || globalState.products || []);
     const email = (JSON.parse(query.get("email")) || globalState.email || []);
@@ -45,27 +57,10 @@ const Upsell = () => {
       'currency': 'USD',
       'transaction_id': "txt_" + crypto.randomBytes(10).toString("hex").substring(0,10)
     });
-  }
-
-  useEffect(() => {
-    setClientOrigin(window.location.origin); // set client origin
-    setWindowWidth(window.innerWidth);
-    sendPageViewEvent("UPSELL"); // send page view event to google analytics
-    // setTimeout(() => setMessage(""), 5000);
-    
-    console.log(" [UPSELL]");
-    console.log( query.get("cus_uuid") );
-    setGlobalState({
-      ...globalState,
-      cus_uuid: query.get("cus_uuid") || globalState.cus_uuid || "",
-      funnel_uuid: query.get("funnel_uuid") || globalState.funnel_uuid || "",
-      products: JSON.parse(query.get("products")) || globalState.products || [],
-      bump: query.get("bump") || globalState.bump || false,
-      high_risk: false,
-    });
 
     
   }, []);
+
 
   const signUpForFreeDecals = async () => {
     try {
