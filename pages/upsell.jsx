@@ -41,10 +41,10 @@ const Upsell = () => {
     const email = query.get("email") ? query.get("email") : (globalState.email);
     const bump = (JSON.parse(query.get("bump")) || globalState.bump || []);
     console.log( email);
-    console.log( bump);
+    console.log( p_list);
   
     // calc vars
-    const price =  p_list[0].price  ? Number(p_list[0].price ) : 0;
+    const price =  p_list[0].price_num  ? Number(p_list[0].price_num ) : 0;
     const conversion_price = bump ? (price/100) + 3.99 : (price/100);
     console.log(price);
     console.log(conversion_price);
