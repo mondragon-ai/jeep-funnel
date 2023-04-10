@@ -63,6 +63,10 @@ const SignupFormContainer = () => {
       funnel_uuid,
       high_risk,
     };
+    setGlobalState({
+      ...globalState,
+      email: email,
+    });
     await gtags.event('conversion', {'send_to': 'AW-10793712364/xSshCNiBkpIYEOz165oo'});
 
     const response = await imPoweredRequest(
@@ -76,7 +80,7 @@ const SignupFormContainer = () => {
       setGlobalState({
         ...globalState,
         first_name,
-        email,
+        email: email,
         clientSecret: STRIPE_CLIENT_ID,
         cus_uuid: id,
       });

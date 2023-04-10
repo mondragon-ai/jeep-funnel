@@ -20,7 +20,7 @@ const Upsell = () => {
 
 
   useEffect(() => {
-    let query = window ? (new URLSearchParams(window.location.search)) : null;
+    let query = new URLSearchParams(window.location.search);
     setClientOrigin(window ? window.location.origin : ""); // set client origin
     setWindowWidth(window? window.innerWidth : 0);
     sendPageViewEvent("UPSELL"); // send page view event to google analytics
@@ -36,16 +36,16 @@ const Upsell = () => {
       high_risk: false,
     });
 
-    // extract vars
+    // // extract vars
     const p_list = (JSON.parse(query.get("products")) || globalState.products || []);
-    const email = (JSON.parse(query.get("email")) || globalState.email || []);
+    const email = query.get("email") ? query.get("email") : (globalState.email);
     const bump = (JSON.parse(query.get("bump")) || globalState.bump || []);
     console.log( email);
     console.log( bump);
   
     // calc vars
-    const price =  payload.bump ? Number(p_list[0].price )+ 399 : Number(p_list[0].price);
-    const conversion_price = price && bump ? (price/100) + 3.99 : price ? (price/100) : 0;
+    const price =  p_list[0].price  ? Number(p_list[0].price ) : 0;
+    const conversion_price = bump ? (price/100) + 3.99 : (price/100);
     console.log(price);
     console.log(conversion_price);
   
