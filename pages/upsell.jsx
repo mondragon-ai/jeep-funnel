@@ -8,7 +8,6 @@ import Router from "next/router";
 import Head from "next/head";
 import * as gtags from "../lib/analytics";
 import * as crypto from "crypto";
-import * as gtags from "../lib/analytics";
 
 
 const Upsell = () => {
@@ -18,6 +17,8 @@ const Upsell = () => {
   const [globalState, setGlobalState] = useContext(Context);
   const [clientOrigin, setClientOrigin] = useState("127.0.0.1");
   const [windowWidth, setWindowWidth] = useState(0);
+
+
 
   useEffect(() => {
     setClientOrigin(window.location.origin); // set client origin
@@ -37,29 +38,29 @@ const Upsell = () => {
       high_risk: false,
     });
 
-    // extract vars
-    const p_list = (JSON.parse(query.get("products")) || globalState.products || []);
-    const email = (JSON.parse(query.get("email")) || globalState.email || []);
-    const bump = (JSON.parse(query.get("bump")) || globalState.bump || []);
-    console.log( email);
-    console.log( bump);
-
-    // calc vars
-    const price =  payload.bump ? Number(p_list[0].price )+ 399 : Number(p_list[0].price);
-    const conversion_price = price && bump ? (price/100) + 3.99 : price ? (price/100) : 0;
-    console.log( price);
-    console.log( conversion_price);
-
-    // push 3rd party analytics
-    gtags.twitterEvent(email, conversion_price);
-    gtags.event('conversion', {
-      'send_to': 'AW-10793712364/Knd8CNuBkpIYEOz165oo',
-      'value': conversion_price,
-      'currency': 'USD',
-      'transaction_id': "txt_" + crypto.randomBytes(10).toString("hex").substring(0,10)
-    });
     
   }, []);
+  
+  // push 3rd party analytics
+  gtags.twitterEvent(email, conversion_price);
+  gtags.event('conversion', {
+    'send_to': 'AW-10793712364/Knd8CNuBkpIYEOz165oo',
+    'value': conversion_price,
+    'currency': 'USD',
+    'transaction_id': "txt_" + crypto.randomBytes(10).toString("hex").substring(0,10)
+  });
+  // extract vars
+  const p_list = (JSON.parse(query.get("products")) || globalState.products || []);
+  const email = (JSON.parse(query.get("email")) || globalState.email || []);
+  const bump = (JSON.parse(query.get("bump")) || globalState.bump || []);
+  console.log( email);
+  console.log( bump);
+
+  // calc vars
+  const price =  payload.bump ? Number(p_list[0].price )+ 399 : Number(p_list[0].price);
+  const conversion_price = price && bump ? (price/100) + 3.99 : price ? (price/100) : 0;
+  console.log( price);
+  console.log( conversion_price);
 
   const signUpForFreeDecals = async () => {
     try {
