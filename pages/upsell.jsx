@@ -1,14 +1,16 @@
 import { useState, useEffect, useContext } from "react";
-import MyImage from "../components/MyImage"
+import MyImage from "../components/MyImage";
 import Footer from "../components/Footer";
 import { imPoweredRequest } from "../lib/request";
 import { Context } from "../context";
 import { sendPageViewEvent } from "../lib/analytics";
 import Router from "next/router";
 import Head from "next/head";
+import dynamic from "next/dynamic";
 import * as gtags from "../lib/analytics";
 import * as crypto from "crypto";
 
+const Footer = dynamic(() => import("../components/Footer"));
 
 const Upsell = () => {
   const [message, setMessage] = useState("");
@@ -18,14 +20,16 @@ const Upsell = () => {
   const [clientOrigin, setClientOrigin] = useState("127.0.0.1");
   const [windowWidth, setWindowWidth] = useState(0);
 
-
+  console.log("UPSELL");
+  const query = new URLSearchParams(window.location.search);
+  console.log(query.get("cus_uuid"));
   useEffect(() => {
     let query = new URLSearchParams(window.location.search);
     setClientOrigin(window ? window.location.origin : ""); // set client origin
-    setWindowWidth(window? window.innerWidth : 0);
+    setWindowWidth(window ? window.innerWidth : 0);
     sendPageViewEvent("UPSELL"); // send page view event to google analytics
     // setTimeout(() => setMessage(""), 5000);
-    
+
     console.log(" [UPSELL]");
     setGlobalState({
       ...globalState,
@@ -37,35 +41,39 @@ const Upsell = () => {
     });
 
     // // extract vars
-    const p_list = (JSON.parse(query.get("products")) || globalState.products || []);
-    const email = query.get("email") ? query.get("email") : (globalState.email);
-    const bump = (JSON.parse(query.get("bump")) || globalState.bump || []);
-    console.log( email);
-    console.log( p_list);
-  
+    const p_list =
+      JSON.parse(query.get("products")) || globalState.products || [];
+    const email = query.get("email") ? query.get("email") : globalState.email;
+    const bump = JSON.parse(query.get("bump")) || globalState.bump || [];
+    console.log(email);
+    console.log(p_list);
+
     // calc vars
-    const price =  p_list[0].price_num  ? Number(p_list[0].price_num ) : 0;
-    const conversion_price = bump ? (price/100) + 3.99 : (price/100);
+    const price = p_list[0].price_num ? Number(p_list[0].price_num) : 0;
+    const conversion_price = bump ? price / 100 + 3.99 : price / 100;
     console.log(price);
     console.log(conversion_price);
-  
+
     // push 3rd party analytics
     gtags.twitterEvent(email, conversion_price);
-    gtags.event('conversion', {
-      'send_to': 'AW-10793712364/Knd8CNuBkpIYEOz165oo',
-      'value': conversion_price,
-      'currency': 'USD',
-      'transaction_id': "txt_" + crypto.randomBytes(10).toString("hex").substring(0,10)
+    gtags.event("conversion", {
+      send_to: "AW-10793712364/Knd8CNuBkpIYEOz165oo",
+      value: conversion_price,
+      currency: "USD",
+      transaction_id:
+        "txt_" + crypto.randomBytes(10).toString("hex").substring(0, 10),
     });
-
-    
   }, []);
-
 
   const signUpForFreeDecals = async () => {
     try {
       setIsLoading(true);
       const payload = createPayloadFromOrder();
+      console.log("PAYLOAD");
+      const price = payload.bump
+        ? Number(payload.product.price) + 399
+        : Number(payload.product.price);
+      const conversion_price = price ? price / 100 : 0;
 
       const response = await imPoweredRequest(
         "POST",
@@ -101,7 +109,7 @@ const Upsell = () => {
       const { cus_uuid, high_risk, funnel_uuid } = globalState;
       console.log(cus_uuid);
       const query = new URLSearchParams(window.location.search);
-      console.log( query.get("cus_uuid") );
+      console.log(query.get("cus_uuid"));
       return {
         cus_uuid: query.get("cus_uuid") || cus_uuid,
         product: {
@@ -118,7 +126,7 @@ const Upsell = () => {
           variant_id: 42235971567788,
           quantity: 1,
           product_id: "",
-          is_recurring: true
+          is_recurring: true,
         },
         high_risk,
         funnel_uuid: query.get("funnel_uuid") || funnel_uuid,
@@ -130,47 +138,46 @@ const Upsell = () => {
 
   const updateGlobalState = () => {
     const query = new URLSearchParams(window.location.search);
+    console.log(query.get("cus_uuid"));
+    const p_list =
+      JSON.parse(query.get("products")) || globalState.products || [];
     setGlobalState({
       ...globalState,
       cus_uuid: query.get("cus_uuid") || globalState.cus_uuid || "",
       funnel_uuid: query.get("funnel_uuid") || globalState.funnel_uuid || "",
-      products: [
-        ...p_list,
-        { title: "VIP Membership", price_num: 900 },
-      ],
-      high_risk:  query.get("high_risk") || globalState.high_risk || false,
+      products: [...p_list, { title: "VIP Membership", price_num: 900 }],
+      high_risk: query.get("high_risk") || globalState.high_risk || false,
       bump: query.get("bump") || globalState.bump || false,
     });
-
   };
 
   const showVIPClubInfo = () => setShowVIP(!showVIP);
 
   const description = `Enter for a chance to win a new Chevy 2500HD Duramax Diesel & $10,000.00 cash. PIck your size and get discounted items and more importantly, FAST ENTRIES to enter to win!`;
-  const ogImgUrl =  "https://www.hodgetwinssweepstakes.com/images/High-Country-Funnel-Banner.png";
+  const ogImgUrl =
+    "https://www.hodgetwinssweepstakes.com/images/High-Country-Funnel-Banner.png";
   const canonicalUrl = "https://www.hodgetwinssweepstakes.com";
-  const t = "Hodge Twins Sweepsstake" 
+  const t = "Hodge Twins Sweepsstake";
 
   return (
     <div>
-    <Head>
-      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-      <title>{t}</title>
-      <meta name="description" content={description} />
-      <link rel="canonical" href={canonicalUrl} />
+        <title>{t}</title>
+        <meta name="description" content={description} />
+        <link rel="canonical" href={canonicalUrl} />
 
-      <link rel="shortcut icon" href="/favicon.ico" />
-      <link rel="icon" href="/favicon.ico" />
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.ico" />
 
-      <meta property="og:locale" content="en_US" />
-      <meta property="og:type" content={"artcle"} />
-      <meta property="og:description" content={description} />
-      <meta property="og:image" content={ogImgUrl} />
-      <meta property="og:url" content={canonicalUrl} />
-      <meta property="og:title" content={t} />
-      
-    </Head>
+        <meta property="og:locale" content="en_US" />
+        <meta property="og:type" content={"artcle"} />
+        <meta property="og:description" content={description} />
+        <meta property="og:image" content={ogImgUrl} />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:title" content={t} />
+      </Head>
 
       <div className="section-8 wf-section">
         <div className="w-container">
@@ -254,10 +261,16 @@ const Upsell = () => {
                       justifyContent: "center",
                       alignContent: "center",
                       alignItems: "center",
-                      display: "flex"
+                      display: "flex",
                     }}
                   >
-                    <span style={{ fontSize: windowWidth > 720 ? "45px" : "18px", fontFamily: "Fjalla" }} className="boldtext">
+                    <span
+                      style={{
+                        fontSize: windowWidth > 720 ? "45px" : "18px",
+                        fontFamily: "Fjalla",
+                      }}
+                      className="boldtext"
+                    >
                       What is the Hodge Twins/Bigly VIP Club?
                     </span>
                     <img
@@ -265,8 +278,8 @@ const Upsell = () => {
                       loading="lazy"
                       alt="Bigly logo"
                       className
-                      width={windowWidth > 720 ? 40: 30}
-                      height={windowWidth > 720 ? 40: 30}
+                      width={windowWidth > 720 ? 40 : 30}
+                      height={windowWidth > 720 ? 40 : 30}
                     />
                   </div>
                   {showVIP && (
@@ -276,174 +289,270 @@ const Upsell = () => {
                     >
                       <div className="accordion-body__contents">
                         <div className="section--44513">
-                          <div className="containerInner" style={{ borderRadius: "6px" }}>
+                          <div
+                            className="containerInner"
+                            style={{ borderRadius: "6px" }}
+                          >
                             <div className="row-185">
                               <div className="col-full-111-127">
-                                <div className="" style={{textAlign: "center"}}>
-                                  <h1 style={{ fontSize: windowWidth > 720 ? "45px" : "35px", lineHeight: windowWidth > 720 ? "45px" : "35px", fontFamily: "Fjalla",  }} >Hodge Twins/Bigly < br /> VIP Club</h1>
+                                <div
+                                  className=""
+                                  style={{ textAlign: "center" }}
+                                >
+                                  <h1
+                                    style={{
+                                      fontSize:
+                                        windowWidth > 720 ? "45px" : "35px",
+                                      lineHeight:
+                                        windowWidth > 720 ? "45px" : "35px",
+                                      fontFamily: "Fjalla",
+                                    }}
+                                  >
+                                    Hodge Twins/Bigly <br /> VIP Club
+                                  </h1>
                                 </div>
-                                <div className="" style={{textAlign: "center"}}>
-                                  <h1 style={{ fontSize: windowWidth > 720 ? "45px" : "25px", lineHeight: windowWidth > 720 ? "45px" : "30px", fontFamily: "Fjalla",  }}>
+                                <div
+                                  className=""
+                                  style={{ textAlign: "center" }}
+                                >
+                                  <h1
+                                    style={{
+                                      fontSize:
+                                        windowWidth > 720 ? "45px" : "25px",
+                                      lineHeight:
+                                        windowWidth > 720 ? "45px" : "30px",
+                                      fontFamily: "Fjalla",
+                                    }}
+                                  >
                                     {`(This ain't your ordinary Membership Club)`}
                                   </h1>
                                 </div>
                               </div>
                             </div>
-                            <div style={{
-                              display: "flex",
-                              flexDirection: "column",
-                              justifyContent: "center",
-                              alignItems: "center",
-                              color: "rgb(16, 40, 76)",
-                              fontFamily: "'Fjalla'",
-                            }}>
-                              <div style={{
-                                display: "flex",
-                                flexDirection: windowWidth > 720 ? "row" : "column",
-                                justifyContent: "center",
-                                alignItems: windowWidth > 720 ?  "" : "center",
-                                width: windowWidth > 720 ? "80%" : '100%'
-                              }}>
-                                <div style={{
-                                  display: "flex",
-                                  flexDirection: "column",
-                                  justifyContent: "flex-start",
-                                  alignItems: "center",
-                                  textAlign: "center",
-                                  width: "300px",
-                                }}>
-
-                                  <div style={{
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    justifyContent: "center",
-                                    height: "100px",
-                                    width: "100px",
-                                  }}>
-                                    <MyImage src={"https://hodgetwins.goingbigly.com/hosted/images/d1/09d9b098c740b28b727b900bcb99b6/Coins.png"} />
-                                  </div>
-                                  <h3 style={{
-                                    fontSize: "20px",
-                                    padding: "0 2rem",}}>Monthly <br />Member Credits</h3>
-                                </div>
-
-                                <div style={{
-                                  display: "flex",
-                                  flexDirection: "column",
-                                  justifyContent: "flex-start",
-                                  alignItems: "center",
-                                  width: "300px",
-                                  textAlign: "center",
-                                  padding: "0 2rem",
-                                }}>
-
-                                  <div style={{
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    justifyContent: "center",
-                                    height: "100px",
-                                    width: "100px",
-                                  }}>
-                                    <MyImage src={"https://hodgetwins.goingbigly.com/hosted/images/dc/5821281242414c9c54cf107ac9a173/Winner.png"} />
-                                  </div>
-                                  <h3 style={{fontSize: "20px"}}>Automatic DOUBLE Entries into ALL Giveaways</h3>
-                                </div>
-
-                                <div style={{
-                                  display: "flex",
-                                  flexDirection: "column",
-                                  justifyContent: "flex-start",
-                                  alignItems: "center",
-                                  width: "300px",
-                                  textAlign: "center",
-                                  padding: "0 2rem",
-                                }}>
-
-                                  <div style={{
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    justifyContent: "center",
-                                    height: "100px",
-                                    width: "100px",
-                                  }}>
-                                    <MyImage src={"https://hodgetwins.goingbigly.com/hosted/images/a7/16a9dc49e24f3eb88e8e70161f9ed7/Sale.png"} />
-                                  </div>
-                                  <h3 style={{fontSize: "20px"}}>Hodgetwins Gear at the Best Prices</h3>
-                                </div>
-
-                                <div style={{
-                                  display: "flex",
-                                  flexDirection: "column",
-                                  justifyContent: "flex-start",
-                                  alignItems: "center",
-                                  width: "300px",
-                                  textAlign: "center",
-                                }}>
-
-                                  <div style={{
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    justifyContent: "center",
-                                    height: "100px",
-                                    width: "100px",
-                                  }}>
-                                    <MyImage src={"https://hodgetwins.goingbigly.com/hosted/images/62/360aa636b541ff8fca64a957b49400/VIPexclusive.png"} />
-                                  </div>
-                                  <h3 style={{fontSize: "20px"}}>#Exclusive Monthly VIP-ONLY Giveaways</h3>
-                                </div>
-
-                                <div style={{
-                                  display: "flex",
-                                  flexDirection: "column",
-                                  justifyContent: "flex-start",
-                                  alignItems: "center",
-                                  width: "300px",
-                                  textAlign: "center",
-                                  padding: "0 2rem",
-                                }}>
-
-                                  <div style={{
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    justifyContent: "center",
-                                    height: "100px",
-                                    width: "100px",
-                                  }}>
-                                    <MyImage src={"https://hodgetwins.goingbigly.com/hosted/images/6d/0c3cec709647df8bb8b4372d104f5b/Exclusive.png"} />
-                                  </div>
-                                  <h3 style={{fontSize: "20px"}}>Early Access to Products, Promos, and Giveaways</h3>
-                                </div>
-
-                                <div style={{
-                                  display: "flex",
-                                  flexDirection: "column",
-                                  justifyContent: "flex-start",
-                                  alignItems: "center",
-                                  width: "300px",
-                                  padding: "0 2rem",
-                                  textAlign: "center",
-                                }}>
-
-                                  <div style={{
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    justifyContent: "center",
-                                    height: "100px",
-                                    width: "100px",
-                                  }}>
-                                    <MyImage src={"https://hodgetwins.goingbigly.com/hosted/images/5b/3d058c28214449ac015923f85fd466/Calendar.png"} />
-                                  </div>
-                                  <h3 style={{fontSize: "20px"}}>Unlimited Skips</h3>
-                                </div>
-
-                              </div>
-
-                              <div style={{
+                            <div
+                              style={{
                                 display: "flex",
                                 flexDirection: "column",
                                 justifyContent: "center",
-                              }}>
-                                <MyImage src={"https://hodgetwins.goingbigly.com/hosted/images/86/7c101b9eb140fbae19453daa888e22/official-hodge-twins-4-.png"} />
+                                alignItems: "center",
+                                color: "rgb(16, 40, 76)",
+                                fontFamily: "'Fjalla'",
+                              }}
+                            >
+                              <div
+                                style={{
+                                  display: "flex",
+                                  flexDirection:
+                                    windowWidth > 720 ? "row" : "column",
+                                  justifyContent: "center",
+                                  alignItems: windowWidth > 720 ? "" : "center",
+                                  width: windowWidth > 720 ? "80%" : "100%",
+                                }}
+                              >
+                                <div
+                                  style={{
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    justifyContent: "flex-start",
+                                    alignItems: "center",
+                                    textAlign: "center",
+                                    width: "300px",
+                                  }}
+                                >
+                                  <div
+                                    style={{
+                                      display: "flex",
+                                      flexDirection: "column",
+                                      justifyContent: "center",
+                                      height: "100px",
+                                      width: "100px",
+                                    }}
+                                  >
+                                    <MyImage
+                                      src={
+                                        "https://hodgetwins.goingbigly.com/hosted/images/d1/09d9b098c740b28b727b900bcb99b6/Coins.png"
+                                      }
+                                    />
+                                  </div>
+                                  <h3
+                                    style={{
+                                      fontSize: "20px",
+                                      padding: "0 2rem",
+                                    }}
+                                  >
+                                    Monthly <br />
+                                    Member Credits
+                                  </h3>
+                                </div>
+
+                                <div
+                                  style={{
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    justifyContent: "flex-start",
+                                    alignItems: "center",
+                                    width: "300px",
+                                    textAlign: "center",
+                                    padding: "0 2rem",
+                                  }}
+                                >
+                                  <div
+                                    style={{
+                                      display: "flex",
+                                      flexDirection: "column",
+                                      justifyContent: "center",
+                                      height: "100px",
+                                      width: "100px",
+                                    }}
+                                  >
+                                    <MyImage
+                                      src={
+                                        "https://hodgetwins.goingbigly.com/hosted/images/dc/5821281242414c9c54cf107ac9a173/Winner.png"
+                                      }
+                                    />
+                                  </div>
+                                  <h3 style={{ fontSize: "20px" }}>
+                                    Automatic DOUBLE Entries into ALL Giveaways
+                                  </h3>
+                                </div>
+
+                                <div
+                                  style={{
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    justifyContent: "flex-start",
+                                    alignItems: "center",
+                                    width: "300px",
+                                    textAlign: "center",
+                                    padding: "0 2rem",
+                                  }}
+                                >
+                                  <div
+                                    style={{
+                                      display: "flex",
+                                      flexDirection: "column",
+                                      justifyContent: "center",
+                                      height: "100px",
+                                      width: "100px",
+                                    }}
+                                  >
+                                    <MyImage
+                                      src={
+                                        "https://hodgetwins.goingbigly.com/hosted/images/a7/16a9dc49e24f3eb88e8e70161f9ed7/Sale.png"
+                                      }
+                                    />
+                                  </div>
+                                  <h3 style={{ fontSize: "20px" }}>
+                                    Hodgetwins Gear at the Best Prices
+                                  </h3>
+                                </div>
+
+                                <div
+                                  style={{
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    justifyContent: "flex-start",
+                                    alignItems: "center",
+                                    width: "300px",
+                                    textAlign: "center",
+                                  }}
+                                >
+                                  <div
+                                    style={{
+                                      display: "flex",
+                                      flexDirection: "column",
+                                      justifyContent: "center",
+                                      height: "100px",
+                                      width: "100px",
+                                    }}
+                                  >
+                                    <MyImage
+                                      src={
+                                        "https://hodgetwins.goingbigly.com/hosted/images/62/360aa636b541ff8fca64a957b49400/VIPexclusive.png"
+                                      }
+                                    />
+                                  </div>
+                                  <h3 style={{ fontSize: "20px" }}>
+                                    #Exclusive Monthly VIP-ONLY Giveaways
+                                  </h3>
+                                </div>
+
+                                <div
+                                  style={{
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    justifyContent: "flex-start",
+                                    alignItems: "center",
+                                    width: "300px",
+                                    textAlign: "center",
+                                    padding: "0 2rem",
+                                  }}
+                                >
+                                  <div
+                                    style={{
+                                      display: "flex",
+                                      flexDirection: "column",
+                                      justifyContent: "center",
+                                      height: "100px",
+                                      width: "100px",
+                                    }}
+                                  >
+                                    <MyImage
+                                      src={
+                                        "https://hodgetwins.goingbigly.com/hosted/images/6d/0c3cec709647df8bb8b4372d104f5b/Exclusive.png"
+                                      }
+                                    />
+                                  </div>
+                                  <h3 style={{ fontSize: "20px" }}>
+                                    Early Access to Products, Promos, and
+                                    Giveaways
+                                  </h3>
+                                </div>
+
+                                <div
+                                  style={{
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    justifyContent: "flex-start",
+                                    alignItems: "center",
+                                    width: "300px",
+                                    padding: "0 2rem",
+                                    textAlign: "center",
+                                  }}
+                                >
+                                  <div
+                                    style={{
+                                      display: "flex",
+                                      flexDirection: "column",
+                                      justifyContent: "center",
+                                      height: "100px",
+                                      width: "100px",
+                                    }}
+                                  >
+                                    <MyImage
+                                      src={
+                                        "https://hodgetwins.goingbigly.com/hosted/images/5b/3d058c28214449ac015923f85fd466/Calendar.png"
+                                      }
+                                    />
+                                  </div>
+                                  <h3 style={{ fontSize: "20px" }}>
+                                    Unlimited Skips
+                                  </h3>
+                                </div>
+                              </div>
+
+                              <div
+                                style={{
+                                  display: "flex",
+                                  flexDirection: "column",
+                                  justifyContent: "center",
+                                }}
+                              >
+                                <MyImage
+                                  src={
+                                    "https://hodgetwins.goingbigly.com/hosted/images/86/7c101b9eb140fbae19453daa888e22/official-hodge-twins-4-.png"
+                                  }
+                                />
                               </div>
                             </div>
                             {/* <div
@@ -507,9 +616,7 @@ const Upsell = () => {
                 />
               </div>
               <div className="div-block-64">
-                <h3 className="heading-26">
-                  Official White Privilege Card
-                </h3>
+                <h3 className="heading-26">Official White Privilege Card</h3>
                 <p className="paragraph-34">
                   Patriot Pack Cost: <span className="text-span-28">FREE</span>
                   <br />
