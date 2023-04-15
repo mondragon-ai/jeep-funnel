@@ -20,22 +20,48 @@ const Upsell = () => {
   const [clientOrigin, setClientOrigin] = useState("127.0.0.1");
   const [windowWidth, setWindowWidth] = useState(0);
 
+  console.log("UPSELL");
+  const query = new URLSearchParams(window.location.search);
+  console.log(query.get("cus_uuid"));
   useEffect(() => {
-    setWindowWidth(window.innerWidth);
+    let query = new URLSearchParams(window.location.search);
+    setClientOrigin(window ? window.location.origin : ""); // set client origin
+    setWindowWidth(window ? window.innerWidth : 0);
     sendPageViewEvent("UPSELL"); // send page view event to google analytics
-    setClientOrigin(window.location.origin); // set client origin
-    setTimeout(() => setMessage(""), 5000);
+    // setTimeout(() => setMessage(""), 5000);
 
-    console.log("UPSELL");
-    const query = new URLSearchParams(window.location.search);
-    console.log(query.get("cus_uuid"));
+    console.log(" [UPSELL]");
     setGlobalState({
       ...globalState,
       cus_uuid: query.get("cus_uuid") || globalState.cus_uuid || "",
       funnel_uuid: query.get("funnel_uuid") || globalState.funnel_uuid || "",
       products: JSON.parse(query.get("products")) || globalState.products || [],
-      high_risk: false,
       bump: query.get("bump") || globalState.bump || false,
+      high_risk: false,
+    });
+
+    // // extract vars
+    const p_list =
+      JSON.parse(query.get("products")) || globalState.products || [];
+    const email = query.get("email") ? query.get("email") : globalState.email;
+    const bump = JSON.parse(query.get("bump")) || globalState.bump || [];
+    console.log(email);
+    console.log(p_list);
+
+    // calc vars
+    const price = p_list[0].price_num ? Number(p_list[0].price_num) : 0;
+    const conversion_price = bump ? price / 100 + 3.99 : price / 100;
+    console.log(price);
+    console.log(conversion_price);
+
+    // push 3rd party analytics
+    gtags.twitterEvent(email, conversion_price);
+    gtags.event("conversion", {
+      send_to: "AW-10793712364/Knd8CNuBkpIYEOz165oo",
+      value: conversion_price,
+      currency: "USD",
+      transaction_id:
+        "txt_" + crypto.randomBytes(10).toString("hex").substring(0, 10),
     });
   }, []);
 
@@ -49,7 +75,6 @@ const Upsell = () => {
         : Number(payload.product.price);
       const conversion_price = price ? price / 100 : 0;
 
-      // gtags.event('conversion', { 'send_to': 'AW-10793712364/Ifg6CN6BkpIYEOz165oo', 'value': conversion_price, 'currency': 'USD', 'transaction_id': "txt_" + crypto.randomBytes(10).toString("hex").substring(0,10) });
       const response = await imPoweredRequest(
         "POST",
         "https://us-central1-impowered-funnel.cloudfunctions.net/funnel/payments/quick-sub",
@@ -112,7 +137,6 @@ const Upsell = () => {
   };
 
   const updateGlobalState = () => {
-    console.log("UPSELL");
     const query = new URLSearchParams(window.location.search);
     console.log(query.get("cus_uuid"));
     const p_list =
